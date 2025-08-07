@@ -8,8 +8,17 @@ from models.ai_task import AITask, AITaskCreate, AITaskType, AITaskStatus
 
 class AIOrchestratorService:
     def __init__(self):
-        self.openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY")) if os.getenv("OPENAI_API_KEY") else None
-        self.anthropic_client = Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY")) if os.getenv("ANTHROPIC_API_KEY") else None
+        try:
+            self.openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY")) if os.getenv("OPENAI_API_KEY") else None
+        except Exception as e:
+            print(f"Warning: OpenAI client initialization failed: {e}")
+            self.openai_client = None
+            
+        try:
+            self.anthropic_client = Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY")) if os.getenv("ANTHROPIC_API_KEY") else None
+        except Exception as e:
+            print(f"Warning: Anthropic client initialization failed: {e}")
+            self.anthropic_client = None
 
     async def process_chat_message(self, message: str, user_id: str, context: Dict = None, db=None):
         """Process a chat message with AI"""
