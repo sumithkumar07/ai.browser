@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useBrowser } from '../../contexts/BrowserContext';
 import { useAI } from '../../contexts/AIContext';
 import { useUser } from '../../contexts/UserContext';
-import BubbleTabWorkspace from '../BubbleTab/BubbleTabWorkspace';
-import AIAssistant from '../AIAssistant/AIAssistant';
-import NavigationBar from '../Navigation/NavigationBar';
-import { Plus } from 'lucide-react';
+import EnhancedBubbleTabWorkspace from '../BubbleTab/EnhancedBubbleTabWorkspace';
+import EnhancedAIAssistant from '../AIAssistant/EnhancedAIAssistant';
+import ResponsiveNavigationBar from '../Navigation/ResponsiveNavigationBar';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Plus, Brain, Sparkles, Zap, TrendingUp, Globe } from 'lucide-react';
 
 export default function MainBrowser() {
   const { currentSession, tabs, addTab } = useBrowser();
