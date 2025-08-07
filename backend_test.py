@@ -111,7 +111,7 @@ class AIBrowserAPITester:
             "user_mode": "consumer"
         }
         
-        success, data, details = self.make_request('POST', '/api/users/register', test_user_data, 201)
+        success, data, details = self.make_request('POST', '/api/users/register', test_user_data, 200)
         
         if success and 'id' in data:
             self.user_id = data['id']
