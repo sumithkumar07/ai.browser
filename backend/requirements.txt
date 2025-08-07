@@ -8,7 +8,7 @@ passlib[bcrypt]==1.7.4
 python-multipart==0.0.6
 selenium==4.15.2
 playwright==1.40.0
-groq==0.4.1
+groq==0.31.0
 redis==5.0.1
 celery==5.3.4
 websockets==12.0
