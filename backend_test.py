@@ -127,10 +127,30 @@ class AIBrowserAPITester:
     def test_user_login(self, email: str, password: str):
         """Test user login"""
         login_data = {"email": email, "password": password}
-        success, data, details = self.make_request('POST', '/api/users/login', login_data)
         
-        if success and 'access_token' in data:
-            self.token = data['access_token']
+        # Try form data first
+        url = f"{self.base_url}/api/users/login"
+        headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+        
+        try:
+            import urllib.parse
+            form_data = urllib.parse.urlencode(login_data)
+            response = requests.post(url, data=form_data, headers=headers, timeout=10)
+            
+            success = response.status_code == 200
+            if success:
+                try:
+                    data = response.json()
+                    if 'access_token' in data:
+                        self.token = data['access_token']
+                except:
+                    success = False
+            
+            details = f"Status: {response.status_code}"
+            
+        except Exception as e:
+            success = False
+            details = f"Request failed: {str(e)}"
         
         self.log_test("User Login", success, details)
         return success
