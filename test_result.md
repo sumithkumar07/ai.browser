@@ -90,33 +90,70 @@ I've successfully built and delivered a fully functional advanced AI Agentic Bro
 - RESTful API architecture with proper authentication
 - Development and production environment support
 
-## Architecture Highlights
+## 📊 **API ENDPOINTS OVERVIEW**
 
-### Backend Services
+### **AI & Intelligence** (GROQ-Powered)
+- `POST /api/ai/enhanced/enhanced-chat` - Context-aware AI conversation
+- `POST /api/ai/enhanced/smart-content-analysis` - Webpage analysis  
+- `POST /api/ai/enhanced/automation-planning` - Intelligent automation
+- `POST /api/ai/enhanced/batch-analysis` - Multi-URL analysis
+- `GET /api/ai/enhanced/ai-capabilities` - AI system capabilities
+
+### **Automation & Control**
+- `POST /api/automation/enhanced/smart-form-filling` - Form automation
+- `POST /api/automation/enhanced/ecommerce-automation` - Shopping automation  
+- `POST /api/automation/enhanced/advanced-extraction` - Data extraction
+- `GET /api/automation/enhanced/automation-templates` - Workflow templates
+
+### **Browser & Session Management**
+- `POST /api/browser/sessions` - Session management
+- `GET /api/browser/tabs` - Tab operations
+- `PUT /api/browser/tabs/{id}` - Tab updates
+- `DELETE /api/browser/tabs/{id}` - Tab removal
+
+### **User & Performance**  
+- `POST /api/users/register` - User registration
+- `POST /api/users/login` - Authentication
+- `GET /api/ai/enhanced/performance-metrics` - System metrics
+- `GET /api/ai/enhanced/health` - Health status
+
+## 🏗️ **DEVELOPMENT ARCHITECTURE**
+
+### **Frontend Structure**
 ```
-/api/
-├── users/           # User management & auth
-├── browser/         # Session & tab management
-├── ai/             # AI agent orchestration  
-├── automation/     # Web automation services
-└── content/        # Content analysis services
+/app/frontend/src/
+├── components/              # Reusable UI components
+│   ├── Auth/               # Authentication modals
+│   ├── BubbleTab/          # 3D bubble tab system  
+│   ├── AIAssistant/        # ARIA AI interface
+│   ├── MainBrowser/        # Core browser UI
+│   └── Navigation/         # Navigation components
+├── contexts/               # Global state management
+│   ├── BrowserContext.js   # Tab & session state
+│   ├── AIContext.js        # AI assistant state
+│   └── UserContext.js      # User authentication
+├── services/               # API communication
+└── utils/                  # Helper functions
 ```
 
-### Frontend Architecture
+### **Backend Structure**
 ```
-/src/
-├── components/     # Reusable UI components
-├── contexts/       # Global state management
-├── services/       # API communication
-└── utils/         # Helper functions
+/app/backend/
+├── api/                    # REST API routes
+│   ├── ai_agents/         # AI service endpoints
+│   ├── automation/        # Automation endpoints  
+│   ├── browser/           # Browser management
+│   ├── content/           # Content analysis
+│   └── user_management/   # User services
+├── services/              # Business logic
+│   ├── enhanced_ai_orchestrator.py    # GROQ AI integration
+│   ├── advanced_web_automation.py     # Playwright automation
+│   ├── content_analyzer.py           # Content processing
+│   └── performance_service.py        # Performance optimization
+├── models/                # Data models
+├── database/              # MongoDB connection
+└── server.py              # FastAPI application
 ```
-
-### Database Schema
-- **users**: User profiles and preferences
-- **sessions**: Browser sessions with tab states
-- **ai_tasks**: AI agent task tracking
-- **automations**: Saved automation workflows
-- **content_analysis**: Analyzed content cache
 
 ## 🚀 **CURRENT APPLICATION STATUS: PRODUCTION READY**
 
