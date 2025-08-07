@@ -11,15 +11,18 @@ from bs4 import BeautifulSoup
 class EnhancedAIOrchestratorService:
     def __init__(self):
         try:
-            self.groq_client = Groq(api_key=os.getenv("GROQ_API_KEY")) if os.getenv("GROQ_API_KEY") else None
+            groq_api_key = os.getenv("GROQ_API_KEY")
+            if groq_api_key:
+                self.groq_client = Groq(api_key=groq_api_key)
+                print("✅ Enhanced GROQ AI client initialized successfully")
+            else:
+                self.groq_client = None
+                print("⚠️ GROQ API key not found")
+            
             self.conversation_memory = {}  # Store conversation context
             self.user_preferences = {}     # Store user preferences
             self.context_window = 10       # Remember last 10 messages
             
-            if self.groq_client:
-                print("✅ Enhanced GROQ AI client initialized successfully")
-            else:
-                print("⚠️ GROQ API key not found")
         except Exception as e:
             print(f"Warning: Enhanced GROQ client initialization failed: {e}")
             self.groq_client = None
