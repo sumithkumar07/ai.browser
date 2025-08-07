@@ -1,6 +1,7 @@
 import os
 import asyncio
 from typing import Optional, List, Dict, Any
+from datetime import datetime
 from openai import OpenAI
 from anthropic import Anthropic
 from models.ai_task import AITask, AITaskCreate, AITaskType, AITaskStatus
