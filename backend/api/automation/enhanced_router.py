@@ -271,7 +271,7 @@ async def execute_automation_workflow(
             await page.goto(workflow["target_url"], wait_until='networkidle')
             
             for step_index, step in enumerate(workflow["steps"]):
-                step_result = await self._execute_workflow_step(page, step, step_index)
+                step_result = await _execute_workflow_step(page, step, step_index)
                 execution_results.append(step_result)
                 
                 # Add delay between steps if specified
