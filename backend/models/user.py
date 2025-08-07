@@ -8,7 +8,7 @@ class UserBase(BaseModel):
     username: str
     full_name: Optional[str] = None
     is_active: bool = True
-    user_mode: str = Field(default="consumer", regex="^(power|consumer|enterprise)$")
+    user_mode: str = Field(default="consumer", pattern="^(power|consumer|enterprise)$")
     preferences: Optional[dict] = {}
 
 class UserCreate(UserBase):
