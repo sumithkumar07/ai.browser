@@ -3,7 +3,7 @@ from models.user import User
 from models.automation import AutomationWorkflow, AutomationCreate, AutomationExecution
 from services.auth_service import AuthService
 from services.advanced_web_automation import AdvancedWebAutomationService
-from services.performance_service import PerformanceService
+from services.performance_service import performance_service
 from database.connection import get_database
 from typing import List, Dict, Any
 import time
@@ -12,7 +12,7 @@ import asyncio
 router = APIRouter()
 auth_service = AuthService()
 advanced_automation = AdvancedWebAutomationService()
-performance_service = PerformanceService()
+# Use the singleton instance from performance_service module
 
 @router.post("/smart-form-fill")
 async def smart_form_filling(
