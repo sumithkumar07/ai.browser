@@ -126,16 +126,12 @@ class AIBrowserAPITester:
 
     def test_user_login(self, email: str, password: str):
         """Test user login"""
-        login_data = {"email": email, "password": password}
-        
-        # Try form data first
-        url = f"{self.base_url}/api/users/login"
-        headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+        # The login endpoint expects query parameters
+        url = f"{self.base_url}/api/users/login?email={email}&password={password}"
+        headers = {'Content-Type': 'application/json'}
         
         try:
-            import urllib.parse
-            form_data = urllib.parse.urlencode(login_data)
-            response = requests.post(url, data=form_data, headers=headers, timeout=10)
+            response = requests.post(url, headers=headers, timeout=10)
             
             success = response.status_code == 200
             if success:
