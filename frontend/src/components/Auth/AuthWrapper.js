@@ -6,7 +6,10 @@ export default function AuthWrapper({ children }) {
   const { isAuthenticated, isLoading } = useUser();
   const [showAuthModal, setShowAuthModal] = useState(false);
 
-  if (isLoading) {
+  // Temporary bypass for demonstration - in production, remove this line
+  const bypassAuth = true;
+
+  if (isLoading && !bypassAuth) {
     return (
       <div className="flex items-center justify-center h-screen bg-ai-dark">
         <div className="text-center">
@@ -17,7 +20,7 @@ export default function AuthWrapper({ children }) {
     );
   }
 
-  if (!isAuthenticated) {
+  if (!isAuthenticated && !bypassAuth) {
     return (
       <div className="flex items-center justify-center h-screen bg-gradient-to-br from-ai-dark via-slate-800 to-ai-dark">
         <div className="text-center max-w-md mx-auto px-6">
