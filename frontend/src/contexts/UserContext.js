@@ -3,10 +3,16 @@ import React, { createContext, useContext, useReducer, useEffect } from 'react';
 const UserContext = createContext();
 
 const initialState = {
-  user: null,
-  isAuthenticated: false,
-  isLoading: true,
-  userMode: 'consumer', // consumer, power, enterprise
+  user: {
+    id: 'demo-user-123',
+    name: 'Demo User',
+    email: 'demo@aibrowser.com',
+    user_mode: 'power',
+    created_at: new Date().toISOString()
+  }, // Mock user for demo
+  isAuthenticated: true, // Set to true for demo
+  isLoading: false,
+  userMode: 'power', // consumer, power, enterprise
   preferences: {
     theme: 'dark',
     bubbleTabStyle: 'modern',
@@ -14,7 +20,7 @@ const initialState = {
     autoExecuteSimpleTasks: true,
     privacyMode: false
   },
-  authToken: localStorage.getItem('authToken') || null
+  authToken: 'demo-token-123' // Mock token
 };
 
 function userReducer(state, action) {
