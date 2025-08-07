@@ -9,10 +9,12 @@ from models.ai_task import AITask, AITaskCreate, AITaskType, AITaskStatus
 class AIOrchestratorService:
     def __init__(self):
         try:
-            self.groq_client = Groq(api_key=os.getenv("GROQ_API_KEY")) if os.getenv("GROQ_API_KEY") else None
-            if self.groq_client:
-                print("✅ GROQ client initialized successfully")
+            groq_api_key = os.getenv("GROQ_API_KEY")
+            if groq_api_key:
+                self.groq_client = Groq(api_key=groq_api_key)
+                print("✅ GROQ AI client initialized successfully")
             else:
+                self.groq_client = None
                 print("⚠️ GROQ API key not found")
         except Exception as e:
             print(f"Warning: GROQ client initialization failed: {e}")
