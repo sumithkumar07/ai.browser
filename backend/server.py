@@ -11,7 +11,9 @@ load_dotenv()
 # Import routers
 from api.browser.router import router as browser_router
 from api.ai_agents.router import router as ai_router
+from api.ai_agents.enhanced_router import router as enhanced_ai_router
 from api.automation.router import router as automation_router
+from api.automation.enhanced_router import router as enhanced_automation_router
 from api.content.router import router as content_router
 from api.user_management.router import router as user_router
 
