@@ -3,7 +3,7 @@ from models.user import User
 from models.ai_task import AITask, AITaskCreate, AITaskType
 from services.auth_service import AuthService
 from services.enhanced_ai_orchestrator import EnhancedAIOrchestratorService
-from services.performance_service import PerformanceService
+from services.performance_service import performance_service
 from database.connection import get_database
 from typing import List, Optional, Dict, Any
 import time
@@ -11,7 +11,7 @@ import time
 router = APIRouter()
 auth_service = AuthService()
 enhanced_ai = EnhancedAIOrchestratorService()
-performance_service = PerformanceService()
+# Use the singleton instance from performance_service module
 
 @router.post("/enhanced-chat")
 async def enhanced_chat_with_ai(
