@@ -188,15 +188,15 @@ class AIBrowserAPITester:
         self.log_test("User Login", success, details)
         return success
 
-    def test_enhanced_chat(self):
-        """Test enhanced AI chat endpoint"""
+    def test_enhanced_chat_specific(self):
+        """Test enhanced AI chat endpoint with specific message"""
         if not self.token:
-            self.log_test("Enhanced Chat", False, "No authentication token available")
+            self.log_test("Enhanced Chat Specific", False, "No authentication token available")
             return False
 
         chat_data = {
-            "message": "Hello, can you help me understand AI capabilities?",
-            "context": {"test": True}
+            "message": "Hi there! Help me plan my day.",
+            "context": {"activeFeature": "chat"}
         }
         
         success, data, details = self.make_request(
@@ -212,7 +212,26 @@ class AIBrowserAPITester:
                 success = False
                 details += " - Missing expected response structure"
         
-        self.log_test("Enhanced Chat", success, details)
+        self.log_test("Enhanced Chat Specific", success, details)
+        return success, data
+
+    def test_content_analysis_specific(self):
+        """Test smart content analysis with specific URL"""
+        if not self.token:
+            self.log_test("Content Analysis Specific", False, "No authentication token available")
+            return False
+
+        analysis_data = {
+            "url": "https://example.com",
+            "analysis_type": "comprehensive"
+        }
+        
+        success, data, details = self.make_request(
+            'POST', '/api/ai/enhanced/smart-content-analysis',
+            analysis_data, 200, auth_required=True
+        )
+        
+        self.log_test("Smart Content Analysis Specific", success, details)
         return success, data
 
     def test_content_analysis(self):
