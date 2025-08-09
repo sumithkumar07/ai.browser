@@ -8,6 +8,8 @@ import ResponsiveNavigationBar from '../Navigation/ResponsiveNavigationBar';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Brain, Sparkles, Zap, TrendingUp, Globe, Shield, Wifi, WifiOff, Command, Eye, Settings } from 'lucide-react';
 
+const API_BASE = `${process.env.REACT_APP_BACKEND_URL}/api`;
+
 export default function MainBrowser() {
   const { currentSession, tabs, addTab } = useBrowser();
   const { isAssistantVisible, toggleAssistant } = useAI();
@@ -80,7 +82,7 @@ export default function MainBrowser() {
   // Enhanced performance metrics loading with caching
   const loadPerformanceMetrics = useCallback(async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/ai/enhanced/performance-metrics`, {
+      const response = await fetch(`${API_BASE}/ai/enhanced/performance-metrics`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('authToken')}`
         }

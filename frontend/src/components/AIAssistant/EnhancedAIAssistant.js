@@ -3,6 +3,8 @@ import { useAI } from '../../contexts/AIContext';
 import { Send, Minimize2, Maximize2, Bot, Zap, FileText, Settings, TrendingUp, Brain, Sparkles, MessageSquare, X, Mic, MicOff, Copy, ThumbsUp, ThumbsDown, RotateCcw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+const API_BASE = `${process.env.REACT_APP_BACKEND_URL}/api`;
+
 export default function EnhancedAIAssistant() {
   const { 
     isAssistantVisible,
@@ -40,7 +42,7 @@ export default function EnhancedAIAssistant() {
 
   const loadPerformanceMetrics = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/ai/enhanced/performance-metrics`, {
+      const response = await fetch(`${API_BASE}/ai/enhanced/performance-metrics`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('authToken')}`
         }
@@ -73,7 +75,7 @@ export default function EnhancedAIAssistant() {
     setAIStatus('processing');
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/ai/enhanced/enhanced-chat`, {
+      const response = await fetch(`${API_BASE}/ai/enhanced/enhanced-chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -211,7 +213,7 @@ export default function EnhancedAIAssistant() {
     try {
       setIsProcessing(true);
       
-      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/ai/enhanced/smart-content-analysis`, {
+      const response = await fetch(`${API_BASE}/ai/enhanced/smart-content-analysis`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
