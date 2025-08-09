@@ -101,27 +101,64 @@ class AIBrowserAPITester:
         self.log_test("AI System Health", success, details)
         return success, data
 
-    def test_create_test_user(self):
-        """Create a test user for authentication testing"""
+    def test_register_specific_user(self):
+        """Register user with specific data as per review request"""
         test_user_data = {
-            "email": f"test_user_{int(time.time())}@example.com",
-            "username": f"testuser_{int(time.time())}",
-            "password": "TestPassword123!",
+            "email": "test@example.com",
+            "username": "tester", 
             "full_name": "Test User",
-            "user_mode": "consumer"
+            "password": "secret123",
+            "user_mode": "power"
         }
         
         success, data, details = self.make_request('POST', '/api/users/register', test_user_data, 200)
         
         if success and 'id' in data:
             self.user_id = data['id']
-            # Try to login with the created user
-            login_success = self.test_user_login(test_user_data['email'], test_user_data['password'])
-            if not login_success:
-                success = False
-                details += " - Login after registration failed"
         
-        self.log_test("Create Test User", success, details)
+        self.log_test("Register Specific User", success, details)
+        return success
+
+    def test_login_specific_user(self):
+        """Test login with URL-encoded params as per review request"""
+        # The login endpoint expects query parameters
+        url = f"{self.base_url}/api/users/login?email=test@example.com&password=secret123"
+        headers = {'Content-Type': 'application/json'}
+        
+        try:
+            response = requests.post(url, headers=headers, timeout=10)
+            
+            success = response.status_code == 200
+            if success:
+                try:
+                    data = response.json()
+                    if 'access_token' in data:
+                        self.token = data['access_token']
+                        print(f"🔑 Captured access_token: {self.token[:20]}...")
+                except:
+                    success = False
+            
+            details = f"Status: {response.status_code}"
+            
+        except Exception as e:
+            success = False
+            details = f"Request failed: {str(e)}"
+        
+        self.log_test("Login Specific User", success, details)
+        return success
+
+    def test_user_profile_with_token(self):
+        """Test GET /api/users/profile with Authorization Bearer token"""
+        if not self.token:
+            self.log_test("User Profile", False, "No authentication token available")
+            return False
+
+        success, data, details = self.make_request(
+            'GET', '/api/users/profile', 
+            auth_required=True
+        )
+        
+        self.log_test("User Profile", success, details)
         return success
 
     def test_user_login(self, email: str, password: str):
