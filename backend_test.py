@@ -12,7 +12,7 @@ from datetime import datetime
 from typing import Dict, Any, Optional
 
 class AIBrowserAPITester:
-    def __init__(self, base_url="http://localhost:8001"):
+    def __init__(self, base_url="https://23fb044c-ef2e-4aa1-9643-747e46cd5523.preview.emergentagent.com"):
         self.base_url = base_url
         self.token = None
         self.user_id = None
