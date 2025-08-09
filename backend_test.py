@@ -317,38 +317,41 @@ class AIBrowserAPITester:
         self.log_test("Get Conversation Memory", success, details)
         return success
 
-    def run_comprehensive_tests(self):
-        """Run all backend tests"""
-        print("🚀 Starting Comprehensive AI Browser Backend Tests")
+    def run_smoke_tests_per_review(self):
+        """Run smoke tests as per review request"""
+        print("🚀 Starting Backend Smoke Test for AI-enhanced endpoints")
         print("=" * 60)
         
-        # Basic connectivity tests
-        print("\n📡 Testing Basic Connectivity...")
-        self.test_health_check()
-        self.test_root_endpoint()
+        # 1) Register and login flow
+        print("\n🔐 Testing Register and Login Flow...")
+        register_success = self.test_register_specific_user()
+        login_success = self.test_login_specific_user()
+        profile_success = self.test_user_profile_with_token()
         
-        # AI system tests (no auth required)
-        print("\n🤖 Testing AI System...")
-        self.test_ai_capabilities()
-        self.test_ai_system_health()
+        # 2) AI enhanced endpoints
+        print("\n🤖 Testing AI Enhanced Endpoints...")
+        health_success = self.test_ai_system_health()
+        capabilities_success, _ = self.test_ai_capabilities()
+        metrics_success, _ = self.test_performance_metrics()
         
-        # Authentication tests
-        print("\n🔐 Testing Authentication...")
-        auth_success = self.test_create_test_user()
-        
-        if auth_success and self.token:
-            # Authenticated AI tests
-            print("\n🧠 Testing Enhanced AI Features...")
-            self.test_enhanced_chat()
-            self.test_content_analysis()
-            self.test_batch_analysis()
-            self.test_performance_metrics()
-            self.test_conversation_memory()
+        if self.token:
+            chat_success, _ = self.test_enhanced_chat_specific()
+            analysis_success, _ = self.test_content_analysis_specific()
         else:
-            print("⚠️  Skipping authenticated tests due to authentication failure")
+            print("⚠️  Skipping authenticated AI tests due to authentication failure")
+            chat_success = False
+            analysis_success = False
+        
+        # 3) Validate routing prefix
+        print("\n📡 Testing Routing Prefix...")
+        health_check_success = self.test_health_check()
+        
+        # 4) Database validation (user creation validates MongoDB operations)
+        print("\n💾 Database Validation...")
+        db_validation = register_success  # User creation validates DB operations
         
         # Print final results
-        self.print_test_summary()
+        self.print_smoke_test_summary()
         
         return self.tests_passed == self.tests_run
 
