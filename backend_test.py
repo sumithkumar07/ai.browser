@@ -355,36 +355,53 @@ class AIBrowserAPITester:
         
         return self.tests_passed == self.tests_run
 
-    def print_test_summary(self):
-        """Print comprehensive test summary"""
+    def print_smoke_test_summary(self):
+        """Print smoke test summary"""
         print("\n" + "=" * 60)
-        print("📊 TEST SUMMARY")
+        print("📊 SMOKE TEST SUMMARY")
         print("=" * 60)
         print(f"Total Tests: {self.tests_run}")
         print(f"Passed: {self.tests_passed}")
         print(f"Failed: {self.tests_run - self.tests_passed}")
         print(f"Success Rate: {(self.tests_passed/self.tests_run)*100:.1f}%")
         
+        print("\n🔍 Test Results by Category:")
+        
+        # Group results by category
+        auth_tests = [r for r in self.test_results if any(keyword in r['test'].lower() for keyword in ['register', 'login', 'profile'])]
+        ai_tests = [r for r in self.test_results if any(keyword in r['test'].lower() for keyword in ['ai', 'chat', 'analysis', 'capabilities', 'metrics'])]
+        routing_tests = [r for r in self.test_results if 'health' in r['test'].lower()]
+        
+        print("\n  🔐 Authentication & User Management:")
+        for result in auth_tests:
+            status = "✅" if result['success'] else "❌"
+            print(f"    {status} {result['test']}")
+            
+        print("\n  🤖 AI Enhanced Endpoints:")
+        for result in ai_tests:
+            status = "✅" if result['success'] else "❌"
+            print(f"    {status} {result['test']}")
+            
+        print("\n  📡 Routing & Health:")
+        for result in routing_tests:
+            status = "✅" if result['success'] else "❌"
+            print(f"    {status} {result['test']}")
+        
         if self.tests_run - self.tests_passed > 0:
-            print("\n❌ Failed Tests:")
+            print("\n❌ Failed Tests Details:")
             for result in self.test_results:
                 if not result['success']:
                     print(f"  - {result['test']}: {result['details']}")
-        
-        print("\n🔍 Detailed Results:")
-        for result in self.test_results:
-            status = "✅" if result['success'] else "❌"
-            print(f"  {status} {result['test']}")
 
 def main():
     """Main test execution"""
-    print("AI Agentic Browser - Backend API Testing")
-    print("Testing against: http://localhost:8001")
+    print("AI Agentic Browser - Backend Smoke Test")
+    print("Testing against: https://23fb044c-ef2e-4aa1-9643-747e46cd5523.preview.emergentagent.com")
     
-    tester = AIBrowserAPITester("http://localhost:8001")
+    tester = AIBrowserAPITester("https://23fb044c-ef2e-4aa1-9643-747e46cd5523.preview.emergentagent.com")
     
     try:
-        success = tester.run_comprehensive_tests()
+        success = tester.run_smoke_tests_per_review()
         return 0 if success else 1
     except KeyboardInterrupt:
         print("\n⚠️  Tests interrupted by user")
