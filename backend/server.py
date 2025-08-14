@@ -57,7 +57,7 @@ app.add_middleware(
 security = HTTPBearer()
 
 # Include routers with API prefix - Add one by one to identify issue
-app.include_router(user_router, prefix="/api/users", tags=["users"])
+# app.include_router(user_router, prefix="/api/users", tags=["users"])
 # app.include_router(browser_router, prefix="/api/browser", tags=["browser"])
 # app.include_router(ai_router, prefix="/api/ai", tags=["ai_agents"])
 # app.include_router(enhanced_ai_router, prefix="/api/ai/enhanced", tags=["enhanced_ai"])
