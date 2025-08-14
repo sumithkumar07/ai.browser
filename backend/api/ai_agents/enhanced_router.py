@@ -187,6 +187,128 @@ async def clear_conversation_memory(
         raise HTTPException(status_code=500, detail=f"Could not clear conversation memory: {str(e)}")
 
 
+@router.post("/document-analysis")
+async def advanced_document_analysis(
+    req: DocumentAnalysisRequest,
+    current_user: User = Depends(auth_service.get_current_user),
+    db=Depends(get_database)
+):
+    """Advanced document analysis with AI intelligence"""
+    start_time = time.time()
+
+    try:
+        # Check cache
+        cache_key = f"doc_analysis_{hash(req.file_content)}_{req.file_type}"
+        cached_result = await performance_service.get_cached_data(cache_key)
+
+        if cached_result:
+            return {**cached_result, "cached": True}
+
+        # Perform document analysis
+        result = await enhanced_ai.advanced_document_analysis(
+            req.file_content, req.file_type, current_user.id, req.context
+        )
+
+        # Cache result for 15 minutes
+        await performance_service.optimize_caching(cache_key, result, 900)
+
+        # Monitor performance
+        await performance_service.monitor_response_times("document_analysis", start_time)
+
+        return {**result, "cached": False}
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Document analysis failed: {str(e)}")
+
+
+@router.post("/code-generation")
+async def intelligent_code_generation(
+    req: CodeGenerationRequest,
+    current_user: User = Depends(auth_service.get_current_user)
+):
+    """Intelligent code generation with AI"""
+    start_time = time.time()
+
+    try:
+        result = await enhanced_ai.intelligent_code_generation(
+            req.task_description, req.language, req.context or {}, current_user.id
+        )
+
+        # Monitor performance
+        await performance_service.monitor_response_times("code_generation", start_time)
+
+        return result
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Code generation failed: {str(e)}")
+
+
+@router.post("/workflow-optimization")
+async def advanced_workflow_optimization(
+    req: WorkflowOptimizationRequest,
+    current_user: User = Depends(auth_service.get_current_user)
+):
+    """Advanced workflow optimization with AI insights"""
+    start_time = time.time()
+
+    try:
+        result = await enhanced_ai.advanced_workflow_optimization(
+            req.current_workflow, req.optimization_goals, current_user.id
+        )
+
+        # Monitor performance
+        await performance_service.monitor_response_times("workflow_optimization", start_time)
+
+        return result
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Workflow optimization failed: {str(e)}")
+
+
+@router.post("/multilingual-chat")
+async def multilingual_conversation(
+    req: MultilingualChatRequest,
+    current_user: User = Depends(auth_service.get_current_user)
+):
+    """Multilingual conversation with AI"""
+    start_time = time.time()
+
+    try:
+        result = await enhanced_ai.multilingual_conversation(
+            req.message, req.target_language, current_user.id, req.context
+        )
+
+        # Monitor performance
+        await performance_service.monitor_response_times("multilingual_chat", start_time)
+
+        return result
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Multilingual conversation failed: {str(e)}")
+
+
+@router.post("/predictive-assistance")
+async def predictive_user_assistance(
+    req: PredictiveAssistanceRequest,
+    current_user: User = Depends(auth_service.get_current_user)
+):
+    """Predictive user assistance based on behavior patterns"""
+    start_time = time.time()
+
+    try:
+        result = await enhanced_ai.predictive_user_assistance(
+            req.user_behavior, req.current_context, current_user.id
+        )
+
+        # Monitor performance
+        await performance_service.monitor_response_times("predictive_assistance", start_time)
+
+        return result
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Predictive assistance failed: {str(e)}")
+
+
 @router.get("/ai-capabilities")
 async def get_ai_capabilities():
     """Get AI system capabilities and status"""
