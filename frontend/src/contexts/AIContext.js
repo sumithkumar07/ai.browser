@@ -168,7 +168,15 @@ export default function AIContextProvider({ children }) {
     removeTask: (taskId) => dispatch({ type: 'REMOVE_TASK', payload: taskId }),
     setCurrentAnalysis: (analysis) => dispatch({ type: 'SET_CURRENT_ANALYSIS', payload: analysis }),
     addToAutomationQueue: (automation) => dispatch({ type: 'ADD_TO_AUTOMATION_QUEUE', payload: automation }),
-    clearChat: () => dispatch({ type: 'CLEAR_CHAT' })
+    clearChat: () => dispatch({ type: 'CLEAR_CHAT' }),
+    // 🚀 NEW HYBRID AI HELPER FUNCTIONS
+    updateHybridFeatures: (features) => dispatch({ type: 'UPDATE_HYBRID_FEATURES', payload: features }),
+    updateAgenticMemory: (memory) => dispatch({ type: 'UPDATE_AGENTIC_MEMORY', payload: memory }),
+    addWorkflow: (workflow) => dispatch({ type: 'ADD_WORKFLOW', payload: workflow }),
+    updateWorkflow: (workflow) => dispatch({ type: 'UPDATE_WORKFLOW', payload: workflow }),
+    addGeneratedApp: (app) => dispatch({ type: 'ADD_GENERATED_APP', payload: app }),
+    addResearchReport: (report) => dispatch({ type: 'ADD_RESEARCH_REPORT', payload: report }),
+    setHybridStatus: (status) => dispatch({ type: 'SET_HYBRID_STATUS', payload: status })
   };
 
   return (
