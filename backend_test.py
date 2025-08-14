@@ -1866,15 +1866,15 @@ class AIBrowserAPITester:
                     print(f"  - {result['test']}: {result['details']}")
 
 def main():
-    """Main test execution"""
-    print("AI Agentic Browser - Comprehensive Backend Testing (All 4 Phases)")
+    """Main function to run hybrid AI backend testing as per review request"""
+    print("🚀 HYBRID AI BACKEND TESTING - NEON AI + FELLOU.AI INTEGRATION")
     print("Testing against: https://hybrid-ai-browser-1.preview.emergentagent.com")
     
     tester = AIBrowserAPITester("https://hybrid-ai-browser-1.preview.emergentagent.com")
     
     try:
-        # Run comprehensive testing for ALL 4 phases as per review request
-        success = tester.run_comprehensive_all_phases_testing()
+        # Run hybrid AI backend testing as per review request
+        success = tester.run_hybrid_ai_backend_testing()
         return 0 if success else 1
     except KeyboardInterrupt:
         print("\n⚠️  Tests interrupted by user")
