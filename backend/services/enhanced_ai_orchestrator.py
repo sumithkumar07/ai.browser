@@ -1092,3 +1092,806 @@ Format as structured JSON with business-focused insights."""
             return json.loads(response.choices[0].message.content)
         except json.JSONDecodeError:
             return {"comprehensive_analysis": response.choices[0].message.content, "format": "text_fallback"}
+
+    # =============================================================================
+    # PHASE 1: ADVANCED AI INTELLIGENCE ENHANCEMENTS
+    # =============================================================================
+
+    async def real_time_collaborative_analysis(self, content: str, analysis_goals: List[str], user_id: str):
+        """NEW PHASE 1: Real-time collaborative analysis with multiple AI models"""
+        if not self.groq_client:
+            return {"error": "GROQ AI not configured"}
+            
+        try:
+            # Step 1: Primary Analysis with Llama3-70B
+            primary_prompt = f"""As the PRIMARY ANALYST, perform initial comprehensive analysis:
+
+CONTENT: {content[:5000]}
+ANALYSIS GOALS: {', '.join(analysis_goals)}
+
+Provide primary analysis with:
+1. 🎯 CONTENT CLASSIFICATION & STRUCTURE
+2. 🔍 KEY INSIGHTS & PATTERNS  
+3. 📊 DATA EXTRACTION & METRICS
+4. 💡 INITIAL RECOMMENDATIONS
+5. 🚩 AREAS FOR SPECIALIST REVIEW
+
+Format as JSON for collaborative processing."""
+
+            primary_response = self.groq_client.chat.completions.create(
+                model="llama3-70b-8192",
+                messages=[
+                    {"role": "system", "content": "You are the PRIMARY ANALYST in a collaborative AI team. Focus on comprehensive initial analysis and flag areas needing specialist attention."},
+                    {"role": "user", "content": primary_prompt}
+                ],
+                max_tokens=2000,
+                temperature=0.3
+            )
+
+            # Step 2: Secondary Analysis with Llama3-8B for speed
+            secondary_prompt = f"""As the SECONDARY ANALYST, review and enhance this primary analysis:
+
+PRIMARY ANALYSIS: {primary_response.choices[0].message.content[:3000]}
+ORIGINAL CONTENT: {content[:3000]}
+
+Provide secondary analysis with:
+1. ✅ VALIDATION & FACT-CHECKING
+2. 🔄 ALTERNATIVE PERSPECTIVES
+3. 📈 TREND IDENTIFICATION
+4. 🎯 MISSED OPPORTUNITIES
+5. 🚀 ENHANCEMENT RECOMMENDATIONS
+
+Focus on speed and efficiency while adding value."""
+
+            secondary_response = self.groq_client.chat.completions.create(
+                model="llama3-8b-8192",
+                messages=[
+                    {"role": "system", "content": "You are the SECONDARY ANALYST providing quick validation and alternative perspectives. Be efficient and focus on gaps."},
+                    {"role": "user", "content": secondary_prompt}
+                ],
+                max_tokens=1500,
+                temperature=0.4
+            )
+
+            # Step 3: Synthesis and Final Analysis
+            synthesis_prompt = f"""As the SYNTHESIS COORDINATOR, combine these analyses into final insights:
+
+PRIMARY ANALYSIS: {primary_response.choices[0].message.content[:2000]}
+SECONDARY ANALYSIS: {secondary_response.choices[0].message.content[:2000]}
+
+Create final collaborative analysis with:
+1. 🏆 BEST INSIGHTS FROM BOTH ANALYSES
+2. 🔗 CONNECTED PATTERNS & RELATIONSHIPS
+3. 📊 CONSOLIDATED RECOMMENDATIONS
+4. 🎯 ACTION-ORIENTED OUTCOMES
+5. 💎 UNIQUE COLLABORATIVE VALUE
+
+Format as comprehensive JSON with clear action items."""
+
+            synthesis_response = self.groq_client.chat.completions.create(
+                model="llama3-70b-8192",
+                messages=[
+                    {"role": "system", "content": "You are the SYNTHESIS COORDINATOR combining multiple AI analyses. Focus on creating actionable, valuable insights that exceed single-model analysis."},
+                    {"role": "user", "content": synthesis_prompt}
+                ],
+                max_tokens=2500,
+                temperature=0.5
+            )
+
+            try:
+                primary_json = json.loads(primary_response.choices[0].message.content)
+            except json.JSONDecodeError:
+                primary_json = {"primary_analysis": primary_response.choices[0].message.content}
+
+            try:
+                secondary_json = json.loads(secondary_response.choices[0].message.content)
+            except json.JSONDecodeError:
+                secondary_json = {"secondary_analysis": secondary_response.choices[0].message.content}
+
+            try:
+                synthesis_json = json.loads(synthesis_response.choices[0].message.content)
+            except json.JSONDecodeError:
+                synthesis_json = {"synthesis_analysis": synthesis_response.choices[0].message.content}
+
+            return {
+                "collaborative_analysis": {
+                    "primary_analysis": primary_json,
+                    "secondary_analysis": secondary_json,
+                    "synthesis_results": synthesis_json,
+                    "collaboration_metadata": {
+                        "models_used": ["llama3-70b-8192", "llama3-8b-8192"],
+                        "analysis_approach": "multi_model_collaborative",
+                        "processing_stages": 3,
+                        "quality_score": "enhanced_collaborative"
+                    }
+                }
+            }
+
+        except Exception as e:
+            return {"error": f"Collaborative analysis failed: {str(e)}"}
+
+    async def industry_specific_analysis(self, content: str, industry: str, user_id: str):
+        """NEW PHASE 1: Industry-specific intelligence for finance, healthcare, legal, education"""
+        if not self.groq_client:
+            return {"error": "GROQ AI not configured"}
+            
+        try:
+            industry_prompts = {
+                "finance": """Analyze from FINANCIAL INDUSTRY perspective:
+                - Market analysis & investment opportunities
+                - Risk assessment & regulatory compliance
+                - Financial metrics & performance indicators
+                - Capital allocation & ROI analysis
+                - Industry benchmarks & competitive positioning""",
+                
+                "healthcare": """Analyze from HEALTHCARE INDUSTRY perspective:
+                - Clinical implications & patient outcomes
+                - Regulatory compliance (FDA, HIPAA, etc.)
+                - Healthcare economics & cost-effectiveness
+                - Evidence-based medicine & research quality
+                - Public health impact & population health""",
+                
+                "legal": """Analyze from LEGAL INDUSTRY perspective:
+                - Legal implications & regulatory requirements
+                - Compliance issues & risk management
+                - Contractual considerations & liability
+                - Intellectual property & data protection
+                - Litigation potential & legal strategy""",
+                
+                "education": """Analyze from EDUCATION INDUSTRY perspective:
+                - Learning outcomes & educational effectiveness
+                - Curriculum design & pedagogical approaches
+                - Student engagement & accessibility
+                - Assessment methods & academic standards
+                - Educational technology & innovation""",
+                
+                "technology": """Analyze from TECHNOLOGY INDUSTRY perspective:
+                - Technical architecture & scalability
+                - Innovation potential & competitive advantage
+                - Security & privacy considerations
+                - Market disruption & technology trends
+                - Implementation feasibility & technical debt""",
+                
+                "retail": """Analyze from RETAIL INDUSTRY perspective:
+                - Consumer behavior & market trends
+                - Supply chain & inventory management
+                - Customer experience & omnichannel strategy
+                - Pricing strategy & profit margins
+                - Brand positioning & market penetration"""
+            }
+
+            industry_context = industry_prompts.get(industry.lower(), industry_prompts["technology"])
+            
+            prompt = f"""Perform specialized {industry.upper()} INDUSTRY analysis:
+
+CONTENT: {content[:5000]}
+
+{industry_context}
+
+Provide industry-specific analysis with:
+
+1. 🏭 INDUSTRY CONTEXT & RELEVANCE
+   - How content relates to {industry} sector
+   - Industry-specific terminology and concepts
+   - Regulatory environment considerations
+   - Market dynamics and competitive landscape
+
+2. 📊 SECTOR-SPECIFIC METRICS & KPIs
+   - Relevant performance indicators for {industry}
+   - Industry benchmarks and standards
+   - Compliance requirements and certifications
+   - Quality measures and success criteria
+
+3. 🎯 INDUSTRY OPPORTUNITIES & RISKS
+   - Growth opportunities specific to {industry}
+   - Sector-specific challenges and threats
+   - Innovation potential and disruption risks
+   - Regulatory and compliance considerations
+
+4. 💼 PROFESSIONAL RECOMMENDATIONS
+   - Best practices for {industry} professionals
+   - Implementation strategies and roadmaps
+   - Resource allocation and investment priorities
+   - Stakeholder considerations and communication
+
+5. 🚀 FUTURE OUTLOOK & TRENDS
+   - Emerging trends in {industry} sector
+   - Technology adoption and digital transformation
+   - Market evolution and future scenarios
+   - Strategic positioning recommendations
+
+Format as detailed JSON with industry-specific insights."""
+
+            response = self.groq_client.chat.completions.create(
+                model="llama3-70b-8192",
+                messages=[
+                    {"role": "system", "content": f"You are a senior {industry} industry analyst with deep domain expertise. Provide specialized industry insights with professional terminology and sector-specific considerations."},
+                    {"role": "user", "content": prompt}
+                ],
+                max_tokens=3000,
+                temperature=0.4
+            )
+            
+            try:
+                return json.loads(response.choices[0].message.content)
+            except json.JSONDecodeError:
+                return {"industry_analysis": response.choices[0].message.content, "industry": industry}
+                
+        except Exception as e:
+            return {"error": f"Industry-specific analysis failed: {str(e)}"}
+
+    async def visual_content_analysis(self, image_description: str, ocr_text: str, user_id: str):
+        """NEW PHASE 1: Visual content analysis with OCR and object recognition"""
+        if not self.groq_client:
+            return {"error": "GROQ AI not configured"}
+            
+        try:
+            prompt = f"""Perform comprehensive VISUAL CONTENT analysis:
+
+IMAGE DESCRIPTION: {image_description}
+OCR EXTRACTED TEXT: {ocr_text}
+
+Provide visual analysis with:
+
+1. 🖼️ VISUAL CONTENT STRUCTURE
+   - Layout and composition analysis
+   - Visual hierarchy and information flow
+   - Design elements and aesthetic evaluation
+   - Color scheme and visual branding analysis
+
+2. 🔍 TEXT & DATA EXTRACTION
+   - Key information from OCR text
+   - Data points, metrics, and statistics
+   - Important text elements and headings
+   - Document type and purpose identification
+
+3. 📊 VISUAL DATA INTERPRETATION
+   - Charts, graphs, and data visualizations
+   - Tables and structured information
+   - Infographic elements and key messages
+   - Visual storytelling and narrative flow
+
+4. 🎨 DESIGN & UX ANALYSIS
+   - User interface design evaluation
+   - Visual accessibility and readability
+   - Brand consistency and design system
+   - User experience and interaction design
+
+5. 💡 INSIGHTS & RECOMMENDATIONS
+   - Content optimization suggestions
+   - Visual improvement recommendations
+   - Accessibility enhancement opportunities
+   - Design system and branding insights
+
+Format as structured JSON with actionable visual insights."""
+
+            response = self.groq_client.chat.completions.create(
+                model="llama3-70b-8192",
+                messages=[
+                    {"role": "system", "content": "You are a visual content analyst with expertise in design, UX, and visual communication. Provide comprehensive visual analysis with actionable insights."},
+                    {"role": "user", "content": prompt}
+                ],
+                max_tokens=2500,
+                temperature=0.4
+            )
+            
+            try:
+                return json.loads(response.choices[0].message.content)
+            except json.JSONDecodeError:
+                return {"visual_analysis": response.choices[0].message.content}
+                
+        except Exception as e:
+            return {"error": f"Visual content analysis failed: {str(e)}"}
+
+    async def audio_intelligence_analysis(self, transcript: str, audio_metadata: Dict, user_id: str):
+        """NEW PHASE 1: Audio intelligence with speech-to-text and sentiment analysis"""
+        if not self.groq_client:
+            return {"error": "GROQ AI not configured"}
+            
+        try:
+            prompt = f"""Perform comprehensive AUDIO INTELLIGENCE analysis:
+
+TRANSCRIPT: {transcript}
+AUDIO METADATA: {audio_metadata}
+
+Provide audio analysis with:
+
+1. 🎤 SPEECH & COMMUNICATION ANALYSIS
+   - Speaking patterns and communication style
+   - Clarity, pace, and articulation assessment
+   - Professional communication evaluation
+   - Voice characteristics and delivery analysis
+
+2. 😊 SENTIMENT & EMOTIONAL INTELLIGENCE
+   - Overall sentiment and emotional tone
+   - Mood variations throughout the content
+   - Confidence levels and conviction assessment
+   - Stress indicators and emotional patterns
+
+3. 💬 CONVERSATION DYNAMICS
+   - Dialogue flow and interaction patterns
+   - Turn-taking and conversation balance
+   - Question-answer patterns and engagement
+   - Communication effectiveness evaluation
+
+4. 📊 CONTENT STRUCTURE & TOPICS
+   - Main topics and thematic analysis
+   - Key points and important messages
+   - Information hierarchy and organization
+   - Content quality and informativeness
+
+5. 🎯 ACTIONABLE INSIGHTS
+   - Communication improvement suggestions
+   - Content optimization recommendations
+   - Audience engagement enhancement ideas
+   - Follow-up actions and next steps
+
+Format as detailed JSON with audio-specific insights."""
+
+            response = self.groq_client.chat.completions.create(
+                model="llama3-70b-8192",
+                messages=[
+                    {"role": "system", "content": "You are an audio intelligence analyst with expertise in speech analysis, sentiment analysis, and communication assessment. Provide comprehensive audio insights."},
+                    {"role": "user", "content": prompt}
+                ],
+                max_tokens=2500,
+                temperature=0.4
+            )
+            
+            try:
+                return json.loads(response.choices[0].message.content)
+            except json.JSONDecodeError:
+                return {"audio_analysis": response.choices[0].message.content}
+                
+        except Exception as e:
+            return {"error": f"Audio intelligence analysis failed: {str(e)}"}
+
+    async def design_intelligence_analysis(self, design_description: str, design_type: str, user_id: str):
+        """NEW PHASE 1: Design intelligence with UI/UX suggestions and design system recommendations"""
+        if not self.groq_client:
+            return {"error": "GROQ AI not configured"}
+            
+        try:
+            prompt = f"""Perform comprehensive DESIGN INTELLIGENCE analysis:
+
+DESIGN DESCRIPTION: {design_description}
+DESIGN TYPE: {design_type}
+
+Provide design analysis with:
+
+1. 🎨 DESIGN SYSTEM EVALUATION
+   - Visual hierarchy and typography assessment
+   - Color palette and branding consistency
+   - Spacing, layout, and grid system analysis
+   - Component design and reusability evaluation
+
+2. 👥 USER EXPERIENCE (UX) ANALYSIS
+   - User journey and interaction flow assessment
+   - Usability and accessibility evaluation
+   - Information architecture and navigation review
+   - User engagement and conversion optimization
+
+3. 📱 INTERFACE DESIGN (UI) ASSESSMENT
+   - Visual design quality and aesthetic appeal
+   - Responsive design and device compatibility
+   - Interactive elements and micro-interactions
+   - Design trends and modern best practices
+
+4. ⚡ PERFORMANCE & TECHNICAL CONSIDERATIONS
+   - Load time and performance optimization
+   - Technical implementation feasibility
+   - Scalability and maintainability factors
+   - Cross-browser and device compatibility
+
+5. 🚀 DESIGN RECOMMENDATIONS & IMPROVEMENTS
+   - Specific design enhancement suggestions
+   - User experience optimization opportunities
+   - Brand consistency and design system improvements
+   - Accessibility and inclusive design recommendations
+
+6. 📊 DESIGN METRICS & SUCCESS CRITERIA
+   - Key design performance indicators
+   - User engagement and conversion metrics
+   - Design quality assessment frameworks
+   - A/B testing and optimization strategies
+
+Format as actionable JSON with specific design recommendations."""
+
+            response = self.groq_client.chat.completions.create(
+                model="llama3-70b-8192",
+                messages=[
+                    {"role": "system", "content": "You are a senior UX/UI designer and design system architect with expertise in modern design principles, user experience, and design systems. Provide actionable design intelligence."},
+                    {"role": "user", "content": prompt}
+                ],
+                max_tokens=3000,
+                temperature=0.4
+            )
+            
+            try:
+                return json.loads(response.choices[0].message.content)
+            except json.JSONDecodeError:
+                return {"design_analysis": response.choices[0].message.content, "design_type": design_type}
+                
+        except Exception as e:
+            return {"error": f"Design intelligence analysis failed: {str(e)}"}
+
+    async def creative_content_generation(self, content_type: str, brief: str, brand_context: Dict, user_id: str):
+        """NEW PHASE 1: Creative content generation for blog posts, reports, presentations"""
+        if not self.groq_client:
+            return {"error": "GROQ AI not configured"}
+            
+        try:
+            content_prompts = {
+                "blog_post": """Create an engaging blog post with:
+                - Compelling headline and introduction
+                - Well-structured body with clear sections
+                - Actionable insights and practical tips
+                - Strong conclusion with call-to-action
+                - SEO-optimized content structure""",
+                
+                "report": """Create a professional report with:
+                - Executive summary and key findings
+                - Structured analysis and recommendations
+                - Data-driven insights and evidence
+                - Professional formatting and presentation
+                - Clear action items and next steps""",
+                
+                "presentation": """Create presentation content with:
+                - Compelling opening and agenda
+                - Clear slide structure and flow
+                - Key messages and supporting points
+                - Visual content suggestions
+                - Strong closing and next steps""",
+                
+                "marketing_copy": """Create marketing content with:
+                - Attention-grabbing headlines
+                - Benefit-focused messaging
+                - Compelling value propositions
+                - Persuasive calls-to-action
+                - Brand-aligned tone and voice""",
+                
+                "social_media": """Create social media content with:
+                - Platform-optimized messaging
+                - Engaging hooks and headlines
+                - Visual content suggestions
+                - Hashtag and keyword optimization
+                - Community engagement strategies"""
+            }
+
+            content_guidance = content_prompts.get(content_type, content_prompts["blog_post"])
+            
+            prompt = f"""Generate creative {content_type.upper()} content:
+
+CONTENT BRIEF: {brief}
+BRAND CONTEXT: {brand_context}
+CONTENT TYPE: {content_type}
+
+{content_guidance}
+
+Provide complete content generation with:
+
+1. 📝 COMPLETE CONTENT
+   - Full {content_type} content ready to use
+   - Professional writing and formatting
+   - Brand-aligned tone and messaging
+   - Engaging and audience-appropriate style
+
+2. 🎯 CONTENT STRATEGY
+   - Target audience considerations
+   - Key messaging and positioning
+   - Content goals and objectives
+   - Distribution and promotion strategies
+
+3. 📊 SEO & OPTIMIZATION
+   - Keyword integration and optimization
+   - Meta descriptions and titles
+   - Content structure for search engines
+   - Social media optimization elements
+
+4. 🎨 CREATIVE ENHANCEMENTS
+   - Visual content suggestions
+   - Design and layout recommendations
+   - Interactive elements and multimedia ideas
+   - Creative formatting and presentation options
+
+5. 📈 PERFORMANCE & ANALYTICS
+   - Success metrics and KPIs
+   - A/B testing opportunities
+   - Performance optimization suggestions
+   - Engagement and conversion strategies
+
+Format as comprehensive JSON with ready-to-use content."""
+
+            response = self.groq_client.chat.completions.create(
+                model="llama3-70b-8192",
+                messages=[
+                    {"role": "system", "content": f"You are an expert content creator and marketing strategist specializing in {content_type} creation. Generate high-quality, engaging content that drives results."},
+                    {"role": "user", "content": prompt}
+                ],
+                max_tokens=3500,
+                temperature=0.6
+            )
+            
+            try:
+                return json.loads(response.choices[0].message.content)
+            except json.JSONDecodeError:
+                return {"generated_content": response.choices[0].message.content, "content_type": content_type}
+                
+        except Exception as e:
+            return {"error": f"Creative content generation failed: {str(e)}"}
+
+    async def data_visualization_generation(self, data_description: str, visualization_goals: List[str], user_id: str):
+        """NEW PHASE 1: Automatic chart and graph generation from data analysis"""
+        if not self.groq_client:
+            return {"error": "GROQ AI not configured"}
+            
+        try:
+            prompt = f"""Generate intelligent DATA VISUALIZATION recommendations:
+
+DATA DESCRIPTION: {data_description}
+VISUALIZATION GOALS: {', '.join(visualization_goals)}
+
+Provide comprehensive visualization strategy with:
+
+1. 📊 CHART TYPE RECOMMENDATIONS
+   - Best chart types for the data and goals
+   - Pros and cons of each visualization option
+   - Audience and context considerations
+   - Interactive vs static visualization needs
+
+2. 🎨 VISUAL DESIGN SPECIFICATIONS
+   - Color palette and branding recommendations
+   - Typography and labeling guidelines
+   - Layout and composition suggestions
+   - Accessibility and inclusive design considerations
+
+3. 💻 IMPLEMENTATION RECOMMENDATIONS
+   - Recommended tools and libraries (Chart.js, D3.js, Plotly, etc.)
+   - Code snippets and implementation examples
+   - Responsive design and mobile optimization
+   - Performance and loading considerations
+
+4. 📈 DATA STORYTELLING STRATEGY
+   - Key insights to highlight visually
+   - Narrative flow and information hierarchy
+   - Animation and interaction recommendations
+   - User engagement and comprehension optimization
+
+5. 🔍 TECHNICAL SPECIFICATIONS
+   - Data preprocessing requirements
+   - Chart configuration and customization
+   - Interactivity and filtering options
+   - Export and sharing capabilities
+
+6. ✨ ADVANCED FEATURES
+   - Real-time data integration possibilities
+   - Machine learning insights integration
+   - Predictive analytics visualization
+   - Dashboard and reporting integration
+
+Format as detailed JSON with implementation-ready specifications."""
+
+            response = self.groq_client.chat.completions.create(
+                model="llama3-70b-8192",
+                messages=[
+                    {"role": "system", "content": "You are a data visualization expert with deep knowledge of chart design, data storytelling, and modern visualization tools. Provide comprehensive visualization recommendations."},
+                    {"role": "user", "content": prompt}
+                ],
+                max_tokens=3000,
+                temperature=0.4
+            )
+            
+            try:
+                return json.loads(response.choices[0].message.content)
+            except json.JSONDecodeError:
+                return {"visualization_recommendations": response.choices[0].message.content}
+                
+        except Exception as e:
+            return {"error": f"Data visualization generation failed: {str(e)}"}
+
+    async def academic_research_assistance(self, research_topic: str, research_goals: List[str], user_id: str):
+        """NEW PHASE 1: Academic research assistant with citation management and research synthesis"""
+        if not self.groq_client:
+            return {"error": "GROQ AI not configured"}
+            
+        try:
+            prompt = f"""Provide comprehensive ACADEMIC RESEARCH assistance:
+
+RESEARCH TOPIC: {research_topic}
+RESEARCH GOALS: {', '.join(research_goals)}
+
+Provide academic research support with:
+
+1. 📚 RESEARCH STRATEGY & METHODOLOGY
+   - Research question formulation and refinement
+   - Literature review strategy and scope
+   - Research methodology recommendations
+   - Data collection and analysis approaches
+
+2. 🔍 LITERATURE SEARCH GUIDANCE
+   - Key databases and search platforms
+   - Search terms and query optimization
+   - Boolean search strategies and filters
+   - Citation tracking and reference management
+
+3. 📖 RESEARCH SYNTHESIS FRAMEWORK
+   - Thematic analysis and categorization
+   - Gap identification and research opportunities
+   - Theoretical framework development
+   - Evidence evaluation and quality assessment
+
+4. ✍️ ACADEMIC WRITING SUPPORT
+   - Paper structure and organization
+   - Citation styles and formatting (APA, MLA, Chicago)
+   - Academic writing best practices
+   - Peer review and revision strategies
+
+5. 📊 DATA ANALYSIS & PRESENTATION
+   - Statistical analysis recommendations
+   - Research visualization strategies
+   - Results interpretation and discussion
+   - Tables, figures, and appendix organization
+
+6. 🎓 PUBLICATION & DISSEMINATION
+   - Target journal identification
+   - Conference presentation opportunities
+   - Grant writing and funding strategies
+   - Impact measurement and metrics
+
+Format as comprehensive JSON with actionable research guidance."""
+
+            response = self.groq_client.chat.completions.create(
+                model="llama3-70b-8192",
+                messages=[
+                    {"role": "system", "content": "You are a senior academic researcher and research methodology expert with experience across multiple disciplines. Provide comprehensive research support and guidance."},
+                    {"role": "user", "content": prompt}
+                ],
+                max_tokens=3000,
+                temperature=0.4
+            )
+            
+            try:
+                return json.loads(response.choices[0].message.content)
+            except json.JSONDecodeError:
+                return {"research_assistance": response.choices[0].message.content, "topic": research_topic}
+                
+        except Exception as e:
+            return {"error": f"Academic research assistance failed: {str(e)}"}
+
+    async def trend_detection_analysis(self, data_sources: List[str], analysis_period: str, user_id: str):
+        """NEW PHASE 1: Industry trend identification and prediction algorithms"""
+        if not self.groq_client:
+            return {"error": "GROQ AI not configured"}
+            
+        try:
+            prompt = f"""Perform comprehensive TREND DETECTION analysis:
+
+DATA SOURCES: {', '.join(data_sources)}
+ANALYSIS PERIOD: {analysis_period}
+
+Provide trend analysis with:
+
+1. 📈 CURRENT TREND IDENTIFICATION
+   - Emerging patterns and developments
+   - Market shifts and behavioral changes
+   - Technology adoption and innovation trends
+   - Industry-specific trend analysis
+
+2. 🔮 PREDICTIVE TREND ANALYSIS
+   - Future trend predictions and scenarios
+   - Growth trajectory and momentum assessment
+   - Potential disruptions and market changes
+   - Timeline and probability estimations
+
+3. 📊 TREND IMPACT ASSESSMENT
+   - Business implications and opportunities
+   - Risk factors and potential challenges
+   - Competitive landscape changes
+   - Consumer behavior implications
+
+4. 🎯 STRATEGIC RECOMMENDATIONS
+   - Trend-based strategic positioning
+   - Investment and resource allocation
+   - Product development opportunities
+   - Market entry and timing strategies
+
+5. 📋 TREND MONITORING FRAMEWORK
+   - Key indicators and metrics to track
+   - Early warning signals and triggers
+   - Monitoring tools and methodologies
+   - Reporting and alert systems
+
+6. 🌍 GLOBAL TREND CONTEXT
+   - Regional variations and differences
+   - Cross-industry trend correlation
+   - Macro-economic and social factors
+   - Cultural and demographic influences
+
+Format as actionable JSON with predictive insights."""
+
+            response = self.groq_client.chat.completions.create(
+                model="llama3-70b-8192",
+                messages=[
+                    {"role": "system", "content": "You are a trend analysis expert with expertise in market research, predictive analytics, and strategic forecasting. Provide comprehensive trend insights."},
+                    {"role": "user", "content": prompt}
+                ],
+                max_tokens=3000,
+                temperature=0.4
+            )
+            
+            try:
+                return json.loads(response.choices[0].message.content)
+            except json.JSONDecodeError:
+                return {"trend_analysis": response.choices[0].message.content, "period": analysis_period}
+                
+        except Exception as e:
+            return {"error": f"Trend detection analysis failed: {str(e)}"}
+
+    async def knowledge_graph_building(self, content: str, domain: str, user_id: str):
+        """NEW PHASE 1: Automatic relationship mapping between concepts and entities"""
+        if not self.groq_client:
+            return {"error": "GROQ AI not configured"}
+            
+        try:
+            prompt = f"""Build comprehensive KNOWLEDGE GRAPH from content:
+
+CONTENT: {content[:5000]}
+DOMAIN: {domain}
+
+Create knowledge graph structure with:
+
+1. 🏷️ ENTITY EXTRACTION & CLASSIFICATION
+   - People, organizations, locations, concepts
+   - Entity types and categories
+   - Entity properties and attributes
+   - Importance scores and relevance rankings
+
+2. 🔗 RELATIONSHIP MAPPING
+   - Direct relationships between entities
+   - Semantic relationships and associations
+   - Hierarchical and taxonomic relationships
+   - Temporal and causal relationships
+
+3. 📊 GRAPH STRUCTURE & TOPOLOGY
+   - Node types and properties
+   - Edge types and weights
+   - Graph clusters and communities
+   - Network metrics and analysis
+
+4. 🧠 SEMANTIC ENRICHMENT
+   - Concept definitions and descriptions
+   - Contextual information and metadata
+   - Cross-references and external links
+   - Confidence scores and validation
+
+5. 💡 KNOWLEDGE INSIGHTS
+   - Key patterns and discoveries
+   - Missing connections and gaps
+   - Important pathways and relationships
+   - Knowledge expansion opportunities
+
+6. 🛠️ IMPLEMENTATION SPECIFICATIONS
+   - Graph database recommendations (Neo4j, ArangoDB)
+   - Data model and schema design
+   - Query examples and use cases
+   - Visualization and exploration tools
+
+Format as structured JSON with graph specifications."""
+
+            response = self.groq_client.chat.completions.create(
+                model="llama3-70b-8192",
+                messages=[
+                    {"role": "system", "content": "You are a knowledge graph architect with expertise in semantic modeling, graph databases, and knowledge representation. Build comprehensive knowledge structures."},
+                    {"role": "user", "content": prompt}
+                ],
+                max_tokens=3000,
+                temperature=0.4
+            )
+            
+            try:
+                return json.loads(response.choices[0].message.content)
+            except json.JSONDecodeError:
+                return {"knowledge_graph": response.choices[0].message.content, "domain": domain}
+                
+        except Exception as e:
+            return {"error": f"Knowledge graph building failed: {str(e)}"}
