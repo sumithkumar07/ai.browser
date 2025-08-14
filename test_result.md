@@ -595,7 +595,7 @@ SECRET_KEY=configured ✅ SET
 ### **Test Execution Summary**
 - **Test Agent**: Testing Agent
 - **Test Type**: Backend Smoke Test for AI-enhanced endpoints  
-- **Base URL**: https://phased-upgrade.preview.emergentagent.com
+- **Base URL**: https://seamless-upgrade-2.preview.emergentagent.com
 - **Total Tests**: 9
 - **Passed**: 9 ✅
 - **Failed**: 0 ❌
@@ -653,7 +653,7 @@ SECRET_KEY=configured ✅ SET
 - **Test Agent**: Testing Agent
 - **Test Type**: Phase 1 AI Intelligence Capabilities Testing
 - **Test Focus**: Newly implemented Phase 1 AI endpoints as per review request
-- **Base URL**: https://phased-upgrade.preview.emergentagent.com
+- **Base URL**: https://seamless-upgrade-2.preview.emergentagent.com
 - **Total Tests**: 8
 - **Passed**: 7 ✅
 - **Failed**: 1 ❌
