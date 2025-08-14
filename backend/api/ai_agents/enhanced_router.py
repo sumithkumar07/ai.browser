@@ -31,6 +31,29 @@ class BatchAnalysisRequest(BaseModel):
     urls: List[str]
     analysis_type: Optional[str] = "comprehensive"
 
+class DocumentAnalysisRequest(BaseModel):
+    file_content: str
+    file_type: str
+    context: Optional[Dict[str, Any]] = None
+
+class CodeGenerationRequest(BaseModel):
+    task_description: str
+    language: str
+    context: Optional[Dict[str, Any]] = None
+
+class WorkflowOptimizationRequest(BaseModel):
+    current_workflow: str
+    optimization_goals: List[str]
+
+class MultilingualChatRequest(BaseModel):
+    message: str
+    target_language: str
+    context: Optional[Dict[str, Any]] = None
+
+class PredictiveAssistanceRequest(BaseModel):
+    user_behavior: Dict[str, Any]
+    current_context: Dict[str, Any]
+
 
 @router.post("/enhanced-chat")
 async def enhanced_chat_with_ai(
