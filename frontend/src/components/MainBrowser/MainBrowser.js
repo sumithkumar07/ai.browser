@@ -299,8 +299,28 @@ export default function MainBrowser() {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.6 }}
               >
-                Welcome to the <span className="text-gradient bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">Enhanced Future</span>
+                Welcome to the 
+                <span className="bg-gradient-to-r from-purple-400 via-blue-400 to-cyan-400 text-transparent bg-clip-text">
+                  {" "}Enhanced Future
+                </span>
               </motion.h1>
+
+              {/* 🚀 HYBRID AI BRANDING */}
+              <motion.div
+                className="mb-8"
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.8 }}
+              >
+                <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-900/50 to-blue-900/50 rounded-full border border-purple-500/30 backdrop-blur-sm">
+                  <Brain className="mr-2 text-purple-400" size={20} />
+                  <span className="text-white font-medium">Powered by</span>
+                  <span className="ml-2 text-transparent bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text font-bold">
+                    Neon AI + Fellou.ai
+                  </span>
+                  <Sparkles className="ml-2 text-yellow-400" size={16} />
+                </div>
+              </motion.div>
               
               <motion.p 
                 className="text-2xl text-gray-300 mb-10 leading-relaxed max-w-3xl mx-auto"
