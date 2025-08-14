@@ -3,7 +3,7 @@
 ## Test Execution Summary
 - **Date**: 2025-01-11
 - **Test Type**: Backend Smoke Test for AI-enhanced endpoints
-- **Base URL**: https://ux-verify-tool.preview.emergentagent.com
+- **Base URL**: https://fusion-browser-ai.preview.emergentagent.com
 - **Total Tests**: 9
 - **Passed**: 9
 - **Failed**: 0
