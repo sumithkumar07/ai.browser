@@ -10,10 +10,16 @@ import json
 
 from services.ecosystem_integration_service import EcosystemIntegrationService
 from database.connection import get_database
-from api.user_management.auth import verify_token
+from services.auth_service import AuthService
+from models.user import User
 
 router = APIRouter()
 security = HTTPBearer()
+auth_service = AuthService()
+
+# Auth dependency
+async def get_current_user(current_user: User = Depends(auth_service.get_current_user)):
+    return current_user
 
 # Request/Response Models
 class IntegrationEndpointConfig(BaseModel):
@@ -53,7 +59,7 @@ async def get_ecosystem_service():
 @router.post("/api/ecosystem/register-endpoint")
 async def register_integration_endpoint(
     config: IntegrationEndpointConfig,
-    current_user: dict = Depends(verify_token),
+    current_user: User = Depends(get_current_user),
     ecosystem_service: EcosystemIntegrationService = Depends(get_ecosystem_service)
 ):
     """Register a new integration endpoint (browser extension, mobile app, etc.)"""
@@ -77,7 +83,7 @@ async def register_integration_endpoint(
 @router.post("/api/ecosystem/browser-extension/sync")
 async def sync_browser_extension(
     sync_data: BrowserExtensionSync,
-    current_user: dict = Depends(verify_token),
+    current_user: User = Depends(get_current_user),
     ecosystem_service: EcosystemIntegrationService = Depends(get_ecosystem_service)
 ):
     """Sync data with browser extensions (Chrome, Firefox, Safari)"""
@@ -103,7 +109,7 @@ async def sync_browser_extension(
 @router.post("/api/ecosystem/mobile-companion/sync")
 async def sync_mobile_companion(
     sync_data: MobileAppSync,
-    current_user: dict = Depends(verify_token),
+    current_user: User = Depends(get_current_user),
     ecosystem_service: EcosystemIntegrationService = Depends(get_ecosystem_service)
 ):
     """Sync with mobile companion apps (iOS/Android)"""
@@ -189,18 +195,18 @@ async def process_webhook(
 
 @router.get("/api/ecosystem/analytics")
 async def get_integration_analytics(
-    current_user: dict = Depends(verify_token),
+    current_user: User = Depends(get_current_user),
     ecosystem_service: EcosystemIntegrationService = Depends(get_ecosystem_service)
 ):
     """Get integration usage analytics"""
     
     try:
-        analytics = await ecosystem_service.get_integration_analytics(current_user["user_id"])
+        analytics = await ecosystem_service.get_integration_analytics(current_user.id)
         
         return {
             "success": True,
             "analytics": analytics,
-            "user_id": current_user["user_id"]
+            "user_id": current_user.id
         }
     except Exception as e:
         raise HTTPException(
