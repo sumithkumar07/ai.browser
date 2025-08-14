@@ -137,9 +137,36 @@ export default function EnhancedAIAssistant() {
   };
 
   const handleSuggestionClick = (suggestion) => {
-    setInputMessage(suggestion);
-    setSuggestions([]);
-    document.querySelector('input[type="text"]')?.focus();
+    // Handle hybrid AI suggestions intelligently
+    const suggestionLower = suggestion.toLowerCase();
+    
+    if (suggestionLower.includes('focus') || suggestionLower.includes('distraction')) {
+      handleNeonFocusMode();
+    } else if (suggestionLower.includes('research') || suggestionLower.includes('report')) {
+      handleProfessionalResearch(suggestion);
+    } else if (suggestionLower.includes('workflow') || suggestionLower.includes('automat')) {
+      handleWorkflowBuilder(suggestion);
+    } else if (suggestionLower.includes('app') || suggestionLower.includes('create') || suggestionLower.includes('build')) {
+      handleProfessionalAppGeneration(suggestion);
+    } else if (suggestionLower.includes('analy') || suggestionLower.includes('intelligen')) {
+      handleSmartContentAnalysis(window.location.href);
+    } else if (suggestionLower.includes('slack') || suggestionLower.includes('notion') || suggestionLower.includes('google') || suggestionLower.includes('microsoft')) {
+      // Handle cross-platform integration suggestions
+      addChatMessage({
+        id: Date.now(),
+        type: 'ai',
+        content: `🌐 **Cross-Platform Integration Ready**\n\nI can help you connect with external platforms:\n\n✅ **Available Integrations:**\n- 📱 Slack (messages, channels, files)\n- 📝 Notion (pages, databases, updates)\n- 📊 Google Workspace (docs, sheets, email)\n- 💼 Microsoft 365 (docs, email, meetings)\n\nLet me know which platform you'd like to integrate with!`,
+        timestamp: new Date(),
+        special_type: 'integration_ready',
+        suggestions: ['Set up Slack integration', 'Connect to Notion', 'Link Google Workspace', 'Integrate Microsoft 365']
+      });
+      setSuggestions(['Set up Slack integration', 'Connect to Notion', 'Link Google Workspace', 'Integrate Microsoft 365']);
+    } else {
+      // Default behavior for regular suggestions
+      setInputMessage(suggestion);
+      setSuggestions([]);
+      document.querySelector('input[type="text"]')?.focus();
+    }
   };
 
   const handleVoiceInput = async () => {
