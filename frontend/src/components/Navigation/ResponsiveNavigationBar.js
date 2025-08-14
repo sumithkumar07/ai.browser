@@ -368,13 +368,28 @@ export default function ResponsiveNavigationBar() {
       {/* Quick Actions (Desktop Only) */}
       {!isMobile && (
         <div className="flex items-center space-x-1">
+          {/* 🚀 HYBRID AI STATUS INDICATOR */}
+          <div className="flex items-center space-x-1 px-2 py-1 rounded-lg bg-gradient-to-r from-purple-900/30 to-blue-900/30 border border-purple-500/20" title="Hybrid AI Active">
+            <motion.div
+              className="w-2 h-2 bg-green-400 rounded-full"
+              animate={{ scale: [1, 1.3, 1] }}
+              transition={{ repeat: Infinity, duration: 2 }}
+            />
+            <motion.div
+              className="w-2 h-2 bg-blue-400 rounded-full"
+              animate={{ scale: [1, 1.3, 1] }}
+              transition={{ repeat: Infinity, duration: 2.5 }}
+            />
+            <span className="text-xs text-gray-300 font-medium">HYBRID</span>
+          </div>
+          
           <button
             className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-200 ${
               isAssistantVisible 
-                ? 'bg-purple-600/30 text-purple-400 animate-pulse' 
+                ? 'bg-gradient-to-r from-purple-600/30 to-blue-600/30 text-purple-400 animate-pulse border border-purple-500/30' 
                 : 'glass hover:bg-purple-600/20 text-purple-400 hover:text-purple-300'
             }`}
-            title="AI Assistant (⌘K)"
+            title="Hybrid AI Assistant (⌘K)"
             onClick={toggleAssistant}
           >
             <Brain size={16} />
