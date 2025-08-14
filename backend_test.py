@@ -469,6 +469,59 @@ class AIBrowserAPITester:
         self.log_test("Backward Compatibility - Enhanced Chat", success, details)
         return success
 
+    def run_hybrid_ai_backend_testing(self):
+        """Run comprehensive hybrid AI backend testing as per review request"""
+        print("🚀 HYBRID AI BACKEND TESTING REQUEST")
+        print("=" * 80)
+        print("Testing Hybrid AI Integration: Neon AI + Fellou.ai capabilities")
+        print("Focus: All 9+ hybrid AI endpoints, authentication, and API response quality")
+        print("Base URL: https://hybrid-ai-browser-1.preview.emergentagent.com")
+        print("=" * 80)
+        
+        # 1) Authentication setup
+        print("\n🔐 Setting up Authentication...")
+        register_success = self.test_register_specific_user()
+        login_success = self.test_login_specific_user()
+        
+        if not login_success:
+            print("❌ Authentication failed - cannot proceed with hybrid AI tests")
+            return False
+        
+        # 2) Core Hybrid AI System Status Testing
+        print("\n📊 Testing Core Hybrid AI System Status...")
+        self.test_hybrid_system_status()
+        self.test_hybrid_capabilities()
+        self.test_hybrid_metrics()
+        
+        # 3) Neon AI Features Testing
+        print("\n" + "="*50)
+        print("🧠 NEON AI FEATURES TESTING")
+        print("="*50)
+        self.test_neon_chat_enhanced()
+        self.test_neon_focus_mode()
+        self.test_neon_intelligence()
+        self.test_neon_make_professional()
+        
+        # 4) Fellou.ai Features Testing
+        print("\n" + "="*50)
+        print("🚀 FELLOU.AI FEATURES TESTING")
+        print("="*50)
+        self.test_deep_search_professional()
+        self.test_controllable_workflow_builder()
+        self.test_deep_action_orchestrator()
+        self.test_agentic_memory_learning()
+        
+        # 5) Frontend Integration Validation
+        print("\n" + "="*50)
+        print("🎨 FRONTEND INTEGRATION VALIDATION")
+        print("="*50)
+        self.test_frontend_integration_validation()
+        
+        # Print hybrid AI test results
+        self.print_hybrid_ai_test_summary()
+        
+        return self.tests_passed == self.tests_run
+
     def run_comprehensive_all_phases_testing(self):
         """Run comprehensive testing for ALL 4 phases as per review request"""
         print("🚀 COMPREHENSIVE AI AGENTIC BROWSER BACKEND TESTING")
