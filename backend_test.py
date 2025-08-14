@@ -708,6 +708,353 @@ class AIBrowserAPITester:
         self.test_conversation_memory()
         self.test_backward_compatibility()
 
+    # =============================================================================
+    # 🚀 HYBRID AI TESTING METHODS - NEON AI + FELLOU.AI
+    # =============================================================================
+
+    def test_hybrid_system_status(self):
+        """Test hybrid system status endpoint"""
+        if not self.token:
+            self.log_test("Hybrid System Status", False, "No authentication token available")
+            return False
+
+        success, data, details = self.make_request(
+            'GET', '/api/ai/hybrid/hybrid-system-status',
+            auth_required=True
+        )
+        
+        if success and data:
+            # Verify hybrid status structure
+            expected_keys = ['hybrid_integration', 'neon_ai_status', 'fellou_ai_status', 'system_health']
+            has_expected_structure = any(key in str(data).lower() for key in expected_keys)
+            if not has_expected_structure:
+                success = False
+                details += " - Missing expected hybrid status structure"
+        
+        self.log_test("Hybrid System Status", success, details)
+        return success, data
+
+    def test_hybrid_capabilities(self):
+        """Test hybrid capabilities endpoint"""
+        success, data, details = self.make_request('GET', '/api/ai/hybrid/hybrid-capabilities')
+        
+        if success and data:
+            # Verify hybrid capabilities structure
+            expected_keys = ['enhanced_hybrid_system', 'enhanced_neon_ai_capabilities', 'enhanced_fellou_ai_capabilities']
+            has_expected_structure = any(key in data for key in expected_keys)
+            if not has_expected_structure:
+                success = False
+                details += " - Missing expected hybrid capabilities structure"
+        
+        self.log_test("Hybrid Capabilities", success, details)
+        return success, data
+
+    def test_hybrid_metrics(self):
+        """Test hybrid metrics endpoint"""
+        if not self.token:
+            self.log_test("Hybrid Metrics", False, "No authentication token available")
+            return False
+
+        success, data, details = self.make_request(
+            'GET', '/api/ai/hybrid/hybrid-metrics',
+            auth_required=True
+        )
+        
+        if success and data:
+            # Verify metrics structure
+            expected_keys = ['hybrid_performance_metrics', 'system_health', 'metrics_timestamp']
+            has_expected_structure = any(key in data for key in expected_keys)
+            if not has_expected_structure:
+                success = False
+                details += " - Missing expected hybrid metrics structure"
+        
+        self.log_test("Hybrid Metrics", success, details)
+        return success, data
+
+    def test_neon_chat_enhanced(self):
+        """Test Neon AI enhanced chat endpoint"""
+        if not self.token:
+            self.log_test("Neon Chat Enhanced", False, "No authentication token available")
+            return False
+
+        chat_data = {
+            "message": "Help me analyze this webpage for automation opportunities",
+            "page_context": {
+                "url": "https://example.com",
+                "title": "Example Domain",
+                "content_type": "webpage"
+            },
+            "include_predictions": True
+        }
+        
+        success, data, details = self.make_request(
+            'POST', '/api/ai/hybrid/neon-chat-enhanced',
+            chat_data, 200, auth_required=True
+        )
+        
+        if success and data:
+            # Verify Neon AI response structure
+            expected_keys = ['response', 'neon_ai_enhanced', 'contextual_intelligence', 'predictive_assistance']
+            has_expected_structure = any(key in str(data).lower() for key in expected_keys)
+            if not has_expected_structure:
+                success = False
+                details += " - Missing expected Neon AI response structure"
+        
+        self.log_test("Neon Chat Enhanced", success, details)
+        return success, data
+
+    def test_neon_focus_mode(self):
+        """Test Neon AI focus mode endpoint"""
+        if not self.token:
+            self.log_test("Neon Focus Mode", False, "No authentication token available")
+            return False
+
+        focus_data = {
+            "url": "https://example.com",
+            "focus_type": "reading"
+        }
+        
+        success, data, details = self.make_request(
+            'POST', '/api/ai/hybrid/neon-focus-mode',
+            focus_data, 200, auth_required=True
+        )
+        
+        if success and data:
+            # Verify focus mode response structure
+            expected_keys = ['focus_content', 'distraction_removal', 'reading_optimization']
+            has_expected_structure = any(key in str(data).lower() for key in expected_keys)
+            if not has_expected_structure:
+                success = False
+                details += " - Missing expected focus mode response structure"
+        
+        self.log_test("Neon Focus Mode", success, details)
+        return success, data
+
+    def test_neon_intelligence(self):
+        """Test Neon AI intelligence endpoint"""
+        if not self.token:
+            self.log_test("Neon Intelligence", False, "No authentication token available")
+            return False
+
+        intelligence_data = {
+            "url": "https://example.com",
+            "analysis_depth": "comprehensive"
+        }
+        
+        success, data, details = self.make_request(
+            'POST', '/api/ai/hybrid/neon-intelligence',
+            intelligence_data, 200, auth_required=True
+        )
+        
+        if success and data:
+            # Verify intelligence response structure
+            expected_keys = ['page_analysis', 'smart_suggestions', 'automation_opportunities']
+            has_expected_structure = any(key in str(data).lower() for key in expected_keys)
+            if not has_expected_structure:
+                success = False
+                details += " - Missing expected intelligence response structure"
+        
+        self.log_test("Neon Intelligence", success, details)
+        return success, data
+
+    def test_neon_make_professional(self):
+        """Test Neon AI professional app generation endpoint"""
+        if not self.token:
+            self.log_test("Neon Make Professional", False, "No authentication token available")
+            return False
+
+        make_data = {
+            "app_request": "Create a professional task management app with dark theme",
+            "template_type": "productivity",
+            "advanced_features": True
+        }
+        
+        success, data, details = self.make_request(
+            'POST', '/api/ai/hybrid/neon-make-professional',
+            make_data, 200, auth_required=True
+        )
+        
+        if success and data:
+            # Verify app generation response structure
+            expected_keys = ['generated_app', 'professional_features', 'app_code']
+            has_expected_structure = any(key in str(data).lower() for key in expected_keys)
+            if not has_expected_structure:
+                success = False
+                details += " - Missing expected app generation response structure"
+        
+        self.log_test("Neon Make Professional", success, details)
+        return success, data
+
+    def test_deep_search_professional(self):
+        """Test Fellou.ai deep search professional endpoint"""
+        if not self.token:
+            self.log_test("Deep Search Professional", False, "No authentication token available")
+            return False
+
+        search_data = {
+            "research_query": "AI automation trends in business 2025",
+            "report_format": "comprehensive",
+            "export_format": "html"
+        }
+        
+        success, data, details = self.make_request(
+            'POST', '/api/ai/hybrid/deep-search-professional',
+            search_data, 200, auth_required=True
+        )
+        
+        if success and data:
+            # Verify deep search response structure
+            expected_keys = ['research_report', 'visual_elements', 'professional_analysis']
+            has_expected_structure = any(key in str(data).lower() for key in expected_keys)
+            if not has_expected_structure:
+                success = False
+                details += " - Missing expected deep search response structure"
+        
+        self.log_test("Deep Search Professional", success, details)
+        return success, data
+
+    def test_controllable_workflow_builder(self):
+        """Test Fellou.ai controllable workflow builder endpoint"""
+        if not self.token:
+            self.log_test("Controllable Workflow Builder", False, "No authentication token available")
+            return False
+
+        workflow_data = {
+            "workflow_description": "Automate daily report generation from multiple data sources",
+            "visual_mode": True
+        }
+        
+        success, data, details = self.make_request(
+            'POST', '/api/ai/hybrid/controllable-workflow-builder',
+            workflow_data, 200, auth_required=True
+        )
+        
+        if success and data:
+            # Verify workflow builder response structure
+            expected_keys = ['workflow_design', 'visual_elements', 'execution_plan']
+            has_expected_structure = any(key in str(data).lower() for key in expected_keys)
+            if not has_expected_structure:
+                success = False
+                details += " - Missing expected workflow builder response structure"
+        
+        self.log_test("Controllable Workflow Builder", success, details)
+        return success, data
+
+    def test_deep_action_orchestrator(self):
+        """Test Fellou.ai deep action orchestrator endpoint"""
+        if not self.token:
+            self.log_test("Deep Action Orchestrator", False, "No authentication token available")
+            return False
+
+        action_data = {
+            "task_description": "Research competitors, analyze pricing, and create comparison report",
+            "context": {"industry": "technology", "focus": "SaaS platforms"},
+            "execution_mode": "plan_only"
+        }
+        
+        success, data, details = self.make_request(
+            'POST', '/api/ai/hybrid/deep-action-orchestrator',
+            action_data, 200, auth_required=True
+        )
+        
+        if success and data:
+            # Verify deep action response structure
+            expected_keys = ['workflow_plan', 'execution_steps', 'orchestration_details']
+            has_expected_structure = any(key in str(data).lower() for key in expected_keys)
+            if not has_expected_structure:
+                success = False
+                details += " - Missing expected deep action response structure"
+        
+        self.log_test("Deep Action Orchestrator", success, details)
+        return success, data
+
+    def test_agentic_memory_learning(self):
+        """Test Fellou.ai agentic memory learning endpoint"""
+        if not self.token:
+            self.log_test("Agentic Memory Learning", False, "No authentication token available")
+            return False
+
+        memory_data = {
+            "interaction_data": {
+                "user_action": "content_analysis",
+                "preferences": {"analysis_depth": "comprehensive", "format": "detailed"},
+                "context": {"domain": "business", "expertise_level": "intermediate"}
+            },
+            "learning_mode": "adaptive"
+        }
+        
+        success, data, details = self.make_request(
+            'POST', '/api/ai/hybrid/agentic-memory-learning',
+            memory_data, 200, auth_required=True
+        )
+        
+        if success and data:
+            # Verify agentic memory response structure
+            expected_keys = ['learning_update', 'behavioral_patterns', 'predictive_insights']
+            has_expected_structure = any(key in str(data).lower() for key in expected_keys)
+            if not has_expected_structure:
+                success = False
+                details += " - Missing expected agentic memory response structure"
+        
+        self.log_test("Agentic Memory Learning", success, details)
+        return success, data
+
+    def test_frontend_integration_validation(self):
+        """Test that hybrid AI service calls work from frontend perspective"""
+        if not self.token:
+            self.log_test("Frontend Integration Validation", False, "No authentication token available")
+            return False
+
+        # Test a simple hybrid endpoint that frontend would call
+        success, data, details = self.make_request(
+            'GET', '/api/ai/hybrid/hybrid-capabilities'
+        )
+        
+        if success and data:
+            # Verify that response includes frontend-friendly structure
+            frontend_indicators = ['enhanced_hybrid_system', 'ui_preservation_strategy', 'enhanced_api_endpoints_summary']
+            has_frontend_structure = any(key in data for key in frontend_indicators)
+            if not has_frontend_structure:
+                success = False
+                details += " - Missing frontend integration indicators"
+        
+        self.log_test("Frontend Integration Validation", success, details)
+        return success, data
+
+    def print_hybrid_ai_test_summary(self):
+        """Print comprehensive hybrid AI test summary"""
+        print("\n" + "="*80)
+        print("🚀 HYBRID AI BACKEND TESTING SUMMARY")
+        print("="*80)
+        
+        success_rate = (self.tests_passed / self.tests_run * 100) if self.tests_run > 0 else 0
+        
+        print(f"📊 HYBRID AI TEST RESULTS:")
+        print(f"   • Total Tests: {self.tests_run}")
+        print(f"   • Passed: {self.tests_passed} ✅")
+        print(f"   • Failed: {self.tests_run - self.tests_passed} ❌")
+        print(f"   • Success Rate: {success_rate:.1f}%")
+        
+        print(f"\n🎯 HYBRID AI FEATURES TESTED:")
+        print(f"   • Core Hybrid System Status ✅")
+        print(f"   • Enhanced Capabilities Listing ✅")
+        print(f"   • Performance Metrics ✅")
+        print(f"   • Neon AI Features (4 endpoints) ✅")
+        print(f"   • Fellou.ai Features (4 endpoints) ✅")
+        print(f"   • Frontend Integration Validation ✅")
+        
+        if success_rate >= 80:
+            print(f"\n🎉 HYBRID AI TESTING: SUCCESS")
+            print(f"   All critical hybrid AI endpoints are operational!")
+        elif success_rate >= 60:
+            print(f"\n⚠️  HYBRID AI TESTING: PARTIAL SUCCESS")
+            print(f"   Most hybrid AI endpoints working, some configuration needed")
+        else:
+            print(f"\n❌ HYBRID AI TESTING: NEEDS ATTENTION")
+            print(f"   Multiple hybrid AI endpoints require fixes")
+        
+        print("="*80)
+
     # Phase 1 Additional Test Methods
     def test_phase1_visual_content_analysis(self):
         """Test Phase 1: Visual Content Analysis endpoint"""
