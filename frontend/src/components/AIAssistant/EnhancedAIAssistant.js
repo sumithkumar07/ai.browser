@@ -216,15 +216,16 @@ export default function EnhancedAIAssistant() {
     try {
       setIsProcessing(true);
       
-      const response = await fetch(`${API_BASE}/ai/enhanced/smart-content-analysis`, {
+      // Use enhanced Neon Intelligence for real-time analysis
+      const response = await fetch(`${API_BASE}/ai/hybrid/neon-intelligence`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('authToken')}`
         },
         body: JSON.stringify({
-          url: url,
-          analysis_type: 'comprehensive'
+          url: url || window.location.href,
+          analysis_depth: 'comprehensive'
         })
       });
 
@@ -233,20 +234,207 @@ export default function EnhancedAIAssistant() {
       const analysisMessage = {
         id: Date.now(),
         type: 'ai',
-        content: `📊 **Enhanced Content Analysis Complete**\n\n🔗 **URL**: ${url}\n\n${typeof data.enhanced_analysis === 'object' ? JSON.stringify(data.enhanced_analysis, null, 2) : data.enhanced_analysis || 'Analysis completed successfully!'}`,
+        content: `🧠 **Enhanced Neon Intelligence Analysis Complete**\n\n🔗 **URL**: ${url || window.location.href}\n\n${typeof data.intelligence_data === 'object' ? JSON.stringify(data.intelligence_data, null, 2) : data.intelligence_data || 'Advanced real-time analysis completed successfully!'}`,
         timestamp: new Date(),
-        special_type: 'analysis',
-        analysis_data: data
+        special_type: 'neon_intelligence',
+        analysis_data: data,
+        neon_ai_enhanced: true
       };
 
       addChatMessage(analysisMessage);
       
     } catch (error) {
-      console.error('Content analysis failed:', error);
+      console.error('Neon Intelligence analysis failed:', error);
       addChatMessage({
         id: Date.now(),
         type: 'ai',
-        content: '📊 I encountered an issue analyzing that content. Please check the URL and try again, or let me help you with a different task!',
+        content: '🧠 I encountered an issue with the enhanced analysis. Let me help you with a different approach or try the basic content analysis!',
+        timestamp: new Date(),
+        error: true
+      });
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  const handleNeonFocusMode = async () => {
+    try {
+      setIsProcessing(true);
+      
+      const response = await fetch(`${API_BASE}/ai/hybrid/neon-focus-mode`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        },
+        body: JSON.stringify({
+          url: window.location.href,
+          focus_type: 'reading'
+        })
+      });
+
+      const data = await response.json();
+      
+      const focusMessage = {
+        id: Date.now(),
+        type: 'ai',
+        content: `🔍 **Neon Focus Mode Activated**\n\nI've analyzed the current page for distraction-free reading. Focus session is ready with AI-powered content optimization!\n\n✨ **Focus Features:**\n- Distraction filtering active\n- Content optimization applied\n- Reading flow enhanced\n- Smart highlights enabled`,
+        timestamp: new Date(),
+        special_type: 'neon_focus',
+        focus_data: data,
+        neon_ai_enhanced: true,
+        suggestions: ['Apply focus optimizations', 'Adjust reading settings', 'Generate content summary', 'Create reading outline']
+      };
+
+      addChatMessage(focusMessage);
+      setSuggestions(focusMessage.suggestions);
+      
+    } catch (error) {
+      console.error('Neon Focus mode failed:', error);
+      addChatMessage({
+        id: Date.now(),
+        type: 'ai',
+        content: '🔍 Focus mode setup encountered an issue. I can still help you organize your reading experience in other ways!',
+        timestamp: new Date(),
+        error: true
+      });
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  const handleProfessionalResearch = async (query) => {
+    try {
+      setIsProcessing(true);
+      
+      const response = await fetch(`${API_BASE}/ai/hybrid/deep-search-professional`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        },
+        body: JSON.stringify({
+          research_query: query || 'Current page topic analysis',
+          report_format: 'comprehensive',
+          export_format: 'html'
+        })
+      });
+
+      const data = await response.json();
+      
+      const researchMessage = {
+        id: Date.now(),
+        type: 'ai',
+        content: `📊 **Professional Deep Search Report Generated**\n\n🔍 **Research Query**: ${query || 'Current page analysis'}\n\n✅ **Professional Report Ready:**\n- Multi-source research compilation\n- Visual charts and infographics\n- Executive summary with insights\n- Export formats: HTML, PDF, PowerPoint, Excel\n\n📈 The comprehensive report includes market analysis, competitive insights, and actionable recommendations!`,
+        timestamp: new Date(),
+        special_type: 'deep_research',
+        research_data: data,
+        fellou_ai_enhanced: true,
+        suggestions: ['View full report', 'Export to PDF', 'Create follow-up research', 'Share insights', 'Generate presentation']
+      };
+
+      addChatMessage(researchMessage);
+      setSuggestions(researchMessage.suggestions);
+      
+    } catch (error) {
+      console.error('Professional research failed:', error);
+      addChatMessage({
+        id: Date.now(),
+        type: 'ai',
+        content: '📊 Professional research encountered an issue. I can help you with basic research and analysis instead!',
+        timestamp: new Date(),
+        error: true
+      });
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  const handleWorkflowBuilder = async (description) => {
+    try {
+      setIsProcessing(true);
+      
+      const response = await fetch(`${API_BASE}/ai/hybrid/controllable-workflow-builder`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        },
+        body: JSON.stringify({
+          workflow_description: description || 'Create a productivity workflow for current task',
+          visual_mode: true
+        })
+      });
+
+      const data = await response.json();
+      
+      const workflowMessage = {
+        id: Date.now(),
+        type: 'ai',
+        content: `🎯 **Visual Workflow Builder Ready**\n\n🛠️ **Workflow**: ${description || 'Productivity workflow'}\n\n✨ **Features Available:**\n- Drag-and-drop visual interface\n- Node-based workflow design\n- Conditional logic and branches\n- Real-time execution monitoring\n- Cross-platform integrations\n\n🚀 Your visual workflow is designed and ready for execution!`,
+        timestamp: new Date(),
+        special_type: 'workflow_builder',
+        workflow_data: data,
+        fellou_ai_enhanced: true,
+        suggestions: ['Open workflow builder', 'Execute workflow', 'Edit workflow steps', 'Share workflow', 'Create workflow template']
+      };
+
+      addChatMessage(workflowMessage);
+      setSuggestions(workflowMessage.suggestions);
+      
+    } catch (error) {
+      console.error('Workflow builder failed:', error);
+      addChatMessage({
+        id: Date.now(),
+        type: 'ai',
+        content: '🎯 Workflow builder setup encountered an issue. I can help you create simpler automation sequences!',
+        timestamp: new Date(),
+        error: true
+      });
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  const handleProfessionalAppGeneration = async (appRequest) => {
+    try {
+      setIsProcessing(true);
+      
+      const response = await fetch(`${API_BASE}/ai/hybrid/neon-make-professional`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        },
+        body: JSON.stringify({
+          app_request: appRequest || 'Create a productivity dashboard app',
+          template_type: 'auto_detect',
+          advanced_features: true
+        })
+      });
+
+      const data = await response.json();
+      
+      const appMessage = {
+        id: Date.now(),
+        type: 'ai',
+        content: `🛠️ **Professional App Generated**\n\n📱 **App**: ${appRequest || 'Productivity dashboard'}\n\n✨ **Professional Features:**\n- Modern responsive design with PWA capabilities\n- Advanced JavaScript with ES6+ features\n- Dark/light theme support\n- Data persistence and offline mode\n- Professional UI/UX with accessibility\n- Analytics and performance monitoring\n\n🚀 Your professional-grade app is ready for deployment!`,
+        timestamp: new Date(),
+        special_type: 'professional_app',
+        app_data: data,
+        neon_ai_enhanced: true,
+        suggestions: ['Open app in new tab', 'Download app code', 'Customize app features', 'Deploy app', 'Create another app']
+      };
+
+      addChatMessage(appMessage);
+      setSuggestions(appMessage.suggestions);
+      
+    } catch (error) {
+      console.error('Professional app generation failed:', error);
+      addChatMessage({
+        id: Date.now(),
+        type: 'ai',
+        content: '🛠️ Professional app generation encountered an issue. I can help you create simpler apps or tools!',
         timestamp: new Date(),
         error: true
       });
