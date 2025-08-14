@@ -81,10 +81,13 @@ async def install_ai_plugin(
             detail=f"Plugin installation failed: {str(e)}"
         )
 
+class CustomModelRequest(BaseModel):
+    model_config: CustomModelConfig
+    training_data: TrainingData
+
 @router.post("/api/modular-ai/create-custom-model")
 async def create_custom_ai_model(
-    model_config: CustomModelConfig,
-    training_data: TrainingData,
+    request: CustomModelRequest,
     current_user: User = Depends(get_current_user),
     modular_service: ModularAIService = Depends(get_modular_ai_service)
 ):
@@ -92,18 +95,18 @@ async def create_custom_ai_model(
     
     try:
         # Add user_id to model config
-        config_with_user = model_config.dict()
+        config_with_user = request.model_config.dict()
         config_with_user["owner_id"] = current_user.id
         
         result = await modular_service.create_custom_ai_model(
             config_with_user,
-            training_data.data
+            request.training_data.data
         )
         
         return {
             "success": True,
             "model_creation_result": result,
-            "model_name": model_config.name,
+            "model_name": request.model_config.name,
             "user_id": current_user.id
         }
     except Exception as e:
