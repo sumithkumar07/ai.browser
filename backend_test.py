@@ -12,7 +12,7 @@ from datetime import datetime
 from typing import Dict, Any, Optional
 
 class AIBrowserAPITester:
-    def __init__(self, base_url="https://hybrid-ai-browser.preview.emergentagent.com"):
+    def __init__(self, base_url="https://hybrid-ai-browser-1.preview.emergentagent.com"):
         self.base_url = base_url
         self.token = None
         self.user_id = None
@@ -474,7 +474,7 @@ class AIBrowserAPITester:
         print("🚀 COMPREHENSIVE AI AGENTIC BROWSER BACKEND TESTING")
         print("=" * 80)
         print("Testing ALL implemented features across all 4 phases of the roadmap")
-        print("Base URL: https://hybrid-ai-browser.preview.emergentagent.com")
+        print("Base URL: https://hybrid-ai-browser-1.preview.emergentagent.com")
         print("=" * 80)
         
         # 1) Authentication setup
@@ -1468,9 +1468,9 @@ class AIBrowserAPITester:
 def main():
     """Main test execution"""
     print("AI Agentic Browser - Comprehensive Backend Testing (All 4 Phases)")
-    print("Testing against: https://hybrid-ai-browser.preview.emergentagent.com")
+    print("Testing against: https://hybrid-ai-browser-1.preview.emergentagent.com")
     
-    tester = AIBrowserAPITester("https://hybrid-ai-browser.preview.emergentagent.com")
+    tester = AIBrowserAPITester("https://hybrid-ai-browser-1.preview.emergentagent.com")
     
     try:
         # Run comprehensive testing for ALL 4 phases as per review request
