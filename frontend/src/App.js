@@ -16,18 +16,22 @@ function App() {
     <div className="App h-screen w-screen overflow-hidden bg-gradient-to-br from-ai-dark via-slate-800 to-ai-dark">
       <DndProvider backend={HTML5Backend}>
         <UserContextProvider>
-          <AIContextProvider>
-            <BrowserContextProvider>
-              <Router>
-                <AuthWrapper>
-                  <Routes>
-                    <Route path="/" element={<MainBrowser />} />
-                    <Route path="/browser" element={<MainBrowser />} />
-                  </Routes>
-                </AuthWrapper>
-              </Router>
-            </BrowserContextProvider>
-          </AIContextProvider>
+          <PerformanceContextProvider>
+            <AccessibilityContextProvider>
+              <AIContextProvider>
+                <BrowserContextProvider>
+                  <Router>
+                    <AuthWrapper>
+                      <Routes>
+                        <Route path="/" element={<MainBrowser />} />
+                        <Route path="/browser" element={<MainBrowser />} />
+                      </Routes>
+                    </AuthWrapper>
+                  </Router>
+                </BrowserContextProvider>
+              </AIContextProvider>
+            </AccessibilityContextProvider>
+          </PerformanceContextProvider>
         </UserContextProvider>
       </DndProvider>
     </div>
