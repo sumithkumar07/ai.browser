@@ -75,7 +75,8 @@ export default function EnhancedAIAssistant() {
     setAIStatus('processing');
 
     try {
-      const response = await fetch(`${API_BASE}/ai/enhanced/enhanced-chat`, {
+      // Use enhanced hybrid AI chat endpoint
+      const response = await fetch(`${API_BASE}/ai/hybrid/neon-chat-enhanced`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -83,11 +84,11 @@ export default function EnhancedAIAssistant() {
         },
         body: JSON.stringify({
           message: originalMessage,
-          context: { 
-            activeFeature,
-            assistantPersonality,
-            timestamp: new Date().toISOString()
-          }
+          page_context: {
+            url: window.location.href,
+            content: document.body.innerText?.substring(0, 2000) // First 2000 chars for context
+          },
+          include_predictions: true
         })
       });
 
@@ -100,30 +101,32 @@ export default function EnhancedAIAssistant() {
       const aiMessage = {
         id: Date.now() + 1,
         type: 'ai',
-        content: data.response?.response || data.response || 'I apologize, but I encountered an issue processing your request. Let me try to help you in a different way!',
+        content: data.response || 'I apologize, but I encountered an issue processing your request. Let me try to help you in a different way!',
         timestamp: new Date(),
         cached: data.cached,
-        suggestions: data.response?.suggestions || [],
-        intelligence_level: data.response?.intelligence_level || 'enhanced',
-        user_intent: data.response?.user_intent || 'conversational',
-        model_used: data.response?.model_used || 'llama3-70b-8192'
+        suggestions: data.enhanced_hybrid_features?.enhanced_suggestions || [],
+        intelligence_level: data.hybrid_intelligence_level || 'enhanced',
+        user_intent: data.enhanced_hybrid_features?.user_intent || 'conversational',
+        hybrid_features: data.enhanced_hybrid_features || {},
+        neon_ai_enhanced: data.neon_ai_enhanced || false,
+        fellou_ai_enhanced: data.fellou_ai_enhanced || false
       };
 
       addChatMessage(aiMessage);
       
-      // Set enhanced suggestions
-      if (data.response?.suggestions && Array.isArray(data.response.suggestions)) {
-        setSuggestions(data.response.suggestions);
+      // Set enhanced suggestions from hybrid AI
+      if (data.enhanced_hybrid_features?.enhanced_suggestions && Array.isArray(data.enhanced_hybrid_features.enhanced_suggestions)) {
+        setSuggestions(data.enhanced_hybrid_features.enhanced_suggestions);
       }
 
     } catch (error) {
       const errorMessage = {
         id: Date.now() + 1,
         type: 'ai',
-        content: '🤖 I apologize for the interruption! It seems there was a connection issue. I\'m still here to help - please try asking your question again, or let me know if you\'d like to explore different features while we reconnect!',
+        content: '🤖 I apologize for the interruption! It seems there was a connection issue. I\'m still here to help with my enhanced hybrid AI capabilities - please try asking your question again!',
         timestamp: new Date(),
         error: true,
-        suggestions: ['Try your question again', 'Explore automation features', 'Check content analysis', 'Browse browser settings']
+        suggestions: ['Try hybrid AI chat again', 'Enable Neon Focus mode', 'Create professional workflow', 'Generate research report', 'Build custom app']
       };
       addChatMessage(errorMessage);
       setSuggestions(errorMessage.suggestions);
