@@ -11,11 +11,40 @@ const initialState = {
     automation: true,
     contentAnalysis: true,
     personalAssistant: true,
-    codeExecution: false
+    codeExecution: false,
+    // 🚀 NEW HYBRID AI CAPABILITIES
+    neonAI: {
+      neonChat: true,
+      neonDo: true,
+      neonMake: true
+    },
+    fellouAI: {
+      deepAction: true,
+      deepSearch: true,
+      agenticMemory: true,
+      controllableWorkflow: true
+    },
+    hybridIntelligence: true
   },
   aiStatus: 'idle', // idle, processing, error
   currentAnalysis: null,
-  automationQueue: []
+  automationQueue: [],
+  // 🧠 NEW HYBRID AI STATE
+  hybridFeatures: {
+    contextualAwareness: false,
+    behavioralLearning: false,
+    predictiveAssistance: false,
+    workflowOrchestration: false
+  },
+  agenticMemory: {
+    learningScore: 0,
+    behaviorPatterns: [],
+    preferences: {},
+    interactionHistory: []
+  },
+  activeWorkflows: [],
+  generatedApps: [],
+  researchReports: []
 };
 
 function aiReducer(state, action) {
