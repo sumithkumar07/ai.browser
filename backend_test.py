@@ -469,13 +469,13 @@ class AIBrowserAPITester:
         self.log_test("Backward Compatibility - Enhanced Chat", success, details)
         return success
 
-    def run_phase1_ai_intelligence_tests(self):
-        """Run comprehensive Phase 1 AI Intelligence tests as per review request"""
-        print("🚀 Starting Phase 1: Advanced AI Intelligence Testing")
-        print("=" * 70)
-        print("Testing Focus: Phase 1 AI endpoints for AI Agentic Browser")
+    def run_comprehensive_all_phases_testing(self):
+        """Run comprehensive testing for ALL 4 phases as per review request"""
+        print("🚀 COMPREHENSIVE AI AGENTIC BROWSER BACKEND TESTING")
+        print("=" * 80)
+        print("Testing ALL implemented features across all 4 phases of the roadmap")
         print("Base URL: https://seamless-upgrade-2.preview.emergentagent.com")
-        print("=" * 70)
+        print("=" * 80)
         
         # 1) Authentication setup
         print("\n🔐 Setting up Authentication...")
@@ -483,38 +483,46 @@ class AIBrowserAPITester:
         login_success = self.test_login_specific_user()
         
         if not login_success:
-            print("❌ Authentication failed - cannot proceed with Phase 1 tests")
+            print("❌ Authentication failed - cannot proceed with comprehensive tests")
             return False
         
-        # 2) Test updated AI capabilities endpoint
-        print("\n📋 Testing Updated AI Capabilities...")
-        capabilities_success, capabilities_data = self.test_phase1_ai_capabilities_updated()
+        # 2) Core functionality testing
+        print("\n🏥 Testing Core Functionality...")
+        health_success = self.test_health_check()
+        capabilities_success, _ = self.test_ai_capabilities()
         
-        # 3) Test new Phase 1 AI endpoints
-        print("\n🧠 Testing Phase 1 AI Intelligence Endpoints...")
+        # 3) PHASE 1: Advanced AI Intelligence Testing
+        print("\n" + "="*50)
+        print("🧠 PHASE 1: ADVANCED AI INTELLIGENCE TESTING")
+        print("="*50)
+        self.test_phase1_comprehensive()
         
-        if self.token:
-            collaborative_success, _ = self.test_phase1_real_time_collaborative_analysis()
-            industry_success, _ = self.test_phase1_industry_specific_analysis()
-            creative_success, _ = self.test_phase1_creative_content_generation()
-            
-            # 4) Test backward compatibility
-            print("\n🔄 Testing Backward Compatibility...")
-            compatibility_success = self.test_backward_compatibility()
-            
-        else:
-            print("⚠️  Skipping authenticated Phase 1 tests due to authentication failure")
-            collaborative_success = False
-            industry_success = False
-            creative_success = False
-            compatibility_success = False
+        # 4) PHASE 2: Ecosystem Integration Testing
+        print("\n" + "="*50)
+        print("🌐 PHASE 2: ECOSYSTEM INTEGRATION TESTING")
+        print("="*50)
+        self.test_phase2_comprehensive()
         
-        # 5) Test system health
-        print("\n🏥 Testing System Health...")
-        health_success = self.test_ai_system_health()
+        # 5) PHASE 3: Advanced Performance & Intelligence Testing
+        print("\n" + "="*50)
+        print("⚡ PHASE 3: ADVANCED PERFORMANCE & INTELLIGENCE TESTING")
+        print("="*50)
+        self.test_phase3_comprehensive()
+        
+        # 6) PHASE 4: Future-Proofing & Innovation Testing
+        print("\n" + "="*50)
+        print("🚀 PHASE 4: FUTURE-PROOFING & INNOVATION TESTING")
+        print("="*50)
+        self.test_phase4_comprehensive()
+        
+        # 7) Integration and end-to-end testing
+        print("\n" + "="*50)
+        print("🔗 INTEGRATION & END-TO-END TESTING")
+        print("="*50)
+        self.test_integration_comprehensive()
         
         # Print comprehensive results
-        self.print_phase1_test_summary()
+        self.print_comprehensive_test_summary()
         
         return self.tests_passed == self.tests_run
 
