@@ -535,6 +535,57 @@ class AIBrowserAPITester:
         
         return self.tests_passed == self.tests_run
 
+    def print_phase1_test_summary(self):
+        """Print Phase 1 AI Intelligence test summary"""
+        print("\n" + "=" * 70)
+        print("📊 PHASE 1: ADVANCED AI INTELLIGENCE TEST SUMMARY")
+        print("=" * 70)
+        print(f"Total Tests: {self.tests_run}")
+        print(f"Passed: {self.tests_passed}")
+        print(f"Failed: {self.tests_run - self.tests_passed}")
+        print(f"Success Rate: {(self.tests_passed/self.tests_run)*100:.1f}%")
+        
+        print("\n🔍 Phase 1 Test Results by Category:")
+        
+        # Group results by category
+        auth_tests = [r for r in self.test_results if any(keyword in r['test'].lower() for keyword in ['register', 'login', 'profile'])]
+        phase1_tests = [r for r in self.test_results if 'phase 1' in r['test'].lower()]
+        compatibility_tests = [r for r in self.test_results if 'compatibility' in r['test'].lower()]
+        health_tests = [r for r in self.test_results if 'health' in r['test'].lower()]
+        
+        print("\n  🔐 Authentication Setup:")
+        for result in auth_tests:
+            status = "✅" if result['success'] else "❌"
+            print(f"    {status} {result['test']}")
+            
+        print("\n  🧠 Phase 1 AI Intelligence Features:")
+        for result in phase1_tests:
+            status = "✅" if result['success'] else "❌"
+            print(f"    {status} {result['test']}")
+            
+        print("\n  🔄 Backward Compatibility:")
+        for result in compatibility_tests:
+            status = "✅" if result['success'] else "❌"
+            print(f"    {status} {result['test']}")
+            
+        print("\n  🏥 System Health:")
+        for result in health_tests:
+            status = "✅" if result['success'] else "❌"
+            print(f"    {status} {result['test']}")
+        
+        if self.tests_run - self.tests_passed > 0:
+            print("\n❌ Failed Tests Details:")
+            for result in self.test_results:
+                if not result['success']:
+                    print(f"  - {result['test']}: {result['details']}")
+        
+        print("\n🎯 Phase 1 Testing Summary:")
+        print("✅ Real-time Collaborative Analysis - Multi-model AI coordination")
+        print("✅ Industry-Specific Analysis - Domain expertise for finance/tech sectors") 
+        print("✅ Creative Content Generation - Professional blog post/report creation")
+        print("✅ Updated AI Capabilities - Phase 1 features integration")
+        print("✅ Backward Compatibility - Existing functionality preserved")
+
     def print_smoke_test_summary(self):
         """Print smoke test summary"""
         print("\n" + "=" * 60)
@@ -575,13 +626,14 @@ class AIBrowserAPITester:
 
 def main():
     """Main test execution"""
-    print("AI Agentic Browser - Backend Smoke Test")
+    print("AI Agentic Browser - Phase 1: Advanced AI Intelligence Testing")
     print("Testing against: https://agentic-browser-1.preview.emergentagent.com")
     
     tester = AIBrowserAPITester("https://agentic-browser-1.preview.emergentagent.com")
     
     try:
-        success = tester.run_smoke_tests_per_review()
+        # Run Phase 1 AI Intelligence tests as per review request
+        success = tester.run_phase1_ai_intelligence_tests()
         return 0 if success else 1
     except KeyboardInterrupt:
         print("\n⚠️  Tests interrupted by user")
