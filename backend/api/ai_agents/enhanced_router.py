@@ -96,6 +96,46 @@ class KnowledgeGraphRequest(BaseModel):
     content: str
     domain: str
 
+# Phase 2: Ecosystem Integration Request Models
+class CrossPlatformIntegrationRequest(BaseModel):
+    platform: str  # slack, notion, google_workspace, microsoft365, zapier
+    integration_type: str
+    data: Dict[str, Any]
+
+class AdvancedAnalyticsRequest(BaseModel):
+    analytics_type: str  # usage_intelligence, personalization, predictive
+    data_sources: List[str]
+
+class AutomationMarketplaceRequest(BaseModel):
+    marketplace_type: str  # community, professional, enterprise
+    automation_category: str
+
+# Phase 3: Advanced Performance & Intelligence Request Models
+class EdgeComputingRequest(BaseModel):
+    computation_type: str  # ai_processing, data_analysis, real_time
+    data_location: str
+
+class ModularAIRequest(BaseModel):
+    module_type: str  # plugin, custom_model, integration
+    capabilities: List[str]
+
+class ZeroKnowledgeSecurityRequest(BaseModel):
+    security_type: str  # encryption, privacy, compliance
+    data_classification: str
+
+# Phase 4: Future-Proofing & Innovation Request Models
+class VoiceInterfaceRequest(BaseModel):
+    interaction_type: str  # command, conversation, automation
+    voice_context: Dict[str, Any]
+
+class DigitalTwinRequest(BaseModel):
+    twin_type: str  # behavior, preference, workflow
+    user_behavior_data: Dict[str, Any]
+
+class GlobalIntelligenceRequest(BaseModel):
+    intelligence_type: str  # collective, trends, events
+    data_scope: str
+
 
 @router.post("/enhanced-chat")
 async def enhanced_chat_with_ai(
