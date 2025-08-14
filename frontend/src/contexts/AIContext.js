@@ -101,6 +101,44 @@ function aiReducer(state, action) {
         ...state,
         chatMessages: []
       };
+    // 🚀 NEW HYBRID AI ACTIONS
+    case 'UPDATE_HYBRID_FEATURES':
+      return {
+        ...state,
+        hybridFeatures: { ...state.hybridFeatures, ...action.payload }
+      };
+    case 'UPDATE_AGENTIC_MEMORY':
+      return {
+        ...state,
+        agenticMemory: { ...state.agenticMemory, ...action.payload }
+      };
+    case 'ADD_WORKFLOW':
+      return {
+        ...state,
+        activeWorkflows: [...state.activeWorkflows, action.payload]
+      };
+    case 'UPDATE_WORKFLOW':
+      return {
+        ...state,
+        activeWorkflows: state.activeWorkflows.map(workflow =>
+          workflow.id === action.payload.id ? { ...workflow, ...action.payload } : workflow
+        )
+      };
+    case 'ADD_GENERATED_APP':
+      return {
+        ...state,
+        generatedApps: [...state.generatedApps, action.payload]
+      };
+    case 'ADD_RESEARCH_REPORT':
+      return {
+        ...state,
+        researchReports: [...state.researchReports, action.payload]
+      };
+    case 'SET_HYBRID_STATUS':
+      return {
+        ...state,
+        aiCapabilities: { ...state.aiCapabilities, ...action.payload }
+      };
     default:
       return state;
   }
