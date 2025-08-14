@@ -29,19 +29,20 @@ from api.phase_capabilities.router import router as phase_capabilities_router
 # Import database connection
 from database.connection import connect_to_mongo, close_mongo_connection
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    # Startup
-    await connect_to_mongo()
-    yield
-    # Shutdown
-    await close_mongo_connection()
-
 app = FastAPI(
     title="AI Agentic Browser API",
     description="Next-generation AI-powered browser with autonomous capabilities",
     version="1.0.0"
 )
+
+# Manual startup and shutdown handlers instead of lifespan for worker compatibility
+@app.on_event("startup")
+async def startup_event():
+    await connect_to_mongo()
+
+@app.on_event("shutdown") 
+async def shutdown_event():
+    await close_mongo_connection()
 
 # CORS middleware - simplified configuration
 app.add_middleware(
