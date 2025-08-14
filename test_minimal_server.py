@@ -24,4 +24,4 @@ async def test():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("test_minimal_server:app", host="0.0.0.0", port=8002, reload=False)
+    uvicorn.run("test_minimal_server:app", host="0.0.0.0", port=8003, reload=False)
