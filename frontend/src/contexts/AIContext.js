@@ -12,19 +12,22 @@ const initialState = {
     contentAnalysis: true,
     personalAssistant: true,
     codeExecution: false,
-    // 🚀 NEW HYBRID AI CAPABILITIES
+    // 🚀 HYBRID AI CAPABILITIES - FULLY ACTIVE
     neonAI: {
-      neonChat: true,
-      neonDo: true,
-      neonMake: true
+      neonChat: true,          // Contextual webpage understanding
+      neonDo: true,            // Enhanced browser automation  
+      neonMake: true,          // Professional app generation
+      neonFocus: true,         // Distraction-free reading mode
+      neonIntelligence: true   // Real-time page analysis
     },
     fellouAI: {
-      deepAction: true,
-      deepSearch: true,
-      agenticMemory: true,
-      controllableWorkflow: true
+      deepAction: true,           // Multi-step workflow orchestration
+      deepSearch: true,           // Professional research reports
+      agenticMemory: true,        // Behavioral learning & prediction
+      controllableWorkflow: true  // Visual workflow builder
     },
-    hybridIntelligence: true
+    hybridIntelligence: true,     // Combined Neon + Fellou.ai intelligence
+    crossPlatformIntegration: true // Slack, Notion, Google, Microsoft
   },
   aiStatus: 'idle', // idle, processing, error
   currentAnalysis: null,
