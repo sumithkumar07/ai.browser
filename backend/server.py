@@ -70,13 +70,13 @@ app.include_router(automation_router, prefix="/api/automation", tags=["automatio
 app.include_router(enhanced_automation_router, prefix="/api/automation/enhanced", tags=["enhanced_automation"])
 app.include_router(content_router, prefix="/api/content", tags=["content"])
 
-# Include Phase 2-4 advanced routers
-app.include_router(ecosystem_router, tags=["ecosystem_integration"])
-app.include_router(edge_computing_router, tags=["edge_computing"])
-app.include_router(emerging_tech_router, tags=["emerging_technology"])
-app.include_router(modular_ai_router, tags=["modular_ai"])
-app.include_router(global_intelligence_router, tags=["global_intelligence"])
-app.include_router(phase_capabilities_router, tags=["phase_capabilities"])
+# Include Phase 2-4 advanced routers - temporarily commented out to fix middleware issue
+# app.include_router(ecosystem_router, tags=["ecosystem_integration"])
+# app.include_router(edge_computing_router, tags=["edge_computing"])
+# app.include_router(emerging_tech_router, tags=["emerging_technology"])
+# app.include_router(modular_ai_router, tags=["modular_ai"])
+# app.include_router(global_intelligence_router, tags=["global_intelligence"])
+# app.include_router(phase_capabilities_router, tags=["phase_capabilities"])
 
 @app.get("/api/health")
 async def health_check():
