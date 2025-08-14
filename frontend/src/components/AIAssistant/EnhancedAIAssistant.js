@@ -609,8 +609,11 @@ export default function EnhancedAIAssistant() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
           >
-            <h4 className="text-white font-medium mb-3 text-sm">Quick Actions</h4>
-            <div className="grid grid-cols-2 gap-2">
+            <h4 className="text-white font-medium mb-3 text-sm flex items-center">
+              <Sparkles className="mr-2 text-yellow-400" size={16} />
+              Hybrid AI Quick Actions
+            </h4>
+            <div className="grid grid-cols-1 gap-2">
               {quickActions.map((action, index) => (
                 <button
                   key={index}
@@ -618,10 +621,13 @@ export default function EnhancedAIAssistant() {
                     action.action();
                     setShowQuickActions(false);
                   }}
-                  className="flex items-center p-2 bg-gray-800/50 hover:bg-gray-700/50 rounded-lg text-white text-xs transition-colors"
+                  className={`flex items-center p-3 bg-gradient-to-r ${action.color} bg-opacity-20 hover:bg-opacity-30 rounded-lg text-white text-xs transition-all duration-200 border border-white/10 hover:border-white/20`}
                 >
-                  <action.icon size={14} className="mr-2" />
-                  {action.label}
+                  <action.icon size={16} className="mr-3 flex-shrink-0" />
+                  <div className="text-left">
+                    <div className="font-medium">{action.label}</div>
+                    <div className="text-xs text-gray-300 opacity-80">{action.description}</div>
+                  </div>
                 </button>
               ))}
             </div>
