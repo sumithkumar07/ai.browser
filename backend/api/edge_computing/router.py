@@ -8,10 +8,16 @@ from pydantic import BaseModel
 from datetime import datetime
 
 from services.edge_computing_service import EdgeComputingService
-from api.user_management.auth import verify_token
+from services.auth_service import AuthService
+from models.user import User
 
 router = APIRouter()
 security = HTTPBearer()
+
+# Auth dependency
+async def get_current_user(token: str = Depends(security)) -> User:
+    auth_service = AuthService()
+    return await auth_service.verify_token(token.credentials)
 
 # Request/Response Models
 class AIProcessingTask(BaseModel):
@@ -45,7 +51,7 @@ async def get_edge_service():
 @router.post("/api/edge-computing/distributed-ai-processing")
 async def distributed_ai_processing(
     task: AIProcessingTask,
-    current_user: dict = Depends(verify_token),
+    current_user: User = Depends(get_current_user),
     edge_service: EdgeComputingService = Depends(get_edge_service)
 ):
     """Distribute AI processing across edge nodes for faster response times"""
@@ -71,14 +77,14 @@ async def distributed_ai_processing(
 @router.post("/api/edge-computing/predictive-caching")
 async def predictive_caching(
     request: PredictiveCachingRequest,
-    current_user: dict = Depends(verify_token),
+    current_user: User = Depends(get_current_user),
     edge_service: EdgeComputingService = Depends(get_edge_service)
 ):
     """ML-powered predictive caching system"""
     
     try:
         result = await edge_service.predictive_caching_system(
-            current_user["user_id"],
+            current_user.id,
             request.user_context
         )
         
@@ -86,7 +92,7 @@ async def predictive_caching(
             "success": True,
             "caching_result": result,
             "ml_optimization": True,
-            "user_id": current_user["user_id"]
+            "user_id": current_user.id
         }
     except Exception as e:
         raise HTTPException(
@@ -97,7 +103,7 @@ async def predictive_caching(
 @router.post("/api/edge-computing/quantum-ready-processing")
 async def quantum_ready_processing(
     quantum_task: QuantumTask,
-    current_user: dict = Depends(verify_token),
+    current_user: User = Depends(get_current_user),
     edge_service: EdgeComputingService = Depends(get_edge_service)
 ):
     """Quantum-ready algorithm processing with classical fallback"""
@@ -120,7 +126,7 @@ async def quantum_ready_processing(
 @router.post("/api/edge-computing/adaptive-optimization")
 async def adaptive_performance_optimization(
     metrics: SystemMetrics,
-    current_user: dict = Depends(verify_token),
+    current_user: User = Depends(get_current_user),
     edge_service: EdgeComputingService = Depends(get_edge_service)
 ):
     """Real-time adaptive performance optimization using ML"""
@@ -142,7 +148,7 @@ async def adaptive_performance_optimization(
 
 @router.get("/api/edge-computing/performance-metrics")
 async def get_edge_performance_metrics(
-    current_user: dict = Depends(verify_token),
+    current_user: User = Depends(get_current_user),
     edge_service: EdgeComputingService = Depends(get_edge_service)
 ):
     """Get edge computing performance metrics"""
