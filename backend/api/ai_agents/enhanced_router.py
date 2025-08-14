@@ -320,26 +320,47 @@ async def get_ai_capabilities():
                 "Advanced content analysis",
                 "Smart form filling",
                 "E-commerce automation",
-                "Performance optimization"
+                "Performance optimization",
+                "Advanced document analysis",
+                "Intelligent code generation",
+                "Workflow optimization",
+                "Multilingual conversations",
+                "Predictive user assistance"
             ],
+            "new_capabilities": {
+                "document_analysis": "Advanced analysis of documents with structure, content extraction, and insights",
+                "code_generation": "Production-ready code generation with documentation and best practices",
+                "workflow_optimization": "AI-powered workflow analysis and optimization with ROI insights",
+                "multilingual_support": "Natural conversations in multiple languages with cultural awareness",
+                "predictive_assistance": "Proactive suggestions based on user behavior patterns"
+            },
             "ai_models": {
                 "primary": "Llama3-70B (GROQ)",
                 "secondary": "Llama3-8B (GROQ)",
-                "optimization": "Performance-optimized inference"
+                "optimization": "Performance-optimized inference",
+                "multilingual": "Enhanced multilingual processing"
             },
             "analysis_types": [
                 "comprehensive", "research", "business",
                 "summary", "keywords", "sentiment",
-                "insights", "action_items"
+                "insights", "action_items", "document_structure",
+                "semantic_analysis", "competitive_analysis"
             ],
             "automation_types": [
                 "form_filling", "ecommerce_shopping",
                 "appointment_booking", "data_extraction",
-                "content_scraping", "workflow_automation"
+                "content_scraping", "workflow_automation",
+                "code_generation", "document_processing"
             ],
             "performance_features": [
                 "Response caching", "Memory optimization",
-                "Batch processing", "Performance monitoring"
+                "Batch processing", "Performance monitoring",
+                "Predictive prefetching", "Smart resource management"
+            ],
+            "intelligence_features": [
+                "Context awareness", "Memory retention",
+                "Intent recognition", "Expertise adaptation",
+                "Proactive assistance", "Behavioral learning"
             ]
         }
 
