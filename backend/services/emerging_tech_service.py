@@ -8,9 +8,28 @@ import numpy as np
 from datetime import datetime
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass
-import speech_recognition as sr
-import cv2
-import mediapipe as mp
+
+# Optional imports for emerging tech features
+try:
+    import cv2
+    CV2_AVAILABLE = True
+except ImportError:
+    CV2_AVAILABLE = False
+    print("OpenCV not available - gesture recognition disabled")
+
+try:
+    import mediapipe as mp
+    MEDIAPIPE_AVAILABLE = True
+except ImportError:
+    MEDIAPIPE_AVAILABLE = False
+    print("MediaPipe not available - gesture recognition disabled")
+
+try:
+    import speech_recognition as sr
+    SPEECH_RECOGNITION_AVAILABLE = True
+except ImportError:
+    SPEECH_RECOGNITION_AVAILABLE = False
+    print("SpeechRecognition not available - voice commands disabled")
 
 @dataclass
 class AROverlay:
