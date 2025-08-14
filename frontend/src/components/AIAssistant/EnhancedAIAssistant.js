@@ -567,8 +567,30 @@ export default function EnhancedAIAssistant() {
         </div>
         
         <div className="flex items-center space-x-2">
+          {/* 🚀 HYBRID AI STATUS INDICATORS */}
+          <div className="flex items-center space-x-1">
+            <motion.div
+              className="w-2 h-2 bg-green-400 rounded-full"
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ repeat: Infinity, duration: 2 }}
+              title="Neon AI Active"
+            />
+            <motion.div
+              className="w-2 h-2 bg-blue-400 rounded-full"
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ repeat: Infinity, duration: 2.5 }}
+              title="Fellou.ai Active"
+            />
+            <motion.div
+              className="w-2 h-2 bg-purple-400 rounded-full"
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ repeat: Infinity, duration: 3 }}
+              title="Hybrid Intelligence Active"
+            />
+          </div>
+          
           {performanceMetrics && (
-            <div className="text-xs text-green-400 flex items-center" title="Cache Performance">
+            <div className="text-xs text-green-400 flex items-center" title="Hybrid Performance Active">
               <TrendingUp size={12} className="mr-1" />
               {performanceMetrics.cache_status?.entries || 0}
             </div>
@@ -576,10 +598,10 @@ export default function EnhancedAIAssistant() {
           
           <button
             onClick={() => setShowQuickActions(!showQuickActions)}
-            className="w-8 h-8 rounded-lg bg-gray-700/50 hover:bg-purple-600/50 flex items-center justify-center text-gray-300 hover:text-white transition-all duration-200"
-            title="Quick Actions"
+            className={`w-8 h-8 rounded-lg bg-gradient-to-r from-purple-600/50 to-blue-600/50 hover:from-purple-600/70 hover:to-blue-600/70 flex items-center justify-center text-white transition-all duration-200 ${showQuickActions ? 'ring-2 ring-purple-400' : ''}`}
+            title="Hybrid AI Quick Actions"
           >
-            <Zap size={16} />
+            <Sparkles size={16} />
           </button>
           
           <button
