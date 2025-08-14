@@ -12,7 +12,6 @@ from dataclasses import dataclass
 import psutil
 import hashlib
 from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor
-import aioredis
 import pickle
 
 @dataclass
