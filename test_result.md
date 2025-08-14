@@ -595,7 +595,7 @@ SECRET_KEY=configured ✅ SET
 ### **Test Execution Summary**
 - **Test Agent**: Testing Agent
 - **Test Type**: Backend Smoke Test for AI-enhanced endpoints  
-- **Base URL**: https://full-app-test.preview.emergentagent.com
+- **Base URL**: https://ux-verify-tool.preview.emergentagent.com
 - **Total Tests**: 9
 - **Passed**: 9 ✅
 - **Failed**: 0 ❌
@@ -653,7 +653,7 @@ SECRET_KEY=configured ✅ SET
 - **Test Agent**: Testing Agent
 - **Test Type**: Phase 1 AI Intelligence Capabilities Testing
 - **Test Focus**: Newly implemented Phase 1 AI endpoints as per review request
-- **Base URL**: https://full-app-test.preview.emergentagent.com
+- **Base URL**: https://ux-verify-tool.preview.emergentagent.com
 - **Total Tests**: 8
 - **Passed**: 7 ✅
 - **Failed**: 1 ❌
@@ -753,7 +753,7 @@ SECRET_KEY=configured ✅ SET
 - **Test Agent**: Testing Agent
 - **Test Type**: Comprehensive Backend Testing for ALL 4 Phases
 - **Test Focus**: Complete implementation testing across all phases of the roadmap
-- **Base URL**: https://full-app-test.preview.emergentagent.com
+- **Base URL**: https://ux-verify-tool.preview.emergentagent.com
 - **Total Tests**: 41
 - **Passed**: 28 ✅
 - **Failed**: 13 ❌
@@ -870,7 +870,7 @@ SECRET_KEY=configured ✅ SET
 - **Test Agent**: Testing Agent
 - **Test Type**: Comprehensive Backend Testing as per Review Request
 - **Test Focus**: All Phase 1 AI endpoints, core functionality, authentication, and performance monitoring
-- **Base URL**: https://full-app-test.preview.emergentagent.com
+- **Base URL**: https://ux-verify-tool.preview.emergentagent.com
 - **Total Tests**: 41
 - **Passed**: 28 ✅
 - **Failed**: 13 ❌
@@ -981,7 +981,7 @@ agent_communication:
 - **Test Agent**: Testing Agent
 - **Test Type**: Comprehensive Frontend Testing for AI Agentic Browser
 - **Test Focus**: Complete UI/UX validation, user journeys, and feature functionality
-- **Frontend URL**: https://full-app-test.preview.emergentagent.com
+- **Frontend URL**: https://ux-verify-tool.preview.emergentagent.com
 - **Total Test Categories**: 8
 - **Overall Success Rate**: 95%
 
