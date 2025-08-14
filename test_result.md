@@ -285,7 +285,7 @@ SECRET_KEY=configured ✅ SET
 ### **Test Execution Summary**
 - **Test Agent**: Testing Agent
 - **Test Type**: Backend Smoke Test for AI-enhanced endpoints  
-- **Base URL**: https://23fb044c-ef2e-4aa1-9643-747e46cd5523.preview.emergentagent.com
+- **Base URL**: https://flow-inspector-1.preview.emergentagent.com
 - **Total Tests**: 9
 - **Passed**: 9 ✅
 - **Failed**: 0 ❌

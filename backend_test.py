@@ -12,7 +12,7 @@ from datetime import datetime
 from typing import Dict, Any, Optional
 
 class AIBrowserAPITester:
-    def __init__(self, base_url="https://23fb044c-ef2e-4aa1-9643-747e46cd5523.preview.emergentagent.com"):
+    def __init__(self, base_url="https://flow-inspector-1.preview.emergentagent.com"):
         self.base_url = base_url
         self.token = None
         self.user_id = None
@@ -396,9 +396,9 @@ class AIBrowserAPITester:
 def main():
     """Main test execution"""
     print("AI Agentic Browser - Backend Smoke Test")
-    print("Testing against: https://23fb044c-ef2e-4aa1-9643-747e46cd5523.preview.emergentagent.com")
+    print("Testing against: https://flow-inspector-1.preview.emergentagent.com")
     
-    tester = AIBrowserAPITester("https://23fb044c-ef2e-4aa1-9643-747e46cd5523.preview.emergentagent.com")
+    tester = AIBrowserAPITester("https://flow-inspector-1.preview.emergentagent.com")
     
     try:
         success = tester.run_smoke_tests_per_review()
