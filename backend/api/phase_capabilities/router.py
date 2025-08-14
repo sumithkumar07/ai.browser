@@ -13,10 +13,15 @@ from services.emerging_tech_service import EmergingTechService
 from services.modular_ai_service import ModularAIService
 from services.global_intelligence_service import GlobalIntelligenceService
 from database.connection import get_database
-from api.user_management.auth import verify_token
+from services.auth_service import AuthService
+from models.user import User
 
 router = APIRouter()
 security = HTTPBearer()
+auth_service = AuthService()
+
+async def get_current_user(current_user: User = Depends(auth_service.get_current_user)):
+    return current_user
 
 async def get_all_services():
     """Initialize all advanced services"""
@@ -31,7 +36,7 @@ async def get_all_services():
 
 @router.get("/api/phase-capabilities/complete-status")
 async def get_complete_phase_status(
-    current_user: dict = Depends(verify_token)
+    current_user: User = Depends(get_current_user)
 ):
     """Get comprehensive status of all Phase 2-4 capabilities"""
     
@@ -42,7 +47,7 @@ async def get_complete_phase_status(
         await services["edge_computing"].initialize_redis()
         
         # Get status from each service
-        ecosystem_status = await services["ecosystem"].get_integration_analytics(current_user["user_id"])
+        ecosystem_status = await services["ecosystem"].get_integration_analytics(current_user.id)
         edge_status = await services["edge_computing"].get_edge_performance_metrics()
         emerging_status = await services["emerging_tech"].get_emerging_tech_status()
         modular_status = await services["modular_ai"].get_modular_ai_status()
@@ -140,7 +145,7 @@ async def get_complete_phase_status(
             "success": True,
             "phase_2_4_status": complete_status,
             "implementation_summary": "All Phase 2-4 features successfully implemented in parallel",
-            "user_id": current_user["user_id"]
+            "user_id": current_user.id
         }
     except Exception as e:
         raise HTTPException(

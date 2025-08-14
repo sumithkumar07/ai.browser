@@ -8,10 +8,15 @@ from pydantic import BaseModel
 
 from services.modular_ai_service import ModularAIService
 from database.connection import get_database
-from api.user_management.auth import verify_token
+from services.auth_service import AuthService
+from models.user import User
 
 router = APIRouter()
 security = HTTPBearer()
+auth_service = AuthService()
+
+async def get_current_user(current_user: User = Depends(auth_service.get_current_user)):
+    return current_user
 
 # Request/Response Models
 class AIPluginData(BaseModel):
@@ -56,7 +61,7 @@ async def get_modular_ai_service():
 @router.post("/api/modular-ai/install-plugin")
 async def install_ai_plugin(
     plugin_data: AIPluginData,
-    current_user: dict = Depends(verify_token),
+    current_user: User = Depends(get_current_user),
     modular_service: ModularAIService = Depends(get_modular_ai_service)
 ):
     """Install a new AI plugin"""
@@ -68,7 +73,7 @@ async def install_ai_plugin(
             "success": True,
             "installation_result": result,
             "plugin_name": plugin_data.name,
-            "user_id": current_user["user_id"]
+            "user_id": current_user.id
         }
     except Exception as e:
         raise HTTPException(
@@ -80,7 +85,7 @@ async def install_ai_plugin(
 async def create_custom_ai_model(
     model_config: CustomModelConfig,
     training_data: TrainingData,
-    current_user: dict = Depends(verify_token),
+    current_user: User = Depends(get_current_user),
     modular_service: ModularAIService = Depends(get_modular_ai_service)
 ):
     """Create and train a custom AI model on user data"""
@@ -88,7 +93,7 @@ async def create_custom_ai_model(
     try:
         # Add user_id to model config
         config_with_user = model_config.dict()
-        config_with_user["owner_id"] = current_user["user_id"]
+        config_with_user["owner_id"] = current_user.id
         
         result = await modular_service.create_custom_ai_model(
             config_with_user,
@@ -99,7 +104,7 @@ async def create_custom_ai_model(
             "success": True,
             "model_creation_result": result,
             "model_name": model_config.name,
-            "user_id": current_user["user_id"]
+            "user_id": current_user.id
         }
     except Exception as e:
         raise HTTPException(
@@ -110,7 +115,7 @@ async def create_custom_ai_model(
 @router.post("/api/modular-ai/federated-learning")
 async def create_federated_learning_task(
     fed_config: FederatedLearningConfig,
-    current_user: dict = Depends(verify_token),
+    current_user: User = Depends(get_current_user),
     modular_service: ModularAIService = Depends(get_modular_ai_service)
 ):
     """Create a federated learning task for privacy-preserving model training"""
@@ -122,7 +127,7 @@ async def create_federated_learning_task(
             "success": True,
             "federated_learning_result": result,
             "privacy_preserving": fed_config.privacy_preserving,
-            "user_id": current_user["user_id"]
+            "user_id": current_user.id
         }
     except Exception as e:
         raise HTTPException(
@@ -134,7 +139,7 @@ async def create_federated_learning_task(
 async def browse_plugin_marketplace(
     category: Optional[str] = None,
     search_query: Optional[str] = None,
-    current_user: dict = Depends(verify_token),
+    current_user: User = Depends(get_current_user),
     modular_service: ModularAIService = Depends(get_modular_ai_service)
 ):
     """Browse the AI plugin marketplace"""
@@ -148,7 +153,7 @@ async def browse_plugin_marketplace(
         return {
             "success": True,
             "marketplace": marketplace_result,
-            "user_id": current_user["user_id"]
+            "user_id": current_user.id
         }
     except Exception as e:
         raise HTTPException(
@@ -159,7 +164,7 @@ async def browse_plugin_marketplace(
 @router.post("/api/modular-ai/execute-plugin")
 async def execute_plugin_capability(
     execution_request: PluginExecutionRequest,
-    current_user: dict = Depends(verify_token),
+    current_user: User = Depends(get_current_user),
     modular_service: ModularAIService = Depends(get_modular_ai_service)
 ):
     """Execute a specific capability of an installed plugin"""
@@ -175,7 +180,7 @@ async def execute_plugin_capability(
             "success": True,
             "execution_result": result,
             "plugin_id": execution_request.plugin_id,
-            "user_id": current_user["user_id"]
+            "user_id": current_user.id
         }
     except Exception as e:
         raise HTTPException(
@@ -185,7 +190,7 @@ async def execute_plugin_capability(
 
 @router.get("/api/modular-ai/installed-plugins")
 async def get_installed_plugins(
-    current_user: dict = Depends(verify_token),
+    current_user: User = Depends(get_current_user),
     modular_service: ModularAIService = Depends(get_modular_ai_service)
 ):
     """Get list of installed AI plugins"""
@@ -208,7 +213,7 @@ async def get_installed_plugins(
             "success": True,
             "installed_plugins": installed_plugins,
             "total_plugins": len(installed_plugins),
-            "user_id": current_user["user_id"]
+            "user_id": current_user.id
         }
     except Exception as e:
         raise HTTPException(
@@ -218,7 +223,7 @@ async def get_installed_plugins(
 
 @router.get("/api/modular-ai/custom-models")
 async def get_custom_models(
-    current_user: dict = Depends(verify_token),
+    current_user: User = Depends(get_current_user),
     modular_service: ModularAIService = Depends(get_modular_ai_service)
 ):
     """Get list of user's custom AI models"""
@@ -226,7 +231,7 @@ async def get_custom_models(
     try:
         user_models = []
         for model in modular_service.custom_models.values():
-            if model.owner_id == current_user["user_id"]:
+            if model.owner_id == current_user.id:
                 user_models.append({
                     "model_id": model.model_id,
                     "name": model.name,
@@ -241,7 +246,7 @@ async def get_custom_models(
             "success": True,
             "custom_models": user_models,
             "total_models": len(user_models),
-            "user_id": current_user["user_id"]
+            "user_id": current_user.id
         }
     except Exception as e:
         raise HTTPException(
@@ -251,7 +256,7 @@ async def get_custom_models(
 
 @router.get("/api/modular-ai/status")
 async def get_modular_ai_status(
-    current_user: dict = Depends(verify_token),
+    current_user: User = Depends(get_current_user),
     modular_service: ModularAIService = Depends(get_modular_ai_service)
 ):
     """Get status of modular AI system"""
@@ -265,7 +270,7 @@ async def get_modular_ai_status(
             "plugin_system": True,
             "custom_models": True,
             "federated_learning": True,
-            "user_id": current_user["user_id"]
+            "user_id": current_user.id
         }
     except Exception as e:
         raise HTTPException(

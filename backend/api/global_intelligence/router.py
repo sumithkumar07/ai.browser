@@ -8,10 +8,15 @@ from pydantic import BaseModel
 
 from services.global_intelligence_service import GlobalIntelligenceService
 from database.connection import get_database
-from api.user_management.auth import verify_token
+from services.auth_service import AuthService
+from models.user import User
 
 router = APIRouter()
 security = HTTPBearer()
+auth_service = AuthService()
+
+async def get_current_user(current_user: User = Depends(auth_service.get_current_user)):
+    return current_user
 
 # Request/Response Models
 class UserBehaviorData(BaseModel):
@@ -45,7 +50,7 @@ async def get_global_intelligence_service():
 @router.post("/api/global-intelligence/collect-insights")
 async def collect_anonymous_insights(
     behavior_data: UserBehaviorData,
-    current_user: dict = Depends(verify_token),
+    current_user: User = Depends(get_current_user),
     global_service: GlobalIntelligenceService = Depends(get_global_intelligence_service)
 ):
     """Collect and aggregate anonymous user behavior insights"""
@@ -68,7 +73,7 @@ async def collect_anonymous_insights(
 @router.post("/api/global-intelligence/world-events")
 async def get_real_time_world_events(
     events_request: WorldEventsRequest,
-    current_user: dict = Depends(verify_token),
+    current_user: User = Depends(get_current_user),
     global_service: GlobalIntelligenceService = Depends(get_global_intelligence_service)
 ):
     """Get real-time world events relevant to user context"""
@@ -83,7 +88,7 @@ async def get_real_time_world_events(
             "success": True,
             "world_events": result,
             "real_time": True,
-            "user_id": current_user["user_id"]
+            "user_id": current_user.id
         }
     except Exception as e:
         raise HTTPException(
@@ -94,7 +99,7 @@ async def get_real_time_world_events(
 @router.post("/api/global-intelligence/cultural-adaptation")
 async def adapt_content_culturally(
     adaptation_request: CulturalAdaptationRequest,
-    current_user: dict = Depends(verify_token),
+    current_user: User = Depends(get_current_user),
     global_service: GlobalIntelligenceService = Depends(get_global_intelligence_service)
 ):
     """Adapt content based on cultural context"""
@@ -110,7 +115,7 @@ async def adapt_content_culturally(
             "success": True,
             "cultural_adaptation_result": result,
             "culturally_adapted": True,
-            "user_id": current_user["user_id"]
+            "user_id": current_user.id
         }
     except Exception as e:
         raise HTTPException(
@@ -120,7 +125,7 @@ async def adapt_content_culturally(
 
 @router.get("/api/global-intelligence/language-evolution")
 async def track_language_evolution(
-    current_user: dict = Depends(verify_token),
+    current_user: User = Depends(get_current_user),
     global_service: GlobalIntelligenceService = Depends(get_global_intelligence_service)
 ):
     """Track language evolution and emerging terminology"""
@@ -132,7 +137,7 @@ async def track_language_evolution(
             "success": True,
             "language_evolution": result,
             "real_time_tracking": True,
-            "user_id": current_user["user_id"]
+            "user_id": current_user.id
         }
     except Exception as e:
         raise HTTPException(
@@ -143,7 +148,7 @@ async def track_language_evolution(
 @router.post("/api/global-intelligence/collaboration-insights")
 async def get_global_collaboration_insights(
     collaboration_context: GlobalCollaborationContext,
-    current_user: dict = Depends(verify_token),
+    current_user: User = Depends(get_current_user),
     global_service: GlobalIntelligenceService = Depends(get_global_intelligence_service)
 ):
     """Provide insights for global team collaboration"""
@@ -157,7 +162,7 @@ async def get_global_collaboration_insights(
             "success": True,
             "collaboration_insights": result,
             "cross_cultural_optimized": True,
-            "user_id": current_user["user_id"]
+            "user_id": current_user.id
         }
     except Exception as e:
         raise HTTPException(
@@ -169,7 +174,7 @@ async def get_global_collaboration_insights(
 async def get_collective_insights(
     category: Optional[str] = None,
     region: Optional[str] = None,
-    current_user: dict = Depends(verify_token),
+    current_user: User = Depends(get_current_user),
     global_service: GlobalIntelligenceService = Depends(get_global_intelligence_service)
 ):
     """Get anonymized collective insights from global user base"""
@@ -195,7 +200,7 @@ async def get_collective_insights(
             "collective_insights": insights[:50],  # Limit to 50 insights
             "total_insights": len(insights),
             "anonymized": True,
-            "user_id": current_user["user_id"]
+            "user_id": current_user.id
         }
     except Exception as e:
         raise HTTPException(

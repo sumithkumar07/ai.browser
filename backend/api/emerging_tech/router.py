@@ -9,10 +9,15 @@ import numpy as np
 import base64
 
 from services.emerging_tech_service import EmergingTechService
-from api.user_management.auth import verify_token
+from services.auth_service import AuthService
+from models.user import User
 
 router = APIRouter()
 security = HTTPBearer()
+auth_service = AuthService()
+
+async def get_current_user(current_user: User = Depends(auth_service.get_current_user)):
+    return current_user
 
 # Request/Response Models
 class VoiceCommandRequest(BaseModel):
@@ -49,7 +54,7 @@ async def get_emerging_tech_service():
 @router.post("/api/emerging-tech/voice-command")
 async def process_voice_command(
     voice_request: VoiceCommandRequest,
-    current_user: dict = Depends(verify_token),
+    current_user: User = Depends(get_current_user),
     emerging_service: EmergingTechService = Depends(get_emerging_tech_service)
 ):
     """Process voice commands using speech recognition"""
@@ -64,7 +69,7 @@ async def process_voice_command(
             "success": True,
             "voice_result": result,
             "audio_processed": True,
-            "user_id": current_user["user_id"]
+            "user_id": current_user.id
         }
     except Exception as e:
         raise HTTPException(
@@ -75,7 +80,7 @@ async def process_voice_command(
 @router.post("/api/emerging-tech/gesture-recognition")
 async def process_gesture_input(
     gesture_data: GestureFrame,
-    current_user: dict = Depends(verify_token),
+    current_user: User = Depends(get_current_user),
     emerging_service: EmergingTechService = Depends(get_emerging_tech_service)
 ):
     """Process gesture recognition from video input"""
@@ -91,7 +96,7 @@ async def process_gesture_input(
             "success": True,
             "gesture_result": result,
             "frame_processed": True,
-            "user_id": current_user["user_id"]
+            "user_id": current_user.id
         }
     except Exception as e:
         raise HTTPException(
@@ -102,7 +107,7 @@ async def process_gesture_input(
 @router.post("/api/emerging-tech/ar-overlay")
 async def create_ar_overlay(
     ar_request: AROverlayRequest,
-    current_user: dict = Depends(verify_token),
+    current_user: User = Depends(get_current_user),
     emerging_service: EmergingTechService = Depends(get_emerging_tech_service)
 ):
     """Create augmented reality overlay for web content"""
@@ -117,7 +122,7 @@ async def create_ar_overlay(
             "success": True,
             "ar_overlay_result": result,
             "augmented_reality": True,
-            "user_id": current_user["user_id"]
+            "user_id": current_user.id
         }
     except Exception as e:
         raise HTTPException(
@@ -128,7 +133,7 @@ async def create_ar_overlay(
 @router.post("/api/emerging-tech/eye-tracking")
 async def eye_tracking_navigation(
     eye_data: EyeTrackingData,
-    current_user: dict = Depends(verify_token),
+    current_user: User = Depends(get_current_user),
     emerging_service: EmergingTechService = Depends(get_emerging_tech_service)
 ):
     """Process eye tracking for gaze-based navigation"""
@@ -140,7 +145,7 @@ async def eye_tracking_navigation(
             "success": True,
             "eye_tracking_result": result,
             "gaze_navigation": True,
-            "user_id": current_user["user_id"]
+            "user_id": current_user.id
         }
     except Exception as e:
         raise HTTPException(
@@ -151,7 +156,7 @@ async def eye_tracking_navigation(
 @router.post("/api/emerging-tech/brain-computer-interface")
 async def brain_computer_interface(
     bci_data: BCISignalData,
-    current_user: dict = Depends(verify_token),
+    current_user: User = Depends(get_current_user),
     emerging_service: EmergingTechService = Depends(get_emerging_tech_service)
 ):
     """Process brain-computer interface signals (preparation for future BCI)"""
@@ -166,7 +171,7 @@ async def brain_computer_interface(
             "bci_result": result,
             "future_technology": True,
             "preparation_mode": True,
-            "user_id": current_user["user_id"]
+            "user_id": current_user.id
         }
     except Exception as e:
         raise HTTPException(
@@ -176,7 +181,7 @@ async def brain_computer_interface(
 
 @router.get("/api/emerging-tech/voice-commands")
 async def get_available_voice_commands(
-    current_user: dict = Depends(verify_token),
+    current_user: User = Depends(get_current_user),
     emerging_service: EmergingTechService = Depends(get_emerging_tech_service)
 ):
     """Get list of available voice commands"""
@@ -204,7 +209,7 @@ async def get_available_voice_commands(
 
 @router.get("/api/emerging-tech/gesture-mappings")
 async def get_gesture_mappings(
-    current_user: dict = Depends(verify_token),
+    current_user: User = Depends(get_current_user),
     emerging_service: EmergingTechService = Depends(get_emerging_tech_service)
 ):
     """Get current gesture control mappings"""
