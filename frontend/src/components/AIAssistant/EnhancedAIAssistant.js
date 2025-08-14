@@ -471,12 +471,48 @@ export default function EnhancedAIAssistant() {
   };
 
   const quickActions = [
-    { icon: Brain, label: 'Neon Intelligence', action: () => handleSmartContentAnalysis(window.location.href) },
-    { icon: Sparkles, label: 'Focus Mode', action: () => handleNeonFocusMode() },
-    { icon: FileText, label: 'Research Report', action: () => handleProfessionalResearch() },
-    { icon: Zap, label: 'Workflow Builder', action: () => handleWorkflowBuilder() },
-    { icon: Settings, label: 'Create Pro App', action: () => handleProfessionalAppGeneration() },
-    { icon: TrendingUp, label: 'Cross-Platform', action: () => setSuggestions(['Connect to Slack', 'Integrate with Notion', 'Sync with Google Workspace', 'Link Microsoft 365']) }
+    {
+      icon: Brain, 
+      label: 'Neon Intelligence', 
+      description: 'Real-time page analysis',
+      action: () => handleSmartContentAnalysis(window.location.href),
+      color: 'from-blue-500 to-purple-600'
+    },
+    {
+      icon: Sparkles, 
+      label: 'Focus Mode', 
+      description: 'Distraction-free reading',
+      action: () => handleNeonFocusMode(),
+      color: 'from-purple-500 to-pink-600'
+    },
+    {
+      icon: FileText, 
+      label: 'Research Report', 
+      description: 'Professional Deep Search',
+      action: () => handleProfessionalResearch(),
+      color: 'from-green-500 to-blue-600'
+    },
+    {
+      icon: Zap, 
+      label: 'Workflow Builder', 
+      description: 'Visual automation',
+      action: () => handleWorkflowBuilder(),
+      color: 'from-orange-500 to-red-600'
+    },
+    {
+      icon: Settings, 
+      label: 'Create Pro App', 
+      description: 'Neon Make generator',
+      action: () => handleProfessionalAppGeneration(),
+      color: 'from-indigo-500 to-purple-600'
+    },
+    {
+      icon: TrendingUp, 
+      label: 'Cross-Platform', 
+      description: 'Connect external tools',
+      action: () => setSuggestions(['Connect to Slack', 'Integrate with Notion', 'Sync with Google Workspace', 'Link Microsoft 365']),
+      color: 'from-teal-500 to-green-600'
+    }
   ];
 
   if (!isAssistantVisible) return null;
