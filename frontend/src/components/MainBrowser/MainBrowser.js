@@ -348,33 +348,54 @@ export default function MainBrowser() {
                   },
                   { 
                     icon: Brain, 
-                    title: "Enhanced AI Assistant", 
-                    desc: "GROQ-powered Llama3-70B with conversational intelligence",
-                    color: "from-purple-500 to-pink-500"
+                    title: "Hybrid AI Assistant", 
+                    desc: "Neon AI + Fellou.ai powered with GROQ Llama3-70B intelligence",
+                    color: "from-purple-500 to-pink-500",
+                    isHybrid: true
                   },
                   { 
                     icon: Zap, 
-                    title: "Smart Automation", 
-                    desc: "Advanced form filling, e-commerce, and workflow automation",
-                    color: "from-yellow-500 to-orange-500"
+                    title: "Deep Action Automation", 
+                    desc: "Multi-step workflows, professional research, and smart app generation",
+                    color: "from-yellow-500 to-orange-500",
+                    isHybrid: true
                   },
                   { 
                     icon: TrendingUp, 
-                    title: "Performance Optimized", 
-                    desc: "Intelligent caching, memory optimization, and monitoring",
-                    color: "from-green-500 to-emerald-500"
+                    title: "Enhanced Performance", 
+                    desc: "Agentic memory, predictive assistance, and real-time optimization",
+                    color: "from-green-500 to-emerald-500",
+                    isHybrid: true
                   }
                 ].map((feature, index) => (
                   <motion.div
                     key={feature.title}
-                    className="p-6 glass-light rounded-2xl border border-gray-700/30 hover:border-purple-500/30 transition-all duration-300"
+                    className={`p-6 glass-light rounded-2xl border transition-all duration-300 relative overflow-hidden ${
+                      feature.isHybrid 
+                        ? 'border-purple-500/50 hover:border-purple-400/70 bg-gradient-to-br from-purple-900/10 to-blue-900/10' 
+                        : 'border-gray-700/30 hover:border-purple-500/30'
+                    }`}
                     initial={{ scale: 0, rotate: -10 }}
                     animate={{ scale: 1, rotate: 0 }}
                     transition={{ delay: 1.2 + index * 0.15, type: "spring", stiffness: 120 }}
                     whileHover={{ y: -5, scale: 1.02 }}
                   >
-                    <div className={`w-12 h-12 bg-gradient-to-r ${feature.color} rounded-xl flex items-center justify-center mx-auto mb-4`}>
+                    {feature.isHybrid && (
+                      <div className="absolute top-2 right-2">
+                        <div className="px-2 py-1 bg-gradient-to-r from-green-400 to-blue-400 rounded-full text-xs font-bold text-white">
+                          HYBRID
+                        </div>
+                      </div>
+                    )}
+                    <div className={`w-12 h-12 bg-gradient-to-r ${feature.color} rounded-xl flex items-center justify-center mx-auto mb-4 relative`}>
                       <feature.icon className="text-white" size={24} />
+                      {feature.isHybrid && (
+                        <motion.div
+                          className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full"
+                          animate={{ scale: [1, 1.3, 1] }}
+                          transition={{ repeat: Infinity, duration: 2 }}
+                        />
+                      )}
                     </div>
                     <h3 className="text-white font-bold mb-3 text-lg">{feature.title}</h3>
                     <p className="text-gray-400 text-sm leading-relaxed">{feature.desc}</p>
