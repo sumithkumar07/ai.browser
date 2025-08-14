@@ -444,10 +444,12 @@ export default function EnhancedAIAssistant() {
   };
 
   const quickActions = [
-    { icon: Zap, label: 'Automate Task', action: () => setActiveFeature('automation') },
-    { icon: FileText, label: 'Analyze Content', action: () => setActiveFeature('analysis') },
-    { icon: Brain, label: 'AI Suggestions', action: () => setSuggestions(['Analyze current tab', 'Organize my tabs', 'Set up automation', 'Help me be productive']) },
-    { icon: Settings, label: 'Customize AI', action: () => setActiveFeature('settings') }
+    { icon: Brain, label: 'Neon Intelligence', action: () => handleSmartContentAnalysis(window.location.href) },
+    { icon: Sparkles, label: 'Focus Mode', action: () => handleNeonFocusMode() },
+    { icon: FileText, label: 'Research Report', action: () => handleProfessionalResearch() },
+    { icon: Zap, label: 'Workflow Builder', action: () => handleWorkflowBuilder() },
+    { icon: Settings, label: 'Create Pro App', action: () => handleProfessionalAppGeneration() },
+    { icon: TrendingUp, label: 'Cross-Platform', action: () => setSuggestions(['Connect to Slack', 'Integrate with Notion', 'Sync with Google Workspace', 'Link Microsoft 365']) }
   ];
 
   if (!isAssistantVisible) return null;
