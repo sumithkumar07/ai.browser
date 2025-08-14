@@ -5,6 +5,8 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import BrowserContextProvider from './contexts/BrowserContext';
 import AIContextProvider from './contexts/AIContext';
 import UserContextProvider from './contexts/UserContext';
+import PerformanceContextProvider from './contexts/PerformanceContext';
+import AccessibilityContextProvider from './contexts/AccessibilityContext';
 import MainBrowser from './components/MainBrowser/MainBrowser';
 import AuthWrapper from './components/Auth/AuthWrapper';
 import './App.css';
