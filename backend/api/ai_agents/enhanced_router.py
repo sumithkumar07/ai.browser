@@ -54,6 +54,48 @@ class PredictiveAssistanceRequest(BaseModel):
     user_behavior: Dict[str, Any]
     current_context: Dict[str, Any]
 
+# Phase 1: Advanced AI Intelligence Request Models
+class CollaborativeAnalysisRequest(BaseModel):
+    content: str
+    analysis_goals: List[str]
+
+class IndustryAnalysisRequest(BaseModel):
+    content: str
+    industry: str  # finance, healthcare, legal, education, technology, retail
+
+class VisualContentAnalysisRequest(BaseModel):
+    image_description: str
+    ocr_text: str
+
+class AudioAnalysisRequest(BaseModel):
+    transcript: str
+    audio_metadata: Dict[str, Any]
+
+class DesignAnalysisRequest(BaseModel):
+    design_description: str
+    design_type: str  # ui, ux, web, mobile, print, brand
+
+class CreativeContentRequest(BaseModel):
+    content_type: str  # blog_post, report, presentation, marketing_copy, social_media
+    brief: str
+    brand_context: Dict[str, Any]
+
+class DataVisualizationRequest(BaseModel):
+    data_description: str
+    visualization_goals: List[str]
+
+class AcademicResearchRequest(BaseModel):
+    research_topic: str
+    research_goals: List[str]
+
+class TrendDetectionRequest(BaseModel):
+    data_sources: List[str]
+    analysis_period: str
+
+class KnowledgeGraphRequest(BaseModel):
+    content: str
+    domain: str
+
 
 @router.post("/enhanced-chat")
 async def enhanced_chat_with_ai(
