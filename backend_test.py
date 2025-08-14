@@ -1467,14 +1467,14 @@ class AIBrowserAPITester:
 
 def main():
     """Main test execution"""
-    print("AI Agentic Browser - Phase 1: Advanced AI Intelligence Testing")
+    print("AI Agentic Browser - Comprehensive Backend Testing (All 4 Phases)")
     print("Testing against: https://seamless-upgrade-2.preview.emergentagent.com")
     
     tester = AIBrowserAPITester("https://seamless-upgrade-2.preview.emergentagent.com")
     
     try:
-        # Run Phase 1 AI Intelligence tests as per review request
-        success = tester.run_phase1_ai_intelligence_tests()
+        # Run comprehensive testing for ALL 4 phases as per review request
+        success = tester.run_comprehensive_all_phases_testing()
         return 0 if success else 1
     except KeyboardInterrupt:
         print("\n⚠️  Tests interrupted by user")
