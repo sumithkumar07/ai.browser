@@ -74,6 +74,7 @@ app.include_router(edge_computing_router, tags=["edge_computing"])
 app.include_router(emerging_tech_router, tags=["emerging_technology"])
 app.include_router(modular_ai_router, tags=["modular_ai"])
 app.include_router(global_intelligence_router, tags=["global_intelligence"])
+app.include_router(phase_capabilities_router, tags=["phase_capabilities"])
 
 @app.get("/api/health")
 async def health_check():
