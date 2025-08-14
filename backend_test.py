@@ -12,7 +12,7 @@ from datetime import datetime
 from typing import Dict, Any, Optional
 
 class AIBrowserAPITester:
-    def __init__(self, base_url="https://agentic-browser-1.preview.emergentagent.com"):
+    def __init__(self, base_url="https://phased-upgrade.preview.emergentagent.com"):
         self.base_url = base_url
         self.token = None
         self.user_id = None
@@ -474,7 +474,7 @@ class AIBrowserAPITester:
         print("🚀 Starting Phase 1: Advanced AI Intelligence Testing")
         print("=" * 70)
         print("Testing Focus: Phase 1 AI endpoints for AI Agentic Browser")
-        print("Base URL: https://agentic-browser-1.preview.emergentagent.com")
+        print("Base URL: https://phased-upgrade.preview.emergentagent.com")
         print("=" * 70)
         
         # 1) Authentication setup
@@ -648,9 +648,9 @@ class AIBrowserAPITester:
 def main():
     """Main test execution"""
     print("AI Agentic Browser - Phase 1: Advanced AI Intelligence Testing")
-    print("Testing against: https://agentic-browser-1.preview.emergentagent.com")
+    print("Testing against: https://phased-upgrade.preview.emergentagent.com")
     
-    tester = AIBrowserAPITester("https://agentic-browser-1.preview.emergentagent.com")
+    tester = AIBrowserAPITester("https://phased-upgrade.preview.emergentagent.com")
     
     try:
         # Run Phase 1 AI Intelligence tests as per review request
