@@ -627,22 +627,38 @@ export default function EnhancedAIAssistant() {
             >
               <Brain size={48} className="mx-auto mb-4 text-purple-400" />
               <p className="mb-3 font-medium text-white">Hi! I'm ARIA, your enhanced AI assistant! 🚀</p>
-              <div className="text-sm space-y-2 bg-gray-800/30 rounded-lg p-4">
-                <p>🤖 <strong>Smart Automation</strong> - Form filling, e-commerce, booking</p>
-                <p>📊 <strong>Content Analysis</strong> - Research, summarization, insights</p>
-                <p>🎯 <strong>Tab Management</strong> - Organization, productivity</p>
+              
+              {/* 🚀 HYBRID AI CAPABILITIES SHOWCASE */}
+              <div className="text-sm space-y-2 bg-gradient-to-r from-purple-900/20 to-blue-900/20 rounded-lg p-4 border border-purple-500/20">
+                <p className="text-purple-300 font-medium mb-3">✨ Hybrid AI Capabilities (Neon + Fellou.ai)</p>
+                <p>🧠 <strong>Neon Chat</strong> - Contextual webpage understanding</p>
+                <p>🔍 <strong>Neon Focus</strong> - Distraction-free reading mode</p>
+                <p>🛠️ <strong>Neon Make</strong> - Professional app generation</p>
+                <p>🎭 <strong>Deep Action</strong> - Multi-step workflow orchestration</p>
+                <p>📊 <strong>Deep Search</strong> - Professional research reports</p>
+                <p>🧠 <strong>Agentic Memory</strong> - Behavioral learning</p>
+                <p>🌐 <strong>Cross-Platform</strong> - Slack, Notion, Google integration</p>
                 <p>⚡ <strong>Enhanced Performance</strong> - Caching, memory optimization</p>
                 <p>🎤 <strong>Voice Input</strong> - Talk to me naturally</p>
               </div>
               
+              {/* 🎯 ENHANCED HYBRID SUGGESTIONS */}
               <div className="mt-4 space-y-2">
-                {['Analyze current webpage', 'Help me automate a task', 'Organize my browser tabs', 'What can you do?'].map((suggestion, index) => (
+                <p className="text-xs text-gray-400 font-medium mb-2">🚀 Try these hybrid AI features:</p>
+                {[
+                  'Activate Neon Focus mode for this page',
+                  'Create professional research report',
+                  'Generate a workflow for my tasks',
+                  'Build a custom app for my needs',
+                  'Analyze this webpage with AI intelligence',
+                  'Connect to Slack or Notion'
+                ].map((suggestion, index) => (
                   <button
                     key={index}
-                    onClick={() => setInputMessage(suggestion)}
-                    className="block w-full text-left text-xs bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 px-3 py-2 rounded-lg transition-colors"
+                    onClick={() => handleSuggestionClick(suggestion)}
+                    className="block w-full text-left text-xs bg-gradient-to-r from-purple-500/20 to-blue-500/20 hover:from-purple-500/30 hover:to-blue-500/30 text-purple-300 px-3 py-2 rounded-lg transition-all duration-200 border border-purple-500/10 hover:border-purple-500/30"
                   >
-                    💡 {suggestion}
+                    ✨ {suggestion}
                   </button>
                 ))}
               </div>
