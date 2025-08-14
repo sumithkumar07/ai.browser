@@ -317,6 +317,186 @@ class AIBrowserAPITester:
         self.log_test("Get Conversation Memory", success, details)
         return success
 
+    def test_phase1_real_time_collaborative_analysis(self):
+        """Test Phase 1: Real-time Collaborative Analysis endpoint"""
+        if not self.token:
+            self.log_test("Phase 1 Collaborative Analysis", False, "No authentication token available")
+            return False
+
+        test_data = {
+            "content": "Analyze the market trends for AI technology in 2025. Focus on enterprise adoption and competitive landscape.",
+            "analysis_goals": ["market_analysis", "competitive_intelligence", "trend_prediction"]
+        }
+        
+        success, data, details = self.make_request(
+            'POST', '/api/ai/enhanced/real-time-collaborative-analysis',
+            test_data, 200, auth_required=True
+        )
+        
+        if success and data:
+            # Verify Phase 1 response structure
+            expected_keys = ['collaborative_analysis', 'multi_model_insights', 'synthesis_results']
+            has_expected_structure = any(key in data for key in expected_keys)
+            if not has_expected_structure:
+                success = False
+                details += " - Missing expected collaborative analysis structure"
+        
+        self.log_test("Phase 1 Collaborative Analysis", success, details)
+        return success, data
+
+    def test_phase1_industry_specific_analysis(self):
+        """Test Phase 1: Industry-Specific Analysis endpoint"""
+        if not self.token:
+            self.log_test("Phase 1 Industry Analysis", False, "No authentication token available")
+            return False
+
+        test_data = {
+            "content": "Financial report showing Q4 2024 revenue growth of 15% with expansion into emerging markets.",
+            "industry": "finance"
+        }
+        
+        success, data, details = self.make_request(
+            'POST', '/api/ai/enhanced/industry-specific-analysis',
+            test_data, 200, auth_required=True
+        )
+        
+        if success and data:
+            # Verify industry-specific response
+            expected_keys = ['industry_insights', 'domain_expertise', 'regulatory_considerations']
+            has_expected_structure = any(key in data for key in expected_keys)
+            if not has_expected_structure:
+                success = False
+                details += " - Missing expected industry analysis structure"
+        
+        self.log_test("Phase 1 Industry Analysis", success, details)
+        return success, data
+
+    def test_phase1_creative_content_generation(self):
+        """Test Phase 1: Creative Content Generation endpoint"""
+        if not self.token:
+            self.log_test("Phase 1 Creative Content", False, "No authentication token available")
+            return False
+
+        test_data = {
+            "content_type": "blog_post",
+            "brief": "Write a professional blog post about the future of AI in business automation, targeting enterprise decision makers.",
+            "brand_context": {
+                "tone": "professional",
+                "target_audience": "enterprise_executives",
+                "industry": "technology"
+            }
+        }
+        
+        success, data, details = self.make_request(
+            'POST', '/api/ai/enhanced/creative-content-generation',
+            test_data, 200, auth_required=True
+        )
+        
+        if success and data:
+            # Verify creative content response
+            expected_keys = ['generated_content', 'content_structure', 'seo_optimization']
+            has_expected_structure = any(key in data for key in expected_keys)
+            if not has_expected_structure:
+                success = False
+                details += " - Missing expected creative content structure"
+        
+        self.log_test("Phase 1 Creative Content", success, details)
+        return success, data
+
+    def test_phase1_ai_capabilities_updated(self):
+        """Test updated AI capabilities endpoint showing Phase 1 features"""
+        success, data, details = self.make_request('GET', '/api/ai/enhanced/ai-capabilities')
+        
+        if success and data:
+            # Verify Phase 1 capabilities are present
+            phase1_indicators = [
+                'phase_1_new_capabilities',
+                'real_time_collaborative_analysis',
+                'industry_specific_intelligence',
+                'creative_content_generation'
+            ]
+            
+            has_phase1_features = any(
+                any(indicator in str(data).lower() for indicator in phase1_indicators)
+                for indicator in phase1_indicators
+            )
+            
+            if not has_phase1_features:
+                success = False
+                details += " - Missing Phase 1 capability indicators"
+        
+        self.log_test("Phase 1 AI Capabilities Updated", success, details)
+        return success, data
+
+    def test_backward_compatibility(self):
+        """Test that existing functionality still works (backward compatibility)"""
+        if not self.token:
+            self.log_test("Backward Compatibility", False, "No authentication token available")
+            return False
+
+        # Test existing enhanced chat endpoint
+        chat_data = {
+            "message": "Test backward compatibility - can you help me analyze a webpage?",
+            "context": {"activeFeature": "compatibility_test"}
+        }
+        
+        success, data, details = self.make_request(
+            'POST', '/api/ai/enhanced/enhanced-chat',
+            chat_data, 200, auth_required=True
+        )
+        
+        self.log_test("Backward Compatibility - Enhanced Chat", success, details)
+        return success
+
+    def run_phase1_ai_intelligence_tests(self):
+        """Run comprehensive Phase 1 AI Intelligence tests as per review request"""
+        print("🚀 Starting Phase 1: Advanced AI Intelligence Testing")
+        print("=" * 70)
+        print("Testing Focus: Phase 1 AI endpoints for AI Agentic Browser")
+        print("Base URL: https://agentic-browser-1.preview.emergentagent.com")
+        print("=" * 70)
+        
+        # 1) Authentication setup
+        print("\n🔐 Setting up Authentication...")
+        register_success = self.test_register_specific_user()
+        login_success = self.test_login_specific_user()
+        
+        if not login_success:
+            print("❌ Authentication failed - cannot proceed with Phase 1 tests")
+            return False
+        
+        # 2) Test updated AI capabilities endpoint
+        print("\n📋 Testing Updated AI Capabilities...")
+        capabilities_success, capabilities_data = self.test_phase1_ai_capabilities_updated()
+        
+        # 3) Test new Phase 1 AI endpoints
+        print("\n🧠 Testing Phase 1 AI Intelligence Endpoints...")
+        
+        if self.token:
+            collaborative_success, _ = self.test_phase1_real_time_collaborative_analysis()
+            industry_success, _ = self.test_phase1_industry_specific_analysis()
+            creative_success, _ = self.test_phase1_creative_content_generation()
+            
+            # 4) Test backward compatibility
+            print("\n🔄 Testing Backward Compatibility...")
+            compatibility_success = self.test_backward_compatibility()
+            
+        else:
+            print("⚠️  Skipping authenticated Phase 1 tests due to authentication failure")
+            collaborative_success = False
+            industry_success = False
+            creative_success = False
+            compatibility_success = False
+        
+        # 5) Test system health
+        print("\n🏥 Testing System Health...")
+        health_success = self.test_ai_system_health()
+        
+        # Print comprehensive results
+        self.print_phase1_test_summary()
+        
+        return self.tests_passed == self.tests_run
+
     def run_smoke_tests_per_review(self):
         """Run smoke tests as per review request"""
         print("🚀 Starting Backend Smoke Test for AI-enhanced endpoints")
