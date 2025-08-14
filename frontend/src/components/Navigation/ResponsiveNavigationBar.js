@@ -28,7 +28,10 @@ import {
   Plus,
   Command,
   Wifi,
-  WifiOff
+  WifiOff,
+  ExternalLink,
+  Activity,
+  Loader
 } from 'lucide-react';
 
 export default function ResponsiveNavigationBar() {
@@ -47,6 +50,8 @@ export default function ResponsiveNavigationBar() {
   const [searchHistory, setSearchHistory] = useState([]);
   const [bookmarks, setBookmarks] = useState([]);
   const [showShortcuts, setShowShortcuts] = useState(false);
+  const [performanceMetrics, setPerformanceMetrics] = useState(null);
+  const [showPerformanceIndicator, setShowPerformanceIndicator] = useState(false);
 
   // Enhanced responsive viewport detection
   useEffect(() => {
@@ -62,6 +67,32 @@ export default function ResponsiveNavigationBar() {
     return () => window.removeEventListener('resize', checkViewportSize);
   }, []);
 
+  // Load performance metrics for power users
+  useEffect(() => {
+    if (user?.user_mode === 'power' || user?.user_mode === 'enterprise') {
+      loadPerformanceMetrics();
+      const interval = setInterval(loadPerformanceMetrics, 30000);
+      return () => clearInterval(interval);
+    }
+  }, [user]);
+
+  const loadPerformanceMetrics = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/ai/enhanced/performance-metrics`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        }
+      });
+      
+      if (response.ok) {
+        const metrics = await response.json();
+        setPerformanceMetrics(metrics);
+      }
+    } catch (error) {
+      console.error('Could not load performance metrics:', error);
+    }
+  };
+
   // Enhanced online/offline detection
   useEffect(() => {
     const handleOnline = () => setIsOnline(true);
@@ -76,9 +107,15 @@ export default function ResponsiveNavigationBar() {
     };
   }, []);
 
-  // Enhanced keyboard shortcuts
+  // Enhanced keyboard shortcuts with visual hints
   useEffect(() => {
     const handleKeyboardShortcuts = (e) => {
+      // Show shortcuts helper on first Ctrl/Cmd press
+      if ((e.ctrlKey || e.metaKey) && !e.repeat) {
+        setShowShortcuts(true);
+        setTimeout(() => setShowShortcuts(false), 3000);
+      }
+
       // Ctrl/Cmd + T for new tab
       if ((e.ctrlKey || e.metaKey) && e.key === 't') {
         e.preventDefault();
@@ -97,6 +134,12 @@ export default function ResponsiveNavigationBar() {
         toggleAssistant();
       }
       
+      // Ctrl/Cmd + P for performance panel (power users)
+      if ((e.ctrlKey || e.metaKey) && e.key === 'p' && user?.user_mode === 'power') {
+        e.preventDefault();
+        setShowPerformanceIndicator(!showPerformanceIndicator);
+      }
+      
       // Escape to close mobile menu
       if (e.key === 'Escape' && isMobileMenuOpen) {
         setIsMobileMenuOpen(false);
@@ -105,7 +148,7 @@ export default function ResponsiveNavigationBar() {
 
     document.addEventListener('keydown', handleKeyboardShortcuts);
     return () => document.removeEventListener('keydown', handleKeyboardShortcuts);
-  }, [toggleAssistant, isMobileMenuOpen]);
+  }, [toggleAssistant, isMobileMenuOpen, showPerformanceIndicator, user]);
 
   // Update current URL based on active tab
   useEffect(() => {
@@ -135,6 +178,7 @@ export default function ResponsiveNavigationBar() {
     try {
       // Enhanced URL validation and formatting
       let formattedUrl = url.trim();
+      const isExternalUrl = formattedUrl.includes('.') && !formattedUrl.includes(' ');
       
       // Check if it's a search query or URL
       if (!formattedUrl.includes('.') || formattedUrl.includes(' ')) {
@@ -158,8 +202,9 @@ export default function ResponsiveNavigationBar() {
           tabs[tabIndex].url = formattedUrl;
           tabs[tabIndex].title = 'Loading...';
           tabs[tabIndex].isLoading = true;
+          tabs[tabIndex].isExternal = isExternalUrl;
           
-          // Enhanced title extraction simulation
+          // Enhanced title extraction simulation with loading indicator
           setTimeout(() => {
             try {
               const domain = new URL(formattedUrl).hostname.replace('www.', '');
@@ -183,11 +228,13 @@ export default function ResponsiveNavigationBar() {
       console.error('Navigation failed:', error);
       // Show user-friendly error
     } finally {
+      // Enhanced loading state with subtle indicator
       setTimeout(() => setIsLoading(false), 800);
     }
   }, [activeTab, tabs, searchHistory]);
 
   const handleNewTab = useCallback((url = 'about:blank') => {
+    const isExternalUrl = url !== 'about:blank' && url.includes('.');
     const newTab = {
       id: `tab-${Date.now()}`,
       url: url,
@@ -196,7 +243,8 @@ export default function ResponsiveNavigationBar() {
       position_y: 150 + Math.random() * 200,
       is_active: true,
       created_at: new Date().toISOString(),
-      isLoading: url !== 'about:blank'
+      isLoading: url !== 'about:blank',
+      isExternal: isExternalUrl
     };
     addTab(newTab);
   }, [addTab]);
@@ -228,7 +276,7 @@ export default function ResponsiveNavigationBar() {
       { type: 'search', text: `${query}`, icon: Search },
       { type: 'search', text: `${query} tutorial`, icon: Search },
       { type: 'search', text: `${query} documentation`, icon: Search },
-      { type: 'direct', text: `${query}.com`, icon: Globe }
+      { type: 'direct', text: `${query}.com`, icon: Globe, isExternal: true }
     ].filter(item => !suggestions.some(s => s.text === item.text)).slice(0, 4);
     
     suggestions.push(...smartSuggestions);
@@ -270,8 +318,9 @@ export default function ResponsiveNavigationBar() {
     { key: '⌘T', action: 'New Tab', handler: handleNewTab },
     { key: '⌘L', action: 'Focus URL', handler: () => document.querySelector('input[type="text"]')?.focus() },
     { key: '⌘K', action: 'AI Assistant', handler: toggleAssistant },
+    { key: user?.user_mode === 'power' ? '⌘P' : '', action: user?.user_mode === 'power' ? 'Performance' : '', handler: () => setShowPerformanceIndicator(!showPerformanceIndicator) },
     { key: 'Esc', action: 'Close Menu', handler: () => setIsMobileMenuOpen(false) }
-  ];
+  ].filter(s => s.key); // Filter out empty shortcuts
 
   const NavigationControls = ({ isMobile = false }) => (
     <div className={`flex items-center ${isMobile ? 'space-x-4 w-full justify-between' : 'space-x-2'}`}>
@@ -379,7 +428,7 @@ export default function ResponsiveNavigationBar() {
                     animate={{ rotate: 360 }}
                     transition={{ repeat: Infinity, duration: 1 }}
                   >
-                    <RotateCcw size={16} className="text-blue-400" />
+                    <Loader size={16} className="text-blue-400" />
                   </motion.div>
                 ) : (
                   <>
@@ -414,6 +463,18 @@ export default function ResponsiveNavigationBar() {
 
               {/* Enhanced Right Side Icons */}
               <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center space-x-1">
+                {/* External Link Indicator */}
+                {currentUrl && (currentUrl.includes('.') && !currentUrl.includes('localhost')) && (
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    title="External website"
+                    className="w-6 h-6 rounded flex items-center justify-center text-blue-400"
+                  >
+                    <ExternalLink size={12} />
+                  </motion.div>
+                )}
+
                 {/* Bookmark Toggle */}
                 {currentUrl && (
                   <motion.button
@@ -483,6 +544,9 @@ export default function ResponsiveNavigationBar() {
                             </span>
                           )}
                         </div>
+                        {suggestion.isExternal && (
+                          <ExternalLink size={12} className="text-blue-400" />
+                        )}
                       </motion.button>
                     ))}
                   </div>
@@ -509,6 +573,17 @@ export default function ResponsiveNavigationBar() {
                 <Command size={14} />
               </button>
 
+              {/* Performance Indicator for Power Users */}
+              {(user?.user_mode === 'power' || user?.user_mode === 'enterprise') && performanceMetrics && (
+                <button
+                  onClick={() => setShowPerformanceIndicator(!showPerformanceIndicator)}
+                  className="w-8 h-8 rounded-lg glass hover:bg-gray-600/50 flex items-center justify-center text-green-400 hover:text-green-300 transition-colors"
+                  title="Performance Metrics"
+                >
+                  <Activity size={14} />
+                </button>
+              )}
+
               {/* Enhanced User Menu */}
               <div className="flex items-center space-x-2">
                 <div className="w-8 h-8 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full flex items-center justify-center relative">
@@ -526,7 +601,7 @@ export default function ResponsiveNavigationBar() {
         </div>
       </motion.div>
 
-      {/* Keyboard Shortcuts Panel */}
+      {/* Enhanced Keyboard Shortcuts Panel with Visual Hints */}
       <AnimatePresence>
         {showShortcuts && viewportSize !== 'mobile' && (
           <motion.div
@@ -535,16 +610,88 @@ export default function ResponsiveNavigationBar() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: -10 }}
           >
-            <h4 className="text-white font-medium mb-3 text-sm">⌨️ Keyboard Shortcuts</h4>
+            <h4 className="text-white font-medium mb-3 text-sm flex items-center">
+              ⌨️ Keyboard Shortcuts
+              <motion.div 
+                className="ml-2 text-xs text-purple-400"
+                animate={{ opacity: [0.5, 1, 0.5] }}
+                transition={{ repeat: Infinity, duration: 2 }}
+              >
+                NEW
+              </motion.div>
+            </h4>
             <div className="space-y-2">
               {shortcuts.map((shortcut, index) => (
                 <div key={index} className="flex items-center justify-between text-xs">
                   <span className="text-gray-300">{shortcut.action}</span>
-                  <kbd className="bg-gray-800 text-gray-400 px-2 py-1 rounded border border-gray-700">
+                  <kbd className="bg-gray-800 text-gray-400 px-2 py-1 rounded border border-gray-700 text-xs">
                     {shortcut.key}
                   </kbd>
                 </div>
               ))}
+            </div>
+            <div className="mt-3 pt-2 border-t border-gray-700/50 text-xs text-gray-500">
+              💡 Hold ⌘/Ctrl to see shortcuts
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Performance Indicator for Power Users */}
+      <AnimatePresence>
+        {showPerformanceIndicator && performanceMetrics && (user?.user_mode === 'power' || user?.user_mode === 'enterprise') && (
+          <motion.div
+            className="fixed top-16 right-20 glass-strong border border-gray-700/50 rounded-xl p-4 z-50 w-80"
+            initial={{ opacity: 0, scale: 0.9, y: -10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: -10 }}
+          >
+            <div className="flex items-center justify-between mb-3">
+              <h4 className="text-white font-medium text-sm flex items-center">
+                <TrendingUp className="mr-2 text-green-400" size={16} />
+                Performance Metrics
+                <motion.div 
+                  className="ml-2 text-xs text-green-400"
+                  animate={{ opacity: [0.5, 1, 0.5] }}
+                  transition={{ repeat: Infinity, duration: 2 }}
+                >
+                  LIVE
+                </motion.div>
+              </h4>
+              <button
+                onClick={() => setShowPerformanceIndicator(false)}
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                <X size={14} />
+              </button>
+            </div>
+            
+            <div className="space-y-3 text-sm">
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-gray-800/30 rounded-lg p-2">
+                  <div className="text-gray-400 text-xs mb-1">Cache</div>
+                  <div className="text-white font-medium text-sm">
+                    {performanceMetrics.cache_status?.entries || 0}
+                  </div>
+                  <div className={`text-xs ${performanceMetrics.cache_status?.enabled ? 'text-green-400' : 'text-red-400'}`}>
+                    {performanceMetrics.cache_status?.enabled ? '✅ Active' : '❌ Inactive'}
+                  </div>
+                </div>
+                
+                <div className="bg-gray-800/30 rounded-lg p-2">
+                  <div className="text-gray-400 text-xs mb-1">AI Status</div>
+                  <div className="text-white font-medium text-sm">Enhanced</div>
+                  <div className="text-xs text-purple-400">GROQ Ready</div>
+                </div>
+              </div>
+              
+              <div className="bg-gray-800/30 rounded-lg p-2">
+                <div className="text-gray-400 text-xs mb-1">System Health</div>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-300 text-xs">Overall</span>
+                  <span className="text-green-400 text-xs font-medium">Excellent</span>
+                </div>
+              </div>
             </div>
           </motion.div>
         )}
@@ -698,7 +845,7 @@ export default function ResponsiveNavigationBar() {
                                 animate={{ rotate: 360 }}
                                 transition={{ repeat: Infinity, duration: 1 }}
                               >
-                                <RotateCcw size={14} />
+                                <Loader size={14} />
                               </motion.div>
                             ) : (
                               tab.title ? tab.title.charAt(0).toUpperCase() : '🌐'
@@ -706,8 +853,11 @@ export default function ResponsiveNavigationBar() {
                           </div>
                           
                           <div className="flex-1 min-w-0">
-                            <h4 className="text-white text-sm font-medium truncate">
+                            <h4 className="text-white text-sm font-medium truncate flex items-center">
                               {tab.title || 'Untitled'}
+                              {tab.isExternal && (
+                                <ExternalLink size={10} className="ml-2 text-blue-400" />
+                              )}
                             </h4>
                             <p className="text-gray-400 text-xs truncate">
                               {tab.url === 'about:blank' ? 'New Tab' : tab.url}

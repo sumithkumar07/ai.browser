@@ -1,188 +1,131 @@
-/* Enhanced Accessibility Styles */
-.high-contrast {
-  --ai-dark: #000000;
-  --ai-primary: #ffffff;
-  --text-primary: #ffffff;
-  --text-secondary: #cccccc;
-  --border-color: #ffffff;
+/* AI Browser Enhanced Styles */
+/* Global CSS Variables and Base Styles */
+:root {
+  --ai-dark: #0f172a;
+  --ai-primary: #8b5cf6;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  --performance-excellent: #10b981;
+  --performance-good: #f59e0b;
+  --performance-poor: #ef4444;
 }
 
-.high-contrast .glass,
-.high-contrast .glass-light,
-.high-contrast .glass-strong {
-  background: rgba(255, 255, 255, 0.1);
-  border: 2px solid #ffffff;
-}
-
-.high-contrast button,
-.high-contrast .btn-primary,
-.high-contrast .btn-secondary {
-  border: 2px solid #ffffff;
-  color: #ffffff;
-}
-
-.reduce-motion * {
-  animation-duration: 0.01ms !important;
-  animation-iteration-count: 1 !important;
-  transition-duration: 0.01ms !important;
-  scroll-behavior: auto !important;
-}
-
-.font-size-small {
-  font-size: 0.875rem;
-}
-
-.font-size-large {
-  font-size: 1.125rem;
-}
-
-.font-size-x-large {
-  font-size: 1.25rem;
-}
-
-.large-targets button,
-.large-targets .btn-primary,
-.large-targets .btn-secondary,
-.large-targets input,
-.large-targets select {
-  min-height: 44px;
-  min-width: 44px;
-}
-
-.simplified .glass-effects,
-.simplified .backdrop-blur-xl,
-.simplified .backdrop-blur-sm {
-  backdrop-filter: none;
-  background: rgba(17, 24, 39, 0.95);
-}
-
-/* Enhanced Focus Styles */
-*:focus {
-  outline: 3px solid #8b5cf6;
-  outline-offset: 2px;
-}
-
-.high-contrast *:focus {
-  outline: 3px solid #ffffff;
-  outline-offset: 2px;
-}
-
-/* Tutorial Highlighting */
-.tutorial-highlight {
-  position: relative;
-  z-index: 1001;
-}
-
-.tutorial-highlight::before {
-  content: '';
-  position: absolute;
-  inset: -4px;
-  background: linear-gradient(45deg, #8b5cf6, #3b82f6);
-  border-radius: 12px;
-  z-index: -1;
-  animation: highlight-pulse 2s ease-in-out infinite;
-}
-
-@keyframes highlight-pulse {
-  0%, 100% {
-    opacity: 0.6;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.9;
-    transform: scale(1.02);
-  }
-}
-
-/* Skip Links */
-.skip-link {
-  position: absolute;
-  top: -40px;
-  left: 6px;
-  background: #8b5cf6;
-  color: white;
-  padding: 8px;
-  text-decoration: none;
-  border-radius: 4px;
-  z-index: 9999;
-  transition: top 0.3s;
-}
-
-.skip-link:focus {
-  top: 6px;
-}
-
-/* Screen Reader Only Content */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
+/* Enhanced Loading Indicator Styles */
+.loading-indicator {
+  position: fixed;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 3px;
+  background: rgba(139, 92, 246, 0.2);
+  border-radius: 2px;
   overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-/* Performance Optimization Classes */
-.will-change-transform {
-  will-change: transform;
+.loading-indicator.visible {
+  opacity: 1;
 }
 
-.will-change-opacity {
-  will-change: opacity;
+.loading-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #8b5cf6, #06b6d4, #8b5cf6);
+  background-size: 200% 100%;
+  animation: loadingProgress 1s ease-out forwards, shimmerEffect 2s infinite;
+  border-radius: 2px;
 }
 
-.gpu-accelerated {
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  perspective: 1000px;
+@keyframes loadingProgress {
+  0% { width: 0%; }
+  50% { width: 60%; }
+  100% { width: 100%; }
 }
 
-/* Custom Scrollbar */
-.custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
+@keyframes shimmerEffect {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(75, 85, 99, 0.2);
-  border-radius: 3px;
+/* Keyboard Shortcuts Visual Hints */
+.keyboard-hint {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  z-index: 10000;
+  pointer-events: none;
+  opacity: 0;
+  scale: 0.9;
+  transition: all 0.3s ease;
 }
 
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(139, 92, 246, 0.5);
-  border-radius: 3px;
+.keyboard-hint.visible {
+  opacity: 1;
+  scale: 1;
 }
 
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(139, 92, 246, 0.7);
+.keyboard-hint-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  color: #f1f5f9;
+  font-size: 14px;
 }
 
-/* Enhanced Button Styles */
-.btn-primary,
-.btn-secondary {
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  transform: translateZ(0);
+.keyboard-hint-key {
+  background: #374151;
+  color: #9ca3af;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid #4b5563;
+  font-family: 'SF Mono', 'Cascadia Code', 'Consolas', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  min-width: 24px;
+  text-align: center;
 }
 
-.btn-primary:hover,
-.btn-secondary:hover {
-  transform: translateY(-1px) translateZ(0);
+/* External Link Indicator */
+.external-link-indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  background: rgba(59, 130, 246, 0.2);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 4px;
+  color: #3b82f6;
+  font-size: 10px;
+  margin-left: 4px;
+  animation: subtlePulse 2s infinite;
 }
 
-.btn-primary:active,
-.btn-secondary:active {
-  transform: translateY(0) translateZ(0);
+@keyframes subtlePulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
 }
 
-/* Performance Indicators */
+/* Performance Indicator for Power Users */
 .performance-indicator {
   position: fixed;
   top: 70px;
   right: 20px;
-  width: 60px;
-  height: 8px;
+  width: 120px;
+  height: 6px;
   background: rgba(0, 0, 0, 0.2);
   border-radius: 4px;
   overflow: hidden;
