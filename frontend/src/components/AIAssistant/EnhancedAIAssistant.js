@@ -559,9 +559,12 @@ export default function EnhancedAIAssistant() {
           <div>
             <h3 className="text-white font-semibold flex items-center">
               ARIA <Sparkles className="ml-1 text-yellow-400" size={14} />
+              <span className="ml-2 text-xs bg-gradient-to-r from-green-400 to-blue-400 text-transparent bg-clip-text font-bold">
+                HYBRID
+              </span>
             </h3>
             <p className="text-gray-400 text-xs">
-              {isProcessing ? 'Processing...' : 'Enhanced AI Assistant'}
+              {isProcessing ? 'Processing...' : 'Neon AI + Fellou.ai Enhanced'}
             </p>
           </div>
         </div>
