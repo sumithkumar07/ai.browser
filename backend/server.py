@@ -57,22 +57,22 @@ app.add_middleware(
 security = HTTPBearer()
 
 # Include routers with API prefix
-# app.include_router(user_router, prefix="/api/users", tags=["users"])
-# app.include_router(browser_router, prefix="/api/browser", tags=["browser"])
-# app.include_router(ai_router, prefix="/api/ai", tags=["ai_agents"])
-# app.include_router(enhanced_ai_router, prefix="/api/ai/enhanced", tags=["enhanced_ai"])
-# app.include_router(hybrid_ai_router, prefix="/api/ai/hybrid", tags=["hybrid_ai"])
-# app.include_router(automation_router, prefix="/api/automation", tags=["automation"])
-# app.include_router(enhanced_automation_router, prefix="/api/automation/enhanced", tags=["enhanced_automation"])
-# app.include_router(content_router, prefix="/api/content", tags=["content"])
+app.include_router(user_router, prefix="/api/users", tags=["users"])
+app.include_router(browser_router, prefix="/api/browser", tags=["browser"])
+app.include_router(ai_router, prefix="/api/ai", tags=["ai_agents"])
+app.include_router(enhanced_ai_router, prefix="/api/ai/enhanced", tags=["enhanced_ai"])
+app.include_router(hybrid_ai_router, prefix="/api/ai/hybrid", tags=["hybrid_ai"])
+app.include_router(automation_router, prefix="/api/automation", tags=["automation"])
+app.include_router(enhanced_automation_router, prefix="/api/automation/enhanced", tags=["enhanced_automation"])
+app.include_router(content_router, prefix="/api/content", tags=["content"])
 
 # Include Phase 2-4 advanced routers
-# app.include_router(ecosystem_router, prefix="/api/ecosystem", tags=["ecosystem_integration"])
-# app.include_router(edge_computing_router, prefix="/api/edge-computing", tags=["edge_computing"])
-# app.include_router(emerging_tech_router, prefix="/api/emerging-tech", tags=["emerging_technology"])
-# app.include_router(modular_ai_router, prefix="/api/modular-ai", tags=["modular_ai"])
-# app.include_router(global_intelligence_router, prefix="/api/global-intelligence", tags=["global_intelligence"])
-# app.include_router(phase_capabilities_router, prefix="/api/phase-capabilities", tags=["phase_capabilities"])
+app.include_router(ecosystem_router, tags=["ecosystem_integration"])
+app.include_router(edge_computing_router, tags=["edge_computing"])
+app.include_router(emerging_tech_router, tags=["emerging_technology"])
+app.include_router(modular_ai_router, tags=["modular_ai"])
+app.include_router(global_intelligence_router, tags=["global_intelligence"])
+app.include_router(phase_capabilities_router, tags=["phase_capabilities"])
 
 @app.get("/api/health")
 async def health_check():
