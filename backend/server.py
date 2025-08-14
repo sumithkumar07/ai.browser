@@ -40,8 +40,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title="AI Agentic Browser API",
     description="Next-generation AI-powered browser with autonomous capabilities",
-    version="1.0.0",
-    lifespan=lifespan
+    version="1.0.0"
 )
 
 # CORS middleware - simplified configuration
