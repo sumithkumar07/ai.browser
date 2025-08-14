@@ -7,7 +7,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from models.user import User
 from services.auth_service import AuthService
-from services.hybrid_ai_orchestrator import HybridAIOrchestratorService
+from services.enhanced_hybrid_ai_orchestrator import EnhancedHybridAIOrchestratorService
 from services.performance_service import performance_service
 from database.connection import get_database
 from typing import List, Optional, Dict, Any
@@ -15,7 +15,7 @@ import time
 
 router = APIRouter()
 auth_service = AuthService()
-hybrid_ai = HybridAIOrchestratorService()
+hybrid_ai = EnhancedHybridAIOrchestratorService()
 
 # =============================================================================
 # 🎯 REQUEST MODELS FOR HYBRID AI CAPABILITIES
