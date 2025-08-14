@@ -34,5 +34,6 @@ scikit-learn==1.3.2
 networkx==3.2.1
 plotly==5.17.0
 pandas==2.1.4
-aiofiles==23.2.1httpcore
+aiofiles==23.2.1
+httpcore
 distro
