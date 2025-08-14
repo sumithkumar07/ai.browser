@@ -44,15 +44,11 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-# CORS middleware - do not hardcode URLs
-frontend_origin = os.environ.get("FRONTEND_ORIGIN")
-allow_origins = [frontend_origin] if frontend_origin else ["*"]
-allow_credentials = bool(frontend_origin)  # Only allow credentials when a specific origin is set
-
+# CORS middleware - simplified configuration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=allow_origins,
-    allow_credentials=allow_credentials,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
