@@ -32,12 +32,16 @@ const initialState = {
   aiStatus: 'idle', // idle, processing, error
   currentAnalysis: null,
   automationQueue: [],
-  // 🧠 NEW HYBRID AI STATE
+  // 🧠 ENHANCED HYBRID AI STATE
   hybridFeatures: {
-    contextualAwareness: false,
-    behavioralLearning: false,
-    predictiveAssistance: false,
-    workflowOrchestration: false
+    contextualAwareness: true,        // Neon AI active
+    behavioralLearning: true,         // Agentic Memory active
+    predictiveAssistance: true,       // Predictive insights active
+    workflowOrchestration: true,      // Deep Action active
+    professionalResearch: true,       // Deep Search active
+    appGeneration: true,              // Neon Make active
+    crossPlatformSync: true,          // External integrations active
+    realTimeIntelligence: true        // Live analysis active
   },
   agenticMemory: {
     learningScore: 0,
