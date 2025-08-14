@@ -65,7 +65,9 @@ class EdgeComputingService:
     async def initialize_redis(self):
         """Initialize Redis connection for caching"""
         try:
-            self.redis = await aioredis.from_url("redis://localhost:6379")
+            # Redis functionality disabled - aioredis dependency removed
+            print("Redis functionality disabled - aioredis dependency not available")
+            self.redis = None
         except Exception as e:
             print(f"Redis connection failed: {e}")
             self.redis = None
