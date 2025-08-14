@@ -67,6 +67,240 @@ async def neon_chat_enhanced(
     db=Depends(get_database)
 ):
     """
+    🧠 ENHANCED NEON CHAT - Advanced contextual AI with deep webpage understanding
+    Enhanced version with real-time intelligence, behavioral adaptation, and predictive assistance
+    """
+    start_time = time.time()
+    
+    try:
+        # Enhanced chat with advanced Neon AI contextual intelligence
+        result = await hybrid_ai.neon_chat_enhanced_v2(
+            req.message, 
+            current_user.id, 
+            req.page_context, 
+            db
+        )
+        
+        # Monitor performance
+        await performance_service.monitor_response_times("neon_chat_enhanced_v2", start_time)
+        
+        return {
+            **result,
+            "processing_time": time.time() - start_time,
+            "hybrid_feature": "neon_chat_enhanced_v2",
+            "neon_ai_enhanced": True
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Enhanced Neon Chat failed: {str(e)}")
+
+
+@router.post("/neon-focus-mode")
+async def neon_focus_mode(
+    url: str,
+    focus_type: str = "reading",
+    current_user: User = Depends(auth_service.get_current_user)
+):
+    """
+    🔍 NEON FOCUS - Distraction-free reading with AI content filtering
+    NEW FEATURE: Advanced content filtering and focus optimization
+    """
+    start_time = time.time()
+    
+    try:
+        result = await hybrid_ai.neon_focus_mode_enhanced(
+            url, 
+            current_user.id, 
+            focus_type
+        )
+        
+        await performance_service.monitor_response_times("neon_focus_mode", start_time)
+        
+        return {
+            **result,
+            "processing_time": time.time() - start_time,
+            "hybrid_feature": "neon_focus_enhanced",
+            "neon_ai_enhanced": True
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Neon Focus mode failed: {str(e)}")
+
+
+@router.post("/neon-intelligence")
+async def neon_intelligence_realtime(
+    url: str,
+    analysis_depth: str = "comprehensive",
+    current_user: User = Depends(auth_service.get_current_user)
+):
+    """
+    📊 NEON INTELLIGENCE - Real-time page analysis and smart suggestions
+    NEW FEATURE: Advanced real-time page intelligence with proactive recommendations
+    """
+    start_time = time.time()
+    
+    try:
+        result = await hybrid_ai.neon_intelligence_realtime(
+            url, 
+            current_user.id, 
+            analysis_depth
+        )
+        
+        await performance_service.monitor_response_times("neon_intelligence", start_time)
+        
+        return {
+            **result,
+            "processing_time": time.time() - start_time,
+            "hybrid_feature": "neon_intelligence_realtime",
+            "neon_ai_enhanced": True
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Neon Intelligence analysis failed: {str(e)}")
+
+
+@router.post("/deep-search-professional")
+async def deep_search_professional(
+    research_query: str,
+    report_format: str = "comprehensive",
+    export_format: str = "html",
+    current_user: User = Depends(auth_service.get_current_user)
+):
+    """
+    🔍 ENHANCED DEEP SEARCH - Professional automated research with visual reports and export
+    ENHANCED FEATURE: Professional report generation with multiple export formats
+    """
+    start_time = time.time()
+    
+    try:
+        result = await hybrid_ai.deep_search_professional(
+            research_query,
+            current_user.id,
+            report_format,
+            export_format
+        )
+        
+        await performance_service.monitor_response_times("deep_search_professional", start_time)
+        
+        return {
+            **result,
+            "processing_time": time.time() - start_time,
+            "hybrid_feature": "deep_search_professional",
+            "fellou_ai_enhanced": True
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Professional Deep Search failed: {str(e)}")
+
+
+@router.post("/controllable-workflow-builder")
+async def controllable_workflow_builder(
+    workflow_description: str,
+    visual_mode: bool = True,
+    current_user: User = Depends(auth_service.get_current_user)
+):
+    """
+    🎯 CONTROLLABLE WORKFLOW - Visual workflow builder and management
+    NEW FEATURE: Advanced visual workflow builder with drag-and-drop interface
+    """
+    start_time = time.time()
+    
+    try:
+        result = await hybrid_ai.controllable_workflow_builder(
+            workflow_description,
+            current_user.id,
+            visual_mode
+        )
+        
+        await performance_service.monitor_response_times("controllable_workflow", start_time)
+        
+        return {
+            **result,
+            "processing_time": time.time() - start_time,
+            "hybrid_feature": "controllable_workflow_builder",
+            "fellou_ai_enhanced": True
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Controllable Workflow builder failed: {str(e)}")
+
+
+@router.post("/neon-make-professional")
+async def neon_make_professional_app(
+    app_request: str,
+    template_type: str = "auto_detect",
+    advanced_features: bool = True,
+    current_user: User = Depends(auth_service.get_current_user)
+):
+    """
+    🛠️ ENHANCED NEON MAKE - Professional app generation with advanced templates
+    ENHANCED FEATURE: Professional-grade app generation with advanced templates and features
+    """
+    start_time = time.time()
+    
+    try:
+        result = await hybrid_ai.neon_make_professional_app(
+            app_request,
+            current_user.id,
+            template_type,
+            advanced_features
+        )
+        
+        await performance_service.monitor_response_times("neon_make_professional", start_time)
+        
+        return {
+            **result,
+            "processing_time": time.time() - start_time,
+            "hybrid_feature": "neon_make_professional",
+            "neon_ai_enhanced": True
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Professional Neon Make failed: {str(e)}")
+
+
+@router.post("/cross-platform-integration")
+async def cross_platform_integration_hub(
+    platform: str,
+    integration_type: str,
+    data: Dict[str, Any],
+    current_user: User = Depends(auth_service.get_current_user)
+):
+    """
+    🌐 CROSS-PLATFORM INTEGRATION - Connect with external tools and services
+    NEW FEATURE: Advanced integration with Slack, Notion, Google Workspace, Microsoft 365
+    """
+    start_time = time.time()
+    
+    try:
+        result = await hybrid_ai.cross_platform_integration_hub(
+            platform,
+            integration_type,
+            data,
+            current_user.id
+        )
+        
+        await performance_service.monitor_response_times("cross_platform_integration", start_time)
+        
+        return {
+            **result,
+            "processing_time": time.time() - start_time,
+            "hybrid_feature": "cross_platform_integration",
+            "integration_ready": True
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Cross-platform integration failed: {str(e)}")
+
+
+# Update the existing neon_chat_enhanced endpoint to use the new enhanced version
+@router.post("/neon-chat-enhanced-original")
+async def neon_chat_enhanced(
+    req: NeonChatRequest,
+    current_user: User = Depends(auth_service.get_current_user),
+    db=Depends(get_database)
+):
+    """
     🧠 NEON CHAT - Enhanced contextual AI with webpage understanding
     Combines Neon AI contextual intelligence with your existing ARIA assistant
     """
