@@ -20,7 +20,7 @@ import {
   Keyboard,
   Eye
 } from 'lucide-react';
-import { useAccessibility } from '../contexts/AccessibilityContext';
+import { useAccessibility } from '../../contexts/AccessibilityContext';
 
 // Enhanced Interactive Tutorial Component
 export default function InteractiveTutorial({ 
