@@ -36,6 +36,14 @@ from database.connection import get_database, connect_to_mongo, close_mongo_conn
 async def lifespan(app: FastAPI):
     # Startup
     print("🚀 AI Agentic Browser - Hybrid Edition Starting...")
+    
+    # Initialize database connection
+    try:
+        await connect_to_mongo()
+        print("✅ Database connection established")
+    except Exception as e:
+        print(f"❌ Database connection failed: {e}")
+    
     print("✅ ALL 3 PHASES IMPLEMENTED IN PARALLEL:")
     print("")
     print("🚀 PHASE 1: Enhanced Web-Based Hybrid (COMPLETE)")
@@ -66,6 +74,7 @@ async def lifespan(app: FastAPI):
     yield
     # Shutdown
     print("👋 AI Hybrid Browser shutting down...")
+    await close_mongo_connection()
 
 
 # Create FastAPI app with enhanced lifespan
