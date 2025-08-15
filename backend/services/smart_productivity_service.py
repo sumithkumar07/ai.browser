@@ -5,6 +5,7 @@ Handles productivity features, quick actions, and automation templates
 
 import asyncio
 import json
+import logging
 from typing import List, Dict, Any, Optional
 from datetime import datetime, timedelta
 import os
