@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useBrowser } from '../../contexts/BrowserContext';
 import { useAI } from '../../contexts/AIContext';
@@ -13,6 +13,11 @@ import EnhancedAIAssistant from '../AIAssistant/EnhancedAIAssistant';
 import PerformanceMonitor from '../Performance/PerformanceMonitor';
 import InteractiveTutorial from '../Tutorial/InteractiveTutorial';
 
+// Import new feature discovery components
+import SmartFeatureHighlight from '../FeatureDiscovery/SmartFeatureHighlight';
+import HybridFeaturePanel from '../FeatureDiscovery/HybridFeaturePanel';
+import FeatureTooltips from '../FeatureDiscovery/FeatureTooltips';
+
 // Icons
 import { 
   Brain, 
@@ -22,7 +27,9 @@ import {
   Globe,
   BarChart3,
   Users,
-  Lightbulb
+  Lightbulb,
+  BookOpen,
+  Layers
 } from 'lucide-react';
 
 export default function MainBrowser() {
