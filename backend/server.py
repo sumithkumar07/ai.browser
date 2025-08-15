@@ -72,12 +72,19 @@ app.include_router(enhanced_automation_router, prefix="/api/automation/enhanced"
 app.include_router(content_router, prefix="/api/content", tags=["content"])
 
 # Include Phase 2-4 advanced routers with proper prefixes
-app.include_router(ecosystem_router, prefix="/api/ecosystem", tags=["ecosystem_integration"])
-app.include_router(edge_computing_router, prefix="/api/edge-computing", tags=["edge_computing"])
-app.include_router(emerging_tech_router, prefix="/api/emerging-tech", tags=["emerging_technology"])
-app.include_router(modular_ai_router, prefix="/api/modular-ai", tags=["modular_ai"])
-app.include_router(global_intelligence_router, prefix="/api/global-intelligence", tags=["global_intelligence"])
-app.include_router(phase_capabilities_router, prefix="/api/phase-capabilities", tags=["phase_capabilities"])
+if ADVANCED_ROUTERS_AVAILABLE:
+    try:
+        app.include_router(ecosystem_router, prefix="/api/ecosystem", tags=["ecosystem_integration"])
+        app.include_router(edge_computing_router, prefix="/api/edge-computing", tags=["edge_computing"])
+        app.include_router(emerging_tech_router, prefix="/api/emerging-tech", tags=["emerging_technology"])
+        app.include_router(modular_ai_router, prefix="/api/modular-ai", tags=["modular_ai"])
+        app.include_router(global_intelligence_router, prefix="/api/global-intelligence", tags=["global_intelligence"])
+        app.include_router(phase_capabilities_router, prefix="/api/phase-capabilities", tags=["phase_capabilities"])
+        print("✅ Advanced routers loaded successfully")
+    except Exception as e:
+        print(f"⚠️ Error loading advanced routers: {e}")
+else:
+    print("⚠️ Advanced routers skipped due to import errors")
 
 @app.get("/api/health")
 async def health_check():
