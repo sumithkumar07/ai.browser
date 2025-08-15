@@ -658,3 +658,7 @@ class PerformanceService:
                 "error": f"Health check failed: {str(e)}",
                 "timestamp": datetime.utcnow().isoformat()
             }
+
+
+# Global service instance
+performance_service = PerformanceService()
