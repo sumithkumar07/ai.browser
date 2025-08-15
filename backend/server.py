@@ -17,6 +17,9 @@ from api.user.router import router as user_router
 from api.browser.enhanced_router import router as enhanced_browser_router
 from api.hybrid_browser.router import router as hybrid_browser_router
 
+# Import real browser router
+from api.real_browser.router import router as real_browser_router
+
 # Import services
 from services.enhanced_ai_orchestrator import EnhancedAIOrchestratorService
 from services.browser_engine_service import BrowserEngineService
