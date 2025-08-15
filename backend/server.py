@@ -13,6 +13,7 @@ from api.browser.router import router as browser_router
 from api.ai_agents.router import router as ai_router
 from api.ai_agents.enhanced_router import router as enhanced_ai_router
 from api.ai_agents.hybrid_router import router as hybrid_ai_router
+from api.ai_agents.advanced_router import router as advanced_ai_router
 from api.automation.router import router as automation_router
 from api.automation.enhanced_router import router as enhanced_automation_router
 from api.content.router import router as content_router
