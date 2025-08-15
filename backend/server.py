@@ -15,7 +15,7 @@ from api.user_management.router import router as user_router
 
 # Import new enhanced routers
 from api.browser.enhanced_router import router as enhanced_browser_router
-# from api.hybrid_browser.router import router as hybrid_browser_router
+from api.hybrid_browser.router import router as hybrid_browser_router
 
 # Import real browser router
 from api.real_browser.router import router as real_browser_router
