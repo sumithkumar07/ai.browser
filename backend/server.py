@@ -157,6 +157,7 @@ app.include_router(ai_router, prefix="/api/ai", tags=["AI Enhanced"])
 app.include_router(hybrid_router, prefix="/api/ai/hybrid", tags=["Hybrid AI"])
 app.include_router(browser_router, prefix="/api/browser", tags=["Browser Core"])
 app.include_router(enhanced_browser_router, prefix="/api/browser/enhanced", tags=["Browser Enhanced"])
+app.include_router(hybrid_browser_router, prefix="/api/hybrid-browser", tags=["Hybrid Browser"])
 app.include_router(automation_router, prefix="/api/automation", tags=["Automation"])
 app.include_router(user_router, prefix="/api/user", tags=["User Management"])
 
