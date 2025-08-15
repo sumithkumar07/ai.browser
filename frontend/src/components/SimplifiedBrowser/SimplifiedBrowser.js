@@ -366,6 +366,15 @@ export default function SimplifiedBrowser() {
               <Download size={16} />
             </button>
             
+            {/* Hybrid Browser Access Button */}
+            <button 
+              className="nav-btn bg-gradient-to-r from-purple-600/20 to-blue-600/20 hover:from-purple-600/30 hover:to-blue-600/30 border border-purple-500/30"
+              onClick={() => setShowHybridPanel(true)}
+              title="Hybrid Browser Features"
+            >
+              <Activity size={16} className="text-purple-300" />
+            </button>
+            
             {/* Mobile Menu Toggle */}
             <button 
               className="nav-btn md:hidden"
