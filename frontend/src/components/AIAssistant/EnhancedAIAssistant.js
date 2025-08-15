@@ -404,7 +404,7 @@ export default function EnhancedAIAssistant() {
             {hybridFeatures?.hybridIntelligence ? (
               <div className="grid grid-cols-1 gap-2">
                 <button
-                  onClick={() => callAPI('../../hybrid/neon-chat-enhanced', {
+                  onClick={() => callAPI('neon-chat-enhanced', {
                     message: contentInput || 'Analyze current context',
                     page_context: { url: window.location.href }
                   })}
@@ -416,7 +416,7 @@ export default function EnhancedAIAssistant() {
                 </button>
                 
                 <button
-                  onClick={() => callAPI('../../hybrid/deep-search-professional', {
+                  onClick={() => callAPI('deep-search-professional', {
                     research_query: contentInput || 'Professional research',
                     report_format: 'comprehensive'
                   })}
@@ -428,7 +428,7 @@ export default function EnhancedAIAssistant() {
                 </button>
                 
                 <button
-                  onClick={() => callAPI('../../hybrid/controllable-workflow-builder', {
+                  onClick={() => callAPI('controllable-workflow-builder', {
                     workflow_description: contentInput || 'Build visual workflow',
                     visual_mode: true
                   })}
@@ -440,7 +440,7 @@ export default function EnhancedAIAssistant() {
                 </button>
                 
                 <button
-                  onClick={() => callAPI('../../hybrid/agentic-memory-learning', {
+                  onClick={() => callAPI('agentic-memory-learning', {
                     interaction_data: { content: contentInput, action: 'analyze' },
                     learning_mode: 'adaptive'
                   })}
