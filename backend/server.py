@@ -76,6 +76,9 @@ app.include_router(automation_router, prefix="/api/automation", tags=["automatio
 app.include_router(enhanced_automation_router, prefix="/api/automation/enhanced", tags=["enhanced_automation"])
 app.include_router(content_router, prefix="/api/content", tags=["content"])
 
+# Include new enhanced features router
+app.include_router(enhanced_features_router, prefix="/api/enhanced-features", tags=["enhanced_features"])
+
 # Include Phase 2-4 advanced routers with proper prefixes
 if ADVANCED_ROUTERS_AVAILABLE:
     try:
