@@ -34,7 +34,7 @@ async def get_all_services():
         "global_intelligence": GlobalIntelligenceService(db)
     }
 
-@router.get("/api/phase-capabilities/complete-status")
+@router.get("/complete-status")
 async def get_complete_phase_status(
     current_user: User = Depends(get_current_user)
 ):
