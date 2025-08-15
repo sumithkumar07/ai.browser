@@ -163,7 +163,7 @@ App Mount → Context Initialization → Service Connection → UI Render → Us
 ```
 
 ### **2. API Integration Points**
-- **Backend URL**: `https://intellibrowse.preview.emergentagent.com`
+- **Backend URL**: `https://aria-browser-boost.preview.emergentagent.com`
 - **API Routes**: All prefixed with `/api`
 - **AI Services**: GROQ integration for chat and analysis
 - **Performance Metrics**: Real-time system monitoring
