@@ -471,10 +471,10 @@ class AIBrowserAPITester:
 
     def run_hybrid_ai_backend_testing(self):
         """Run comprehensive hybrid AI backend testing as per review request"""
-        print("🚀 HYBRID AI BACKEND TESTING REQUEST")
+        print("🚀 HYBRID AI BROWSER TESTING - Neon AI + Fellou.ai Integration")
         print("=" * 80)
-        print("Testing Hybrid AI Integration: Neon AI + Fellou.ai capabilities")
-        print("Focus: All 9+ hybrid AI endpoints, authentication, and API response quality")
+        print("Testing newly implemented hybrid AI capabilities that combine Neon AI browser")
+        print("features with Fellou.ai browser features while preserving existing functionality.")
         print("Base URL: https://ai-browser-blend.preview.emergentagent.com")
         print("=" * 80)
         
@@ -493,29 +493,41 @@ class AIBrowserAPITester:
         self.test_hybrid_capabilities()
         self.test_hybrid_metrics()
         
-        # 3) Neon AI Features Testing
-        print("\n" + "="*50)
-        print("🧠 NEON AI FEATURES TESTING")
-        print("="*50)
+        # 3) Neon AI Capabilities Testing
+        print("\n" + "="*60)
+        print("🧠 NEON AI CAPABILITIES TESTING")
+        print("="*60)
         self.test_neon_chat_enhanced()
         self.test_neon_focus_mode()
-        self.test_neon_intelligence()
-        self.test_neon_make_professional()
+        self.test_neon_do_automation()
+        self.test_neon_make_apps()
         
-        # 4) Fellou.ai Features Testing
-        print("\n" + "="*50)
-        print("🚀 FELLOU.AI FEATURES TESTING")
-        print("="*50)
+        # 4) Fellou.ai Capabilities Testing
+        print("\n" + "="*60)
+        print("🚀 FELLOU.AI CAPABILITIES TESTING")
+        print("="*60)
+        self.test_deep_action_workflows()
         self.test_deep_search_professional()
-        self.test_controllable_workflow_builder()
-        self.test_deep_action_orchestrator()
         self.test_agentic_memory_learning()
+        self.test_controllable_workflow_builder()
         
-        # 5) Frontend Integration Validation
-        print("\n" + "="*50)
-        print("🎨 FRONTEND INTEGRATION VALIDATION")
-        print("="*50)
-        self.test_frontend_integration_validation()
+        # 5) Hybrid Intelligence Testing
+        print("\n" + "="*60)
+        print("🎯 HYBRID INTELLIGENCE TESTING")
+        print("="*60)
+        self.test_hybrid_intelligence_synthesis()
+        self.test_hybrid_analysis()
+        
+        # 6) Integration & Performance Testing
+        print("\n" + "="*60)
+        print("⚡ INTEGRATION & PERFORMANCE TESTING")
+        print("="*60)
+        self.test_groq_ai_integration()
+        self.test_behavioral_learning_systems()
+        self.test_workflow_orchestration()
+        self.test_authentication_hybrid_endpoints()
+        self.test_performance_metrics_hybrid()
+        self.test_backward_compatibility_hybrid()
         
         # Print hybrid AI test results
         self.print_hybrid_ai_test_summary()
