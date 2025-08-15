@@ -17,6 +17,12 @@ from services.agentic_memory_service import AgenticMemoryService
 from services.deep_search_integration_service import DeepSearchIntegrationService
 from services.virtual_workspace_service import VirtualWorkspaceService
 from services.browser_engine_foundation_service import BrowserEngineFoundationService
+from services.electron_service import ElectronService
+from services.workspace_service import WorkspaceService
+from services.engine_service import EngineService
+from services.os_integration_service import OSIntegrationService
+from services.memory_service import MemoryService
+from services.search_service import SearchService
 
 router = APIRouter()
 
