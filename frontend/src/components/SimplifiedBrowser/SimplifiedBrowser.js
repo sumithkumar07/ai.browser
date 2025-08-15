@@ -244,6 +244,9 @@ export default function SimplifiedBrowser() {
           console.error('Downloads error:', error);
         }
         break;
+      case 'hybrid_features':
+        setShowHybridPanel(true);
+        break;
       default:
         console.log('Quick action:', action);
     }
