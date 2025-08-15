@@ -503,3 +503,72 @@ async def get_comprehensive_hybrid_status():
     except Exception as e:
         logging.error(f"Comprehensive status error: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Status check failed: {str(e)}")
+
+# ===============================
+# PHASE 2: BROWSER ENGINE FOUNDATION
+# ===============================
+
+# Electron Hybrid Browser Endpoints
+@router.post("/phase2/electron/initialize-browser")
+async def initialize_electron_browser(config: Optional[Dict] = None):
+    """🌐 Initialize Electron-based browser instance"""
+    try:
+        result = await electron_service.initialize_electron_browser(config)
+        return JSONResponse(content=result)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/phase2/electron/create-window/{browser_id}")
+async def create_browser_window(
+    browser_id: str,
+    window_config: Optional[Dict] = None
+):
+    """🌐 Create a new browser window with native features"""
+    try:
+        result = await electron_service.create_browser_window(browser_id, window_config)
+        return JSONResponse(content=result)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/phase2/electron/navigate/{window_id}")
+async def navigate_browser_window(
+    window_id: str,
+    url: str,
+    options: Optional[Dict] = None
+):
+    """🌐 Navigate browser window with enhanced capabilities"""
+    try:
+        result = await electron_service.navigate_browser_window(window_id, url, options)
+        return JSONResponse(content=result)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/phase2/electron/performance/{browser_id}")
+async def get_browser_performance_metrics(browser_id: Optional[str] = None):
+    """🌐 Get comprehensive performance metrics"""
+    try:
+        result = await electron_service.get_browser_performance_metrics(browser_id)
+        return JSONResponse(content=result)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/phase2/electron/install-extension/{browser_id}")
+async def install_browser_extension(
+    browser_id: str,
+    extension_data: Dict
+):
+    """🌐 Install browser extension with native capabilities"""
+    try:
+        result = await electron_service.install_browser_extension(browser_id, extension_data)
+        return JSONResponse(content=result)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/phase2/electron/status")
+async def get_browser_status(browser_id: Optional[str] = None):
+    """🌐 Get comprehensive browser status"""
+    try:
+        result = await electron_service.get_browser_status(browser_id)
+        return JSONResponse(content=result)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
