@@ -5,6 +5,7 @@ Implements natural language to complex workflow conversion with execution engine
 
 import asyncio
 import json
+import os
 from typing import Dict, List, Any, Optional
 from datetime import datetime
 import uuid
