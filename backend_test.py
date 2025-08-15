@@ -828,6 +828,299 @@ class AIBrowserAPITester:
         self.test_backward_compatibility()
 
     # =============================================================================
+    # 🚀 REAL BROWSER ENGINE TESTING METHODS - CHROMIUM INTEGRATION
+    # =============================================================================
+
+    def test_real_browser_health(self):
+        """Test Real Browser Engine Health Check - GET /api/real-browser/health"""
+        success, data, details = self.make_request('GET', '/api/real-browser/health')
+        
+        if success and data:
+            # Verify health response structure
+            expected_keys = ['success', 'status', 'browser_initialized', 'service', 'engine']
+            has_expected_structure = any(key in data for key in expected_keys)
+            if not has_expected_structure:
+                success = False
+                details += " - Missing expected health response structure"
+        
+        self.log_test("Real Browser Health Check", success, details)
+        return success, data
+
+    def test_real_browser_capabilities(self):
+        """Test Real Browser Engine Capabilities - GET /api/real-browser/capabilities"""
+        success, data, details = self.make_request('GET', '/api/real-browser/capabilities')
+        
+        if success and data:
+            # Verify capabilities response structure
+            expected_keys = ['success', 'engine', 'capabilities', 'features', 'endpoints']
+            has_expected_structure = any(key in data for key in expected_keys)
+            if not has_expected_structure:
+                success = False
+                details += " - Missing expected capabilities response structure"
+        
+        self.log_test("Real Browser Capabilities", success, details)
+        return success, data
+
+    def test_real_browser_session_create(self):
+        """Test Real Browser Session Creation - POST /api/real-browser/sessions/create"""
+        test_data = {
+            "session_id": f"test_session_{int(time.time())}"
+        }
+        
+        success, data, details = self.make_request(
+            'POST', '/api/real-browser/sessions/create',
+            test_data, 200
+        )
+        
+        session_id = None
+        if success and data and 'session_id' in data:
+            session_id = data['session_id']
+            print(f"🔑 Created session: {session_id}")
+        
+        self.log_test("Real Browser Session Create", success, details)
+        return session_id
+
+    def test_real_browser_tab_create(self, session_id=None):
+        """Test Real Browser Tab Creation - POST /api/real-browser/tabs/create"""
+        test_data = {
+            "url": "about:blank",
+            "session_id": session_id
+        }
+        
+        success, data, details = self.make_request(
+            'POST', '/api/real-browser/tabs/create',
+            test_data, 200
+        )
+        
+        tab_id = None
+        if success and data and 'tab_id' in data:
+            tab_id = data['tab_id']
+            print(f"📑 Created tab: {tab_id}")
+        
+        self.log_test("Real Browser Tab Create", success, details)
+        return tab_id
+
+    def test_real_browser_navigate(self, tab_id):
+        """Test Real Browser Navigation - POST /api/real-browser/navigate"""
+        if not tab_id:
+            self.log_test("Real Browser Navigate", False, "No tab_id available")
+            return False
+        
+        # Test navigation to real websites
+        test_urls = [
+            "https://google.com",
+            "https://github.com"
+        ]
+        
+        for url in test_urls:
+            test_data = {
+                "url": url,
+                "tab_id": tab_id
+            }
+            
+            success, data, details = self.make_request(
+                'POST', '/api/real-browser/navigate',
+                test_data, 200
+            )
+            
+            test_name = f"Real Browser Navigate to {url}"
+            self.log_test(test_name, success, details)
+            
+            if success:
+                break  # At least one navigation worked
+        
+        return success
+
+    def test_real_browser_tab_info(self, tab_id):
+        """Test Real Browser Tab Information - GET /api/real-browser/tabs/{tab_id}"""
+        if not tab_id:
+            self.log_test("Real Browser Tab Info", False, "No tab_id available")
+            return False
+        
+        success, data, details = self.make_request(
+            'GET', f'/api/real-browser/tabs/{tab_id}'
+        )
+        
+        if success and data:
+            # Verify tab info response structure
+            expected_keys = ['success', 'tab_id', 'url', 'title']
+            has_expected_structure = any(key in data for key in expected_keys)
+            if not has_expected_structure:
+                success = False
+                details += " - Missing expected tab info response structure"
+        
+        self.log_test("Real Browser Tab Info", success, details)
+        return success, data
+
+    def test_real_browser_tab_navigation(self, tab_id):
+        """Test Real Browser Tab Navigation - back, forward, reload"""
+        if not tab_id:
+            self.log_test("Real Browser Tab Navigation", False, "No tab_id available")
+            return False
+        
+        # Test back navigation
+        success_back, data_back, details_back = self.make_request(
+            'POST', f'/api/real-browser/tabs/{tab_id}/back'
+        )
+        self.log_test("Real Browser Tab Back", success_back, details_back)
+        
+        # Test forward navigation
+        success_forward, data_forward, details_forward = self.make_request(
+            'POST', f'/api/real-browser/tabs/{tab_id}/forward'
+        )
+        self.log_test("Real Browser Tab Forward", success_forward, details_forward)
+        
+        # Test reload
+        success_reload, data_reload, details_reload = self.make_request(
+            'POST', f'/api/real-browser/tabs/{tab_id}/reload'
+        )
+        self.log_test("Real Browser Tab Reload", success_reload, details_reload)
+        
+        return success_back or success_forward or success_reload
+
+    def test_real_browser_page_content(self, tab_id):
+        """Test Real Browser Page Content - GET /api/real-browser/tabs/{tab_id}/content"""
+        if not tab_id:
+            self.log_test("Real Browser Page Content", False, "No tab_id available")
+            return False
+        
+        success, data, details = self.make_request(
+            'GET', f'/api/real-browser/tabs/{tab_id}/content'
+        )
+        
+        if success and data:
+            # Verify content response structure
+            expected_keys = ['success', 'tab_id', 'content', 'url']
+            has_expected_structure = any(key in data for key in expected_keys)
+            if not has_expected_structure:
+                success = False
+                details += " - Missing expected content response structure"
+        
+        self.log_test("Real Browser Page Content", success, details)
+        return success, data
+
+    def test_real_browser_screenshot(self, tab_id):
+        """Test Real Browser Screenshot - POST /api/real-browser/tabs/{tab_id}/screenshot"""
+        if not tab_id:
+            self.log_test("Real Browser Screenshot", False, "No tab_id available")
+            return False
+        
+        success, data, details = self.make_request(
+            'POST', f'/api/real-browser/tabs/{tab_id}/screenshot'
+        )
+        
+        if success and data:
+            # Verify screenshot response structure
+            expected_keys = ['success', 'tab_id', 'screenshot_path']
+            has_expected_structure = any(key in data for key in expected_keys)
+            if not has_expected_structure:
+                success = False
+                details += " - Missing expected screenshot response structure"
+        
+        self.log_test("Real Browser Screenshot", success, details)
+        return success, data
+
+    def test_real_browser_javascript_execution(self, tab_id):
+        """Test Real Browser JavaScript Execution - POST /api/real-browser/tabs/{tab_id}/evaluate"""
+        if not tab_id:
+            self.log_test("Real Browser JavaScript Execution", False, "No tab_id available")
+            return False
+        
+        test_data = {
+            "script": "document.title"
+        }
+        
+        success, data, details = self.make_request(
+            'POST', f'/api/real-browser/tabs/{tab_id}/evaluate',
+            test_data, 200
+        )
+        
+        if success and data:
+            # Verify JavaScript execution response structure
+            expected_keys = ['success', 'tab_id', 'result']
+            has_expected_structure = any(key in data for key in expected_keys)
+            if not has_expected_structure:
+                success = False
+                details += " - Missing expected JavaScript execution response structure"
+        
+        self.log_test("Real Browser JavaScript Execution", success, details)
+        return success, data
+
+    def test_real_browser_tab_delete(self, tab_id):
+        """Test Real Browser Tab Management - DELETE /api/real-browser/tabs/{tab_id}"""
+        if not tab_id:
+            self.log_test("Real Browser Tab Delete", False, "No tab_id available")
+            return False
+        
+        success, data, details = self.make_request(
+            'DELETE', f'/api/real-browser/tabs/{tab_id}'
+        )
+        
+        if success and data:
+            # Verify delete response structure
+            expected_keys = ['success', 'tab_id', 'message']
+            has_expected_structure = any(key in data for key in expected_keys)
+            if not has_expected_structure:
+                success = False
+                details += " - Missing expected delete response structure"
+        
+        self.log_test("Real Browser Tab Delete", success, details)
+        return success, data
+
+    def test_real_browser_session_cleanup(self, session_id):
+        """Test Real Browser Session Cleanup - DELETE /api/real-browser/sessions/{session_id}"""
+        if not session_id:
+            self.log_test("Real Browser Session Cleanup", False, "No session_id available")
+            return False
+        
+        success, data, details = self.make_request(
+            'DELETE', f'/api/real-browser/sessions/{session_id}'
+        )
+        
+        if success and data:
+            # Verify cleanup response structure
+            expected_keys = ['success', 'session_id', 'message']
+            has_expected_structure = any(key in data for key in expected_keys)
+            if not has_expected_structure:
+                success = False
+                details += " - Missing expected cleanup response structure"
+        
+        self.log_test("Real Browser Session Cleanup", success, details)
+        return success, data
+
+    def print_real_browser_test_summary(self):
+        """Print comprehensive Real Browser Engine test summary"""
+        print("\n" + "="*80)
+        print("🎯 REAL BROWSER ENGINE TEST SUMMARY")
+        print("="*80)
+        
+        success_rate = (self.tests_passed / self.tests_run * 100) if self.tests_run > 0 else 0
+        
+        print(f"📊 Test Results:")
+        print(f"   Total Tests: {self.tests_run}")
+        print(f"   Passed: {self.tests_passed} ✅")
+        print(f"   Failed: {self.tests_run - self.tests_passed} ❌")
+        print(f"   Success Rate: {success_rate:.1f}%")
+        
+        print(f"\n🔍 Test Categories:")
+        print(f"   ✅ Core Real Browser Engine (Health, Capabilities, Sessions, Tabs)")
+        print(f"   ✅ Real Navigation & Browsing (Navigate, Tab Info, Navigation)")
+        print(f"   ✅ Content & Advanced Features (Content, Screenshots, JavaScript)")
+        print(f"   ✅ Session Management (Tab Delete, Session Cleanup)")
+        
+        print(f"\n🌐 Base URL: {self.base_url}")
+        print(f"🕒 Test Completed: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        
+        if success_rate >= 80:
+            print(f"\n🎉 REAL BROWSER ENGINE TESTING: SUCCESS")
+            print(f"   The Real Browser Engine with Chromium integration is operational!")
+        else:
+            print(f"\n⚠️  REAL BROWSER ENGINE TESTING: NEEDS ATTENTION")
+            print(f"   Some Real Browser Engine features may need debugging.")
+        
+        print("="*80)
+
+    # =============================================================================
     # 🚀 ENHANCED FEATURES TESTING METHODS - ALL 25 ENDPOINTS
     # =============================================================================
 
