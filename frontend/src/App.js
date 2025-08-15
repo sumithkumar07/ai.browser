@@ -7,6 +7,7 @@ import AIContextProvider from './contexts/AIContext';
 import UserContextProvider from './contexts/UserContext';
 import PerformanceContextProvider from './contexts/PerformanceContext';
 import AccessibilityContextProvider from './contexts/AccessibilityContext';
+import { ParallelFeaturesProvider } from './contexts/ParallelFeaturesContext';
 import MainBrowser from './components/MainBrowser/MainBrowser';
 import AuthWrapper from './components/Auth/AuthWrapper';
 import './App.css';
