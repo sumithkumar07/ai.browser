@@ -167,7 +167,7 @@ async def api_gateway_request(
             detail=f"API gateway request failed: {str(e)}"
         )
 
-@router.post("/api/ecosystem/webhook")
+@router.post("/webhook")
 async def process_webhook(
     webhook_data: WebhookEvent,
     ecosystem_service: EcosystemIntegrationService = Depends(get_ecosystem_service)
