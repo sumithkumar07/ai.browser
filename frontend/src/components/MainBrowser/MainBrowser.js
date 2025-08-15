@@ -533,48 +533,6 @@ export default function MainBrowser() {
         </motion.button>
       )}
 
-      {/* Enhanced Action Buttons - Quick Access to New Features */}
-      {discoveryMode && (
-        <motion.div
-          initial={{ opacity: 0, y: 100 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 100 }}
-          className="fixed bottom-20 right-6 w-80 bg-gradient-to-br from-purple-900/95 to-blue-900/95 backdrop-blur-md rounded-xl border border-purple-500/30 shadow-2xl p-4 z-50"
-        >
-          <div className="flex justify-between items-center mb-3">
-            <h3 className="text-white font-semibold">🚀 New AI Features!</h3>
-            <button
-              onClick={() => setDiscoveryMode(false)}
-              className="text-gray-400 hover:text-white"
-            >
-              ✕
-            </button>
-          </div>
-          <p className="text-gray-300 text-sm mb-3">
-            Your hybrid AI browser now has 6 new cutting-edge features!
-          </p>
-          <div className="space-y-2">
-            <button
-              onClick={() => {
-                setShowFeaturePanel(true);
-                setDiscoveryMode(false);
-              }}
-              className="w-full px-3 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm rounded-lg transition-colors"
-            >
-              🔍 Explore New Features
-            </button>
-            <button
-              onClick={() => {
-                toggleAssistant();
-                setDiscoveryMode(false);
-              }}
-              className="w-full px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-lg transition-colors"
-            >
-              🧠 Try ARIA Enhanced AI
-            </button>
-          </div>
-        </motion.div>
-      )}
     </div>
   );
 }
