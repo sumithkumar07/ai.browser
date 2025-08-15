@@ -6,6 +6,7 @@ Implements parallel authenticated searches across multiple platforms
 import asyncio
 import json
 import os
+import uuid
 from typing import Dict, List, Any, Optional
 from datetime import datetime, timedelta
 import sqlite3
