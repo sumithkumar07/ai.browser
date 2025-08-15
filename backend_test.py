@@ -3478,7 +3478,7 @@ def main():
     if len(sys.argv) > 1:
         test_type = sys.argv[1].lower()
     else:
-        test_type = "real_browser"  # Default to Real Browser Engine testing as per review request
+        test_type = "unified"  # Default to Unified Browser testing as per review request
     
     print(f"🚀 BACKEND TESTING - {test_type.upper()}")
     print("Testing against: https://chromium-tests.preview.emergentagent.com")
@@ -3486,7 +3486,10 @@ def main():
     tester = AIBrowserAPITester("https://chromium-tests.preview.emergentagent.com")
     
     try:
-        if test_type == "real_browser":
+        if test_type == "unified":
+            print("🚀 Running Unified AI Browser Testing...")
+            success = tester.run_unified_browser_testing()
+        elif test_type == "real_browser":
             print("🚀 Running Real Browser Engine Testing...")
             success = tester.run_real_browser_engine_testing()
         elif test_type == "hybrid":
@@ -3502,8 +3505,8 @@ def main():
             print("🚀 Running Enhanced Features Testing...")
             success = tester.run_enhanced_features_testing()
         else:
-            print("🚀 Running Real Browser Engine Testing (default)...")
-            success = tester.run_real_browser_engine_testing()
+            print("🚀 Running Unified AI Browser Testing (default)...")
+            success = tester.run_unified_browser_testing()
         
         return 0 if success else 1
     except KeyboardInterrupt:
