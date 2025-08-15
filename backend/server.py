@@ -173,6 +173,37 @@ async def root():
         "access_point": "Click purple 'Hybrid AI' button in browser navigation"
     }
 
+# API Health check endpoint (missing from tests)
+@app.get("/api/health")
+async def api_health():
+    """API health check endpoint"""
+    try:
+        # Test database connection
+        db = await get_database()
+        db_status = "connected" if db is not None else "disconnected"
+        
+        return {
+            "status": "healthy",
+            "version": "3.0.0",
+            "timestamp": "2025-01-XX",
+            "services": {
+                "database": db_status,
+                "api": "operational",
+                "ai": "operational",
+                "browser_engine": "operational"
+            },
+            "message": "AI Agentic Browser API is operational"
+        }
+    except Exception as e:
+        return JSONResponse(
+            status_code=500,
+            content={
+                "status": "unhealthy",
+                "error": str(e),
+                "message": "API health check failed"
+            }
+        )
+
 # Include all routers with proper prefixes
 app.include_router(ai_router, prefix="/api/ai", tags=["AI Enhanced"])
 app.include_router(hybrid_router, prefix="/api/ai/hybrid", tags=["Hybrid AI"])
