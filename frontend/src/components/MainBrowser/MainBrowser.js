@@ -500,6 +500,78 @@ export default function MainBrowser() {
       
       {/* Interactive Tutorial */}
       <InteractiveTutorial />
+
+      {/* 🚀 ENHANCED FEATURE DISCOVERY PANEL */}
+      <HybridFeaturePanel 
+        isVisible={showFeaturePanel}
+        onClose={() => setShowFeaturePanel(false)}
+      />
+
+      {/* Feature Discovery Button */}
+      {!showFeaturePanel && (
+        <motion.button
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={() => setShowFeaturePanel(true)}
+          className="fixed right-6 bottom-6 w-14 h-14 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-full flex items-center justify-center text-white shadow-lg hover:shadow-emerald-500/25 transition-all duration-300 z-50"
+          title="Discover Hybrid AI Features"
+        >
+          <Layers size={24} />
+          {/* New Features Indicator */}
+          <motion.div
+            animate={{ scale: [1, 1.2, 1] }}
+            transition={{ repeat: Infinity, duration: 2 }}
+            className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center text-xs font-bold"
+          >
+            6
+          </motion.div>
+        </motion.button>
+      )}
+
+      {/* Enhanced Action Buttons - Quick Access to New Features */}
+      {discoveryMode && (
+        <motion.div
+          initial={{ opacity: 0, y: 100 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 100 }}
+          className="fixed bottom-20 right-6 w-80 bg-gradient-to-br from-purple-900/95 to-blue-900/95 backdrop-blur-md rounded-xl border border-purple-500/30 shadow-2xl p-4 z-50"
+        >
+          <div className="flex justify-between items-center mb-3">
+            <h3 className="text-white font-semibold">🚀 New AI Features!</h3>
+            <button
+              onClick={() => setDiscoveryMode(false)}
+              className="text-gray-400 hover:text-white"
+            >
+              ✕
+            </button>
+          </div>
+          <p className="text-gray-300 text-sm mb-3">
+            Your hybrid AI browser now has 6 new cutting-edge features!
+          </p>
+          <div className="space-y-2">
+            <button
+              onClick={() => {
+                setShowFeaturePanel(true);
+                setDiscoveryMode(false);
+              }}
+              className="w-full px-3 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm rounded-lg transition-colors"
+            >
+              🔍 Explore New Features
+            </button>
+            <button
+              onClick={() => {
+                toggleAssistant();
+                setDiscoveryMode(false);
+              }}
+              className="w-full px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-lg transition-colors"
+            >
+              🧠 Try ARIA Enhanced AI
+            </button>
+          </div>
+        </motion.div>
+      )}
     </div>
   );
 }
