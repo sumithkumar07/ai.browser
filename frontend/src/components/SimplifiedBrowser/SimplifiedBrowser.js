@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import HybridBrowserPanel from '../HybridBrowser/HybridBrowserPanel';
 import HybridBrowserService from '../../services/HybridBrowserService';
+import RealBrowserInterface from '../RealBrowser/RealBrowserInterface';
 
 export default function SimplifiedBrowser() {
   // Simplified state management - focusing only on essentials
