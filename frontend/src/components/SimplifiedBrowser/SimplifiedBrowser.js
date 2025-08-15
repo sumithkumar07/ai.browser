@@ -466,8 +466,8 @@ export default function SimplifiedBrowser() {
                         : 'bg-gray-800/50 hover:bg-gray-700/50'
                     }`}
                   >
-                    <item.icon size={24} className="mx-auto mb-2 text-gray-400" />
-                    <div className="text-sm text-gray-300">{item.text}</div>
+                    <item.icon size={24} className={`mx-auto mb-2 ${item.special ? 'text-purple-300' : 'text-gray-400'}`} />
+                    <div className={`text-sm ${item.special ? 'text-purple-200' : 'text-gray-300'}`}>{item.text}</div>
                   </motion.button>
                 ))}
               </div>
