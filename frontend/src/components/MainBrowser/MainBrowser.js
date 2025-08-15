@@ -18,6 +18,9 @@ import SmartFeatureHighlight from '../FeatureDiscovery/SmartFeatureHighlight';
 import HybridFeaturePanel from '../FeatureDiscovery/HybridFeaturePanel';
 import FeatureTooltips from '../FeatureDiscovery/FeatureTooltips';
 
+// Import minimal enhanced features integration
+import FloatingActionButton from '../EnhancedFeatures/FloatingActionButton';
+
 // Icons
 import { 
   Brain, 
