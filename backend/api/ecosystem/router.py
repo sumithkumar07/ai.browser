@@ -133,7 +133,7 @@ async def sync_mobile_companion(
             detail=f"Mobile companion sync failed: {str(e)}"
         )
 
-@router.post("/api/ecosystem/api-gateway")
+@router.post("/api-gateway")
 async def api_gateway_request(
     request_data: APIGatewayRequest,
     api_key: str,
