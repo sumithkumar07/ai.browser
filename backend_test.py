@@ -534,6 +534,68 @@ class AIBrowserAPITester:
         
         return self.tests_passed == self.tests_run
 
+    def run_enhanced_features_testing(self):
+        """Run comprehensive testing for ALL 25 enhanced features endpoints as per review request"""
+        print("🚀 COMPREHENSIVE ENHANCED FEATURES TESTING")
+        print("=" * 80)
+        print("Testing ALL 25 newly implemented enhanced features API endpoints")
+        print("Base URL: https://neon-hybrid-browser.preview.emergentagent.com")
+        print("=" * 80)
+        
+        # 1) Authentication setup
+        print("\n🔐 Setting up Authentication...")
+        register_success = self.test_register_specific_user()
+        login_success = self.test_login_specific_user()
+        
+        if not login_success:
+            print("❌ Authentication failed - cannot proceed with enhanced features tests")
+            return False
+        
+        # 2) Core functionality testing
+        print("\n🏥 Testing Core Functionality...")
+        health_success = self.test_health_check()
+        
+        # 3) ADVANCED NAVIGATION FEATURES (4 endpoints)
+        print("\n" + "="*60)
+        print("🧭 ADVANCED NAVIGATION FEATURES TESTING (4 endpoints)")
+        print("="*60)
+        self.test_enhanced_navigation_features()
+        
+        # 4) SMART PRODUCTIVITY FEATURES (4 endpoints)
+        print("\n" + "="*60)
+        print("⚡ SMART PRODUCTIVITY FEATURES TESTING (4 endpoints)")
+        print("="*60)
+        self.test_enhanced_productivity_features()
+        
+        # 5) PERFORMANCE OPTIMIZATION FEATURES (5 endpoints)
+        print("\n" + "="*60)
+        print("🚀 PERFORMANCE OPTIMIZATION FEATURES TESTING (5 endpoints)")
+        print("="*60)
+        self.test_enhanced_performance_features()
+        
+        # 6) ADVANCED AI INTERFACE FEATURES (6 endpoints)
+        print("\n" + "="*60)
+        print("🤖 ADVANCED AI INTERFACE FEATURES TESTING (6 endpoints)")
+        print("="*60)
+        self.test_enhanced_ai_interface_features()
+        
+        # 7) FEATURE DISCOVERY & MANAGEMENT (4 endpoints)
+        print("\n" + "="*60)
+        print("🔍 FEATURE DISCOVERY & MANAGEMENT TESTING (4 endpoints)")
+        print("="*60)
+        self.test_enhanced_feature_discovery()
+        
+        # 8) Integration and validation testing
+        print("\n" + "="*60)
+        print("🔗 INTEGRATION & VALIDATION TESTING")
+        print("="*60)
+        self.test_enhanced_features_integration()
+        
+        # Print comprehensive results
+        self.print_enhanced_features_test_summary()
+        
+        return self.tests_passed == self.tests_run
+
     def run_comprehensive_all_phases_testing(self):
         """Run comprehensive testing for ALL 4 phases as per review request"""
         print("🚀 COMPREHENSIVE AI AGENTIC BROWSER BACKEND TESTING")
