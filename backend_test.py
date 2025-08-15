@@ -653,48 +653,55 @@ class AIBrowserAPITester:
         
         return self.tests_passed == self.tests_run
 
-    def run_real_browser_engine_testing(self):
-        """Run comprehensive Real Browser Engine testing as per review request"""
-        print("🚀 REAL BROWSER ENGINE TESTING - Chromium Integration")
+    def run_unified_browser_testing(self):
+        """Run comprehensive Unified AI Browser testing as per review request"""
+        print("🚀 UNIFIED AI BROWSER TESTING - Enhanced Real Browser Implementation")
         print("=" * 80)
-        print("Testing newly implemented Real Browser Engine capabilities with Chromium integration")
+        print("Testing newly implemented Unified Browser with Enhanced Real Browser Engine")
         print("Base URL: https://chromium-tests.preview.emergentagent.com")
         print("=" * 80)
         
-        # Priority 1: Core Real Browser Engine
+        # Priority 1: Enhanced Real Browser Engine Health
         print("\n" + "="*60)
-        print("🔧 PRIORITY 1: CORE REAL BROWSER ENGINE")
+        print("🔧 PRIORITY 1: ENHANCED REAL BROWSER ENGINE")
         print("="*60)
-        self.test_real_browser_health()
-        self.test_real_browser_capabilities()
-        session_id = self.test_real_browser_session_create()
-        tab_id = self.test_real_browser_tab_create(session_id)
+        self.test_enhanced_real_browser_health()
+        self.test_enhanced_real_browser_capabilities()
         
-        # Priority 2: Real Navigation & Browsing
+        # Priority 2: Enhanced Session & Tab Management
         print("\n" + "="*60)
-        print("🌐 PRIORITY 2: REAL NAVIGATION & BROWSING")
+        print("🌐 PRIORITY 2: ENHANCED SESSION & TAB MANAGEMENT")
         print("="*60)
-        self.test_real_browser_navigate(tab_id)
-        self.test_real_browser_tab_info(tab_id)
-        self.test_real_browser_tab_navigation(tab_id)
+        session_id = self.test_enhanced_session_create()
+        tab_id = self.test_enhanced_tab_create(session_id)
+        self.test_enhanced_tab_info(tab_id)
         
-        # Priority 3: Content & Advanced Features
+        # Priority 3: Enhanced Navigation with AI
         print("\n" + "="*60)
-        print("🎯 PRIORITY 3: CONTENT & ADVANCED FEATURES")
+        print("🎯 PRIORITY 3: ENHANCED NAVIGATION WITH AI")
         print("="*60)
-        self.test_real_browser_page_content(tab_id)
-        self.test_real_browser_screenshot(tab_id)
-        self.test_real_browser_javascript_execution(tab_id)
+        self.test_enhanced_navigate_to_url(tab_id)
+        self.test_enhanced_tab_navigation(tab_id)
         
-        # Cleanup
+        # Priority 4: Enhanced Content & AI Analysis
         print("\n" + "="*60)
-        print("🧹 CLEANUP & SESSION MANAGEMENT")
+        print("🧠 PRIORITY 4: ENHANCED CONTENT & AI ANALYSIS")
         print("="*60)
-        self.test_real_browser_tab_delete(tab_id)
-        self.test_real_browser_session_cleanup(session_id)
+        self.test_enhanced_page_content(tab_id)
+        self.test_enhanced_screenshot(tab_id)
+        self.test_enhanced_content_analysis(tab_id)
+        self.test_enhanced_javascript_execution(tab_id)
+        
+        # Priority 5: Enhanced Session Management
+        print("\n" + "="*60)
+        print("🧹 PRIORITY 5: ENHANCED SESSION MANAGEMENT")
+        print("="*60)
+        self.test_enhanced_sessions_list()
+        self.test_enhanced_tab_close(tab_id)
+        self.test_enhanced_session_cleanup(session_id)
         
         # Print final results
-        self.print_real_browser_test_summary()
+        self.print_unified_browser_test_summary()
         
         return self.tests_passed == self.tests_run
 
