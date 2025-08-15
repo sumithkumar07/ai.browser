@@ -57,14 +57,14 @@ app.add_middleware(
 security = HTTPBearer()
 
 # Include routers with API prefix
-# app.include_router(user_router, prefix="/api/users", tags=["users"])
+app.include_router(user_router, prefix="/api/users", tags=["users"])
 app.include_router(browser_router, prefix="/api/browser", tags=["browser"])
 app.include_router(ai_router, prefix="/api/ai", tags=["ai_agents"])
-# app.include_router(enhanced_ai_router, prefix="/api/ai/enhanced", tags=["enhanced_ai"])
+app.include_router(enhanced_ai_router, prefix="/api/ai/enhanced", tags=["enhanced_ai"])
 # app.include_router(hybrid_ai_router, prefix="/api/ai/hybrid", tags=["hybrid_ai"])
-# app.include_router(automation_router, prefix="/api/automation", tags=["automation"])
-# app.include_router(enhanced_automation_router, prefix="/api/automation/enhanced", tags=["enhanced_automation"])
-# app.include_router(content_router, prefix="/api/content", tags=["content"])
+app.include_router(automation_router, prefix="/api/automation", tags=["automation"])
+app.include_router(enhanced_automation_router, prefix="/api/automation/enhanced", tags=["enhanced_automation"])
+app.include_router(content_router, prefix="/api/content", tags=["content"])
 
 # Include Phase 2-4 advanced routers with proper prefixes - TEMPORARILY DISABLED FOR DEBUGGING
 # app.include_router(ecosystem_router, prefix="/api/ecosystem", tags=["ecosystem_integration"])
