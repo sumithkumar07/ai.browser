@@ -38,7 +38,16 @@ export default function EnhancedAIAssistant() {
   const callAPI = async (endpoint, data) => {
     try {
       setIsProcessing(true);
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/ai/enhanced/${endpoint}`, {
+      
+      // 🚀 HYBRID AI API ROUTING - Enhanced with Neon + Fellou.ai capabilities
+      let apiUrl = `${process.env.REACT_APP_BACKEND_URL}/api/ai/enhanced/${endpoint}`;
+      
+      // Route hybrid AI endpoints to the hybrid router
+      if (endpoint.startsWith('neon-') || endpoint.startsWith('deep-') || endpoint.includes('hybrid')) {
+        apiUrl = `${process.env.REACT_APP_BACKEND_URL}/api/ai/hybrid/${endpoint}`;
+      }
+      
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -50,13 +59,14 @@ export default function EnhancedAIAssistant() {
       const result = await response.json();
       setLastResult(result);
       
-      // Add result to chat
+      // Add result to chat with hybrid AI indicator
       addChatMessage({
         id: Date.now(),
         type: 'ai',
-        content: JSON.stringify(result, null, 2),
+        content: result.response || JSON.stringify(result, null, 2),
         timestamp: new Date(),
-        feature: endpoint
+        feature: endpoint,
+        hybrid_powered: endpoint.startsWith('neon-') || endpoint.startsWith('deep-') || endpoint.includes('hybrid')
       });
       
       return result;
