@@ -41,7 +41,14 @@ const initialState = {
     professionalResearch: true,       // Deep Search active
     appGeneration: true,              // Neon Make active
     crossPlatformSync: true,          // External integrations active
-    realTimeIntelligence: true        // Live analysis active
+    realTimeIntelligence: true,       // Live analysis active
+    // 🚀 NEW ADVANCED FEATURES
+    smartBookmarkIntelligence: true,  // AI bookmark management
+    contextAwareSuggestions: true,    // Proactive AI assistance
+    aiBrowserPlugins: true,           // Dynamic plugin generation
+    realTimeCollaboration: true,      // Multi-user AI collaboration
+    predictiveContentCaching: true,   // AI-powered pre-loading
+    seamlessIntegration: true         // Perfect Neon+Fellou harmony
   },
   agenticMemory: {
     learningScore: 0,
