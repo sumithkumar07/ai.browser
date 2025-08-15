@@ -217,7 +217,9 @@ export default function MainBrowser() {
                       description: "Real-time collaboration, industry intelligence, visual & audio analysis",
                       gradient: "from-purple-500/20 to-blue-500/20",
                       border: "border-purple-500/30",
-                      features: ["Collaborative Analysis", "Industry-Specific", "Visual Intelligence", "Audio Processing"]
+                      features: ["Collaborative Analysis", "Industry-Specific", "Visual Intelligence", "Audio Processing"],
+                      featureId: "advanced_ai",
+                      isEnhanced: true
                     },
                     {
                       icon: Sparkles,
@@ -225,7 +227,10 @@ export default function MainBrowser() {
                       description: "Neon AI + Fellou.ai integration with behavioral learning",
                       gradient: "from-blue-500/20 to-cyan-500/20",
                       border: "border-blue-500/30",
-                      features: ["Neon Chat Enhanced", "Deep Search Pro", "Agentic Memory", "Workflow Builder"]
+                      features: ["Neon Chat Enhanced", "Deep Search Pro", "Agentic Memory", "Workflow Builder"],
+                      featureId: "hybrid_intelligence",
+                      isEnhanced: true,
+                      hasNewFeatures: true
                     },
                     {
                       icon: BarChart3,
@@ -233,7 +238,9 @@ export default function MainBrowser() {
                       description: "Research, trends, and visual reports with export capabilities",
                       gradient: "from-green-500/20 to-teal-500/20",
                       border: "border-green-500/30",
-                      features: ["Academic Research", "Trend Detection", "Knowledge Graphs", "Visual Reports"]
+                      features: ["Academic Research", "Trend Detection", "Knowledge Graphs", "Visual Reports"],
+                      featureId: "professional_reports",
+                      isEnhanced: true
                     },
                     {
                       icon: Zap,
@@ -241,31 +248,58 @@ export default function MainBrowser() {
                       description: "Content generation, code creation, and workflow automation",
                       gradient: "from-amber-500/20 to-orange-500/20",
                       border: "border-amber-500/30",
-                      features: ["Content Generation", "Code Creation", "Data Visualization", "Smart Automation"]
+                      features: ["Content Generation", "Code Creation", "Data Visualization", "Smart Automation"],
+                      featureId: "creative_automation",
+                      isEnhanced: true
                     }
                   ].map((feature, index) => (
-                    <motion.div
+                    <SmartFeatureHighlight
                       key={feature.title}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.6 + index * 0.1 }}
-                      whileHover={{ scale: 1.02, y: -5 }}
-                      className={`bg-gradient-to-br ${feature.gradient} backdrop-blur-lg border ${feature.border} rounded-2xl p-6 space-y-4 hover:shadow-2xl transition-all duration-300`}
+                      featureId={feature.featureId}
+                      title={feature.title}
+                      description={feature.description}
+                      isNew={feature.hasNewFeatures}
                     >
-                      <div className="flex items-center space-x-3">
-                        <feature.icon size={28} className="text-white" />
-                        <h3 className="text-lg font-semibold text-white">{feature.title}</h3>
-                      </div>
-                      <p className="text-gray-300 text-sm leading-relaxed">{feature.description}</p>
-                      <div className="space-y-1">
-                        {feature.features.map((item, i) => (
-                          <div key={i} className="text-xs text-gray-400 flex items-center">
-                            <span className="w-1 h-1 bg-gray-400 rounded-full mr-2"></span>
-                            {item}
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.6 + index * 0.1 }}
+                        whileHover={{ scale: 1.02, y: -5 }}
+                        className={`relative bg-gradient-to-br ${feature.gradient} backdrop-blur-lg border ${feature.border} rounded-2xl p-6 space-y-4 hover:shadow-2xl transition-all duration-300 cursor-pointer`}
+                        onClick={() => setActiveTooltip(activeTooltip === feature.featureId ? null : feature.featureId)}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center space-x-3">
+                            <feature.icon size={28} className="text-white" />
+                            <h3 className="text-lg font-semibold text-white">{feature.title}</h3>
                           </div>
-                        ))}
-                      </div>
-                    </motion.div>
+                          {feature.isEnhanced && (
+                            <motion.div
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              className="text-xs bg-gradient-to-r from-purple-500/30 to-blue-500/30 text-purple-200 px-2 py-1 rounded-full font-medium"
+                            >
+                              Enhanced ✨
+                            </motion.div>
+                          )}
+                        </div>
+                        <p className="text-gray-300 text-sm leading-relaxed">{feature.description}</p>
+                        <div className="space-y-1">
+                          {feature.features.map((item, i) => (
+                            <div key={i} className="text-xs text-gray-400 flex items-center">
+                              <span className="w-1 h-1 bg-gray-400 rounded-full mr-2"></span>
+                              {item}
+                            </div>
+                          ))}
+                        </div>
+                        
+                        <FeatureTooltips
+                          isVisible={activeTooltip === feature.featureId}
+                          onClose={() => setActiveTooltip(null)}
+                          feature={feature.featureId}
+                        />
+                      </motion.div>
+                    </SmartFeatureHighlight>
                   ))}
                 </motion.div>
 
