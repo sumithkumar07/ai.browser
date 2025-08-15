@@ -653,6 +653,51 @@ class AIBrowserAPITester:
         
         return self.tests_passed == self.tests_run
 
+    def run_real_browser_engine_testing(self):
+        """Run comprehensive Real Browser Engine testing as per review request"""
+        print("🚀 REAL BROWSER ENGINE TESTING - Chromium Integration")
+        print("=" * 80)
+        print("Testing newly implemented Real Browser Engine capabilities with Chromium integration")
+        print("Base URL: https://browser-engine-hub.preview.emergentagent.com")
+        print("=" * 80)
+        
+        # Priority 1: Core Real Browser Engine
+        print("\n" + "="*60)
+        print("🔧 PRIORITY 1: CORE REAL BROWSER ENGINE")
+        print("="*60)
+        self.test_real_browser_health()
+        self.test_real_browser_capabilities()
+        session_id = self.test_real_browser_session_create()
+        tab_id = self.test_real_browser_tab_create(session_id)
+        
+        # Priority 2: Real Navigation & Browsing
+        print("\n" + "="*60)
+        print("🌐 PRIORITY 2: REAL NAVIGATION & BROWSING")
+        print("="*60)
+        self.test_real_browser_navigate(tab_id)
+        self.test_real_browser_tab_info(tab_id)
+        self.test_real_browser_tab_navigation(tab_id)
+        
+        # Priority 3: Content & Advanced Features
+        print("\n" + "="*60)
+        print("🎯 PRIORITY 3: CONTENT & ADVANCED FEATURES")
+        print("="*60)
+        self.test_real_browser_page_content(tab_id)
+        self.test_real_browser_screenshot(tab_id)
+        self.test_real_browser_javascript_execution(tab_id)
+        
+        # Cleanup
+        print("\n" + "="*60)
+        print("🧹 CLEANUP & SESSION MANAGEMENT")
+        print("="*60)
+        self.test_real_browser_tab_delete(tab_id)
+        self.test_real_browser_session_cleanup(session_id)
+        
+        # Print final results
+        self.print_real_browser_test_summary()
+        
+        return self.tests_passed == self.tests_run
+
     def run_smoke_tests_per_review(self):
         """Run smoke tests as per review request"""
         print("🚀 Starting Backend Smoke Test for AI-enhanced endpoints")
