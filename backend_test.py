@@ -3135,15 +3135,37 @@ class AIBrowserAPITester:
                     print(f"  - {result['test']}: {result['details']}")
 
 def main():
-    """Main function to run hybrid AI backend testing as per review request"""
-    print("🚀 HYBRID AI BACKEND TESTING - NEON AI + FELLOU.AI INTEGRATION")
+    """Main function to run testing as per review request"""
+    if len(sys.argv) > 1:
+        test_type = sys.argv[1].lower()
+    else:
+        test_type = "real_browser"  # Default to Real Browser Engine testing as per review request
+    
+    print(f"🚀 BACKEND TESTING - {test_type.upper()}")
     print("Testing against: https://browser-engine-hub.preview.emergentagent.com")
     
     tester = AIBrowserAPITester("https://browser-engine-hub.preview.emergentagent.com")
     
     try:
-        # Run hybrid AI backend testing as per review request
-        success = tester.run_hybrid_ai_backend_testing()
+        if test_type == "real_browser":
+            print("🚀 Running Real Browser Engine Testing...")
+            success = tester.run_real_browser_engine_testing()
+        elif test_type == "hybrid":
+            print("🚀 Running Hybrid AI Backend Testing...")
+            success = tester.run_hybrid_ai_backend_testing()
+        elif test_type == "smoke":
+            print("🚀 Running Smoke Tests...")
+            success = tester.run_smoke_tests_per_review()
+        elif test_type == "comprehensive":
+            print("🚀 Running Comprehensive Testing...")
+            success = tester.run_comprehensive_all_phases_testing()
+        elif test_type == "enhanced":
+            print("🚀 Running Enhanced Features Testing...")
+            success = tester.run_enhanced_features_testing()
+        else:
+            print("🚀 Running Real Browser Engine Testing (default)...")
+            success = tester.run_real_browser_engine_testing()
+        
         return 0 if success else 1
     except KeyboardInterrupt:
         print("\n⚠️  Tests interrupted by user")
