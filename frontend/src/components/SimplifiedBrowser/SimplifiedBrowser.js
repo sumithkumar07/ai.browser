@@ -446,12 +446,13 @@ export default function SimplifiedBrowser() {
               </motion.div>
 
               {/* Quick Start Actions */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
                 {[
                   { icon: Plus, text: 'New Tab', action: 'new_tab' },
                   { icon: Bookmark, text: 'Bookmarks', action: 'bookmarks' },
                   { icon: History, text: 'History', action: 'history' }, 
-                  { icon: Download, text: 'Downloads', action: 'downloads' }
+                  { icon: Download, text: 'Downloads', action: 'downloads' },
+                  { icon: Activity, text: 'Hybrid AI', action: 'hybrid_features', special: true }
                 ].map((item, index) => (
                   <motion.button
                     key={index}
