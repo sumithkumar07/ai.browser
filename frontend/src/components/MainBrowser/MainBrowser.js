@@ -533,6 +533,8 @@ export default function MainBrowser() {
         </motion.button>
       )}
 
+      {/* 🚀 MINIMAL ENHANCED FEATURES INTEGRATION */}
+      <FloatingActionButton userId={user?.id || 'anonymous'} />
     </div>
   );
 }
