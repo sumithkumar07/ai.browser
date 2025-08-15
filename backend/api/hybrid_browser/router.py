@@ -572,3 +572,70 @@ async def get_browser_status(browser_id: Optional[str] = None):
         return JSONResponse(content=result)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+# Virtual Workspace Endpoints
+@router.post("/phase2/workspace/create-workspace")
+async def create_virtual_workspace(workspace_config: Optional[Dict] = None):
+    """🪟 Create a new virtual workspace with shadow capabilities"""
+    try:
+        result = await workspace_service.create_virtual_workspace(workspace_config)
+        return JSONResponse(content=result)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/phase2/workspace/create-shadow-window/{workspace_id}")
+async def create_shadow_window(
+    workspace_id: str,
+    window_config: Optional[Dict] = None
+):
+    """🪟 Create invisible shadow window for background operations"""
+    try:
+        result = await workspace_service.create_shadow_window(workspace_id, window_config)
+        return JSONResponse(content=result)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/phase2/workspace/execute-shadow-operation/{shadow_window_id}")
+async def execute_shadow_operation(
+    shadow_window_id: str,
+    operation: Dict
+):
+    """🪟 Execute operation in shadow window"""
+    try:
+        result = await workspace_service.execute_shadow_operation(shadow_window_id, operation)
+        return JSONResponse(content=result)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/phase2/workspace/start-background-task/{workspace_id}")
+async def start_background_task(
+    workspace_id: str,
+    task_config: Dict
+):
+    """🪟 Start background task in virtual workspace"""
+    try:
+        result = await workspace_service.start_background_task(workspace_id, task_config)
+        return JSONResponse(content=result)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/phase2/workspace/status")
+async def get_workspace_status(workspace_id: Optional[str] = None):
+    """🪟 Get comprehensive workspace status"""
+    try:
+        result = await workspace_service.get_workspace_status(workspace_id)
+        return JSONResponse(content=result)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.delete("/phase2/workspace/cleanup/{workspace_id}")
+async def cleanup_workspace(
+    workspace_id: str,
+    cleanup_options: Optional[Dict] = None
+):
+    """🪟 Cleanup virtual workspace and its resources"""
+    try:
+        result = await workspace_service.cleanup_workspace(workspace_id, cleanup_options)
+        return JSONResponse(content=result)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
