@@ -106,7 +106,7 @@ async def sync_browser_extension(
             detail=f"Browser extension sync failed: {str(e)}"
         )
 
-@router.post("/api/ecosystem/mobile-companion/sync")
+@router.post("/mobile-companion/sync")
 async def sync_mobile_companion(
     sync_data: MobileAppSync,
     current_user: User = Depends(get_current_user),
