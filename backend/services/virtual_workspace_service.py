@@ -7,6 +7,7 @@ import asyncio
 import json
 import os
 import uuid
+import base64
 from typing import Dict, List, Any, Optional
 from datetime import datetime, timedelta
 import sqlite3
