@@ -153,7 +153,7 @@ async def get_complete_phase_status(
             detail=f"Failed to get complete phase status: {str(e)}"
         )
 
-@router.get("/api/phase-capabilities/new-endpoints")
+@router.get("/new-endpoints")
 async def get_new_api_endpoints():
     """Get list of all new API endpoints added in Phase 2-4"""
     
