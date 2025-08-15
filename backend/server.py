@@ -22,6 +22,18 @@ from api.user_management.router import router as user_router
 # Import new enhanced features router
 from api.enhanced_features.router import router as enhanced_features_router
 
+# Import new parallel implementation routers
+try:
+    from api.advanced_navigation.router import router as advanced_navigation_router
+    from api.cross_site_intelligence.router import router as cross_site_intelligence_router
+    from api.enhanced_performance.router import router as enhanced_performance_router
+    from api.template_automation.router import router as template_automation_router
+    from api.voice_actions.router import router as voice_actions_router
+    PARALLEL_ROUTERS_AVAILABLE = True
+except Exception as e:
+    print(f"Warning: Parallel routers not available: {e}")
+    PARALLEL_ROUTERS_AVAILABLE = False
+
 # Import Phase 2-4 advanced routers
 try:
     from api.ecosystem.router import router as ecosystem_router
