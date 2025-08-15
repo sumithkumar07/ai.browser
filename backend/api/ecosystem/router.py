@@ -193,7 +193,7 @@ async def process_webhook(
             detail=f"Webhook processing failed: {str(e)}"
         )
 
-@router.get("/api/ecosystem/analytics")
+@router.get("/analytics")
 async def get_integration_analytics(
     current_user: User = Depends(get_current_user),
     ecosystem_service: EcosystemIntegrationService = Depends(get_ecosystem_service)
