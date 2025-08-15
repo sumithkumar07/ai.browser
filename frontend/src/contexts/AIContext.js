@@ -58,7 +58,20 @@ const initialState = {
   },
   activeWorkflows: [],
   generatedApps: [],
-  researchReports: []
+  researchReports: [],
+  // 🚀 NEW ADVANCED AI STATE
+  smartBookmarks: [],
+  contextSuggestions: [],
+  aiPlugins: [],
+  collaborativeSessions: [],
+  predictiveCache: {},
+  advancedMetrics: {
+    bookmarksCreated: 0,
+    suggestionsGenerated: 0,
+    pluginsCreated: 0,
+    collaborationSessions: 0,
+    cacheHitRate: 0
+  }
 };
 
 function aiReducer(state, action) {
