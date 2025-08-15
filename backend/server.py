@@ -171,7 +171,7 @@ app.include_router(enhanced_browser_router, prefix="/api/browser/enhanced", tags
 app.include_router(hybrid_browser_router, prefix="/api/hybrid-browser", tags=["Hybrid Browser"])
 app.include_router(real_browser_router, prefix="/api/real-browser", tags=["Real Browser Engine"])
 app.include_router(automation_router, prefix="/api/automation", tags=["Automation"])
-app.include_router(user_router, prefix="/api/user", tags=["User Management"])
+app.include_router(user_router, prefix="/api/users", tags=["User Management"])
 
 # Enhanced API documentation endpoint
 @app.get("/api/documentation")
