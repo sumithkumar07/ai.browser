@@ -4,6 +4,7 @@ Implements all missing capabilities from Neon AI and Fellou.ai browsers
 """
 
 from fastapi import APIRouter, HTTPException, Depends, BackgroundTasks
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from typing import Dict, List, Any, Optional
 from datetime import datetime
