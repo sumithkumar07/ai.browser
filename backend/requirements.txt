@@ -42,3 +42,4 @@ distro
 aiohttp==3.9.1
 soupsieve==2.5
 asyncio-mqtt==0.13.0
+sqlite3
