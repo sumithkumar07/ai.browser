@@ -39,3 +39,6 @@ pandas==2.1.4
 aiofiles==23.2.1
 httpcore
 distro
+aiohttp==3.9.1
+soupsieve==2.5
+asyncio-mqtt==0.13.0
