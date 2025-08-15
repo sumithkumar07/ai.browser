@@ -42,3 +42,10 @@ distro
 aiohttp==3.9.1
 soupsieve==2.5
 asyncio-mqtt==0.13.0
+
+# Additional dependencies for backend fixes
+multidict==6.6.4
+attrs==25.3.0
+yarl==1.20.1
+aiosignal==1.4.0
+frozenlist==1.7.0
