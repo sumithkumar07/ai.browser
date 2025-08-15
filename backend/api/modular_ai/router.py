@@ -58,7 +58,7 @@ async def get_modular_ai_service():
     db = await get_database()
     return ModularAIService(db)
 
-@router.post("/api/modular-ai/install-plugin")
+@router.post("/install-plugin")
 async def install_ai_plugin(
     plugin_data: AIPluginData,
     current_user: User = Depends(get_current_user),
@@ -85,7 +85,7 @@ class CustomModelRequest(BaseModel):
     model_config: CustomModelConfig
     training_data: TrainingData
 
-@router.post("/api/modular-ai/create-custom-model")
+@router.post("/create-custom-model")
 async def create_custom_ai_model(
     request: CustomModelRequest,
     current_user: User = Depends(get_current_user),
@@ -115,7 +115,7 @@ async def create_custom_ai_model(
             detail=f"Custom model creation failed: {str(e)}"
         )
 
-@router.post("/api/modular-ai/federated-learning")
+@router.post("/federated-learning")
 async def create_federated_learning_task(
     fed_config: FederatedLearningConfig,
     current_user: User = Depends(get_current_user),
@@ -138,7 +138,7 @@ async def create_federated_learning_task(
             detail=f"Federated learning task creation failed: {str(e)}"
         )
 
-@router.get("/api/modular-ai/marketplace")
+@router.get("/marketplace")
 async def browse_plugin_marketplace(
     category: Optional[str] = None,
     search_query: Optional[str] = None,
@@ -164,7 +164,7 @@ async def browse_plugin_marketplace(
             detail=f"Marketplace browsing failed: {str(e)}"
         )
 
-@router.post("/api/modular-ai/execute-plugin")
+@router.post("/execute-plugin")
 async def execute_plugin_capability(
     execution_request: PluginExecutionRequest,
     current_user: User = Depends(get_current_user),
@@ -191,7 +191,7 @@ async def execute_plugin_capability(
             detail=f"Plugin execution failed: {str(e)}"
         )
 
-@router.get("/api/modular-ai/installed-plugins")
+@router.get("/installed-plugins")
 async def get_installed_plugins(
     current_user: User = Depends(get_current_user),
     modular_service: ModularAIService = Depends(get_modular_ai_service)
@@ -224,7 +224,7 @@ async def get_installed_plugins(
             detail=f"Failed to get installed plugins: {str(e)}"
         )
 
-@router.get("/api/modular-ai/custom-models")
+@router.get("/custom-models")
 async def get_custom_models(
     current_user: User = Depends(get_current_user),
     modular_service: ModularAIService = Depends(get_modular_ai_service)
@@ -257,7 +257,7 @@ async def get_custom_models(
             detail=f"Failed to get custom models: {str(e)}"
         )
 
-@router.get("/api/modular-ai/status")
+@router.get("/status")
 async def get_modular_ai_status(
     current_user: User = Depends(get_current_user),
     modular_service: ModularAIService = Depends(get_modular_ai_service)

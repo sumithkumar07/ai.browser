@@ -47,7 +47,7 @@ async def get_global_intelligence_service():
     db = await get_database()
     return GlobalIntelligenceService(db)
 
-@router.post("/api/global-intelligence/collect-insights")
+@router.post("/collect-insights")
 async def collect_anonymous_insights(
     behavior_data: UserBehaviorData,
     current_user: User = Depends(get_current_user),
@@ -70,7 +70,7 @@ async def collect_anonymous_insights(
             detail=f"Insights collection failed: {str(e)}"
         )
 
-@router.post("/api/global-intelligence/world-events")
+@router.post("/world-events")
 async def get_real_time_world_events(
     events_request: WorldEventsRequest,
     current_user: User = Depends(get_current_user),
@@ -96,7 +96,7 @@ async def get_real_time_world_events(
             detail=f"World events retrieval failed: {str(e)}"
         )
 
-@router.post("/api/global-intelligence/cultural-adaptation")
+@router.post("/cultural-adaptation")
 async def adapt_content_culturally(
     adaptation_request: CulturalAdaptationRequest,
     current_user: User = Depends(get_current_user),
@@ -123,7 +123,7 @@ async def adapt_content_culturally(
             detail=f"Cultural adaptation failed: {str(e)}"
         )
 
-@router.get("/api/global-intelligence/language-evolution")
+@router.get("/language-evolution")
 async def track_language_evolution(
     current_user: User = Depends(get_current_user),
     global_service: GlobalIntelligenceService = Depends(get_global_intelligence_service)
@@ -145,7 +145,7 @@ async def track_language_evolution(
             detail=f"Language evolution tracking failed: {str(e)}"
         )
 
-@router.post("/api/global-intelligence/collaboration-insights")
+@router.post("/collaboration-insights")
 async def get_global_collaboration_insights(
     collaboration_context: GlobalCollaborationContext,
     current_user: User = Depends(get_current_user),
@@ -170,7 +170,7 @@ async def get_global_collaboration_insights(
             detail=f"Collaboration insights failed: {str(e)}"
         )
 
-@router.get("/api/global-intelligence/collective-insights")
+@router.get("/collective-insights")
 async def get_collective_insights(
     category: Optional[str] = None,
     region: Optional[str] = None,
@@ -208,7 +208,7 @@ async def get_collective_insights(
             detail=f"Failed to get collective insights: {str(e)}"
         )
 
-@router.get("/api/global-intelligence/supported-regions")
+@router.get("/supported-regions")
 async def get_supported_regions(
     global_service: GlobalIntelligenceService = Depends(get_global_intelligence_service)
 ):
@@ -236,7 +236,7 @@ async def get_supported_regions(
             detail=f"Failed to get supported regions: {str(e)}"
         )
 
-@router.get("/api/global-intelligence/status")
+@router.get("/status")
 async def get_global_intelligence_status(
     global_service: GlobalIntelligenceService = Depends(get_global_intelligence_service)
 ):
