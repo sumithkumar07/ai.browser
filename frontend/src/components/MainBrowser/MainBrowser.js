@@ -20,6 +20,8 @@ import FeatureTooltips from '../FeatureDiscovery/FeatureTooltips';
 
 // Import minimal enhanced features integration
 import FloatingActionButton from '../EnhancedFeatures/FloatingActionButton';
+// Import comprehensive features panel
+import ComprehensiveFeaturesPanel from '../ComprehensiveFeatures/ComprehensiveFeaturesPanel';
 
 // Icons
 import { 
