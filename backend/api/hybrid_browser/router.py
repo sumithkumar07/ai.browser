@@ -639,3 +639,65 @@ async def cleanup_workspace(
         return JSONResponse(content=result)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+# ===============================
+# PHASE 3: NATIVE BROWSER ENGINE
+# ===============================
+
+# Custom Browser Engine Endpoints
+@router.post("/phase3/engine/initialize")
+async def initialize_browser_engine(
+    engine_type: str,
+    config: Optional[Dict] = None
+):
+    """🏗️ Initialize a specific browser engine (Chromium/WebKit/Gecko)"""
+    try:
+        result = await engine_service.initialize_browser_engine(engine_type, config)
+        return JSONResponse(content=result)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/phase3/engine/create-context/{engine_id}")
+async def create_browser_context(
+    engine_id: str,
+    context_config: Optional[Dict] = None
+):
+    """🏗️ Create isolated browser context within engine"""
+    try:
+        result = await engine_service.create_browser_context(engine_id, context_config)
+        return JSONResponse(content=result)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/phase3/engine/compile/{engine_id}")
+async def compile_browser_engine(
+    engine_id: str,
+    compilation_options: Optional[Dict] = None
+):
+    """🏗️ Compile custom browser engine"""
+    try:
+        result = await engine_service.compile_browser_engine(engine_id, compilation_options)
+        return JSONResponse(content=result)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/phase3/engine/optimize/{engine_id}")
+async def optimize_engine_performance(
+    engine_id: str,
+    optimization_options: Optional[Dict] = None
+):
+    """🏗️ Optimize browser engine performance"""
+    try:
+        result = await engine_service.optimize_engine_performance(engine_id, optimization_options)
+        return JSONResponse(content=result)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/phase3/engine/status")
+async def get_engine_status(engine_id: Optional[str] = None):
+    """🏗️ Get comprehensive engine status"""
+    try:
+        result = await engine_service.get_engine_status(engine_id)
+        return JSONResponse(content=result)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
