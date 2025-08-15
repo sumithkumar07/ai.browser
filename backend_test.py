@@ -835,8 +835,340 @@ class AIBrowserAPITester:
         self.test_backward_compatibility()
 
     # =============================================================================
-    # 🚀 REAL BROWSER ENGINE TESTING METHODS - CHROMIUM INTEGRATION
+    # 🚀 ENHANCED REAL BROWSER ENGINE TESTING METHODS - UNIFIED BROWSER
     # =============================================================================
+
+    def test_enhanced_real_browser_health(self):
+        """Test Enhanced Real Browser Engine Health Check - GET /api/real-browser/enhanced/health"""
+        success, data, details = self.make_request('GET', '/api/real-browser/enhanced/health')
+        
+        if success and data:
+            # Verify enhanced health response structure
+            expected_keys = ['success', 'status', 'browser_initialized', 'service', 'engine', 'capabilities', 'features']
+            has_expected_structure = any(key in data for key in expected_keys)
+            if not has_expected_structure:
+                success = False
+                details += " - Missing expected enhanced health response structure"
+        
+        self.log_test("Enhanced Real Browser Health Check", success, details)
+        return success, data
+
+    def test_enhanced_real_browser_capabilities(self):
+        """Test Enhanced Real Browser Engine Capabilities - GET /api/real-browser/enhanced/capabilities"""
+        success, data, details = self.make_request('GET', '/api/real-browser/enhanced/capabilities')
+        
+        if success and data:
+            # Verify enhanced capabilities response structure
+            expected_keys = ['success', 'engine', 'capabilities', 'ai_features', 'browser_features', 'endpoints']
+            has_expected_structure = any(key in data for key in expected_keys)
+            if not has_expected_structure:
+                success = False
+                details += " - Missing expected enhanced capabilities response structure"
+        
+        self.log_test("Enhanced Real Browser Capabilities", success, details)
+        return success, data
+
+    def test_enhanced_session_create(self):
+        """Test Enhanced Real Browser Session Creation - POST /api/real-browser/enhanced/sessions/create"""
+        test_data = {
+            "session_id": f"enhanced_test_session_{int(time.time())}"
+        }
+        
+        success, data, details = self.make_request(
+            'POST', '/api/real-browser/enhanced/sessions/create',
+            test_data, 200
+        )
+        
+        session_id = None
+        if success and data and 'session_id' in data:
+            session_id = data['session_id']
+            print(f"🔑 Created enhanced session: {session_id}")
+        
+        self.log_test("Enhanced Real Browser Session Create", success, details)
+        return session_id
+
+    def test_enhanced_tab_create(self, session_id=None):
+        """Test Enhanced Real Browser Tab Creation - POST /api/real-browser/enhanced/tabs/create"""
+        test_data = {
+            "url": "about:blank",
+            "session_id": session_id,
+            "title": "Enhanced Test Tab"
+        }
+        
+        success, data, details = self.make_request(
+            'POST', '/api/real-browser/enhanced/tabs/create',
+            test_data, 200
+        )
+        
+        tab_id = None
+        if success and data and 'tab_id' in data:
+            tab_id = data['tab_id']
+            print(f"📑 Created enhanced tab: {tab_id}")
+        
+        self.log_test("Enhanced Real Browser Tab Create", success, details)
+        return tab_id
+
+    def test_enhanced_tab_info(self, tab_id):
+        """Test Enhanced Real Browser Tab Information - GET /api/real-browser/enhanced/tabs/{tab_id}"""
+        if not tab_id:
+            self.log_test("Enhanced Real Browser Tab Info", False, "No tab_id available")
+            return False
+        
+        success, data, details = self.make_request(
+            'GET', f'/api/real-browser/enhanced/tabs/{tab_id}'
+        )
+        
+        if success and data:
+            # Verify enhanced tab info response structure
+            expected_keys = ['success', 'tab_id', 'session_id', 'url', 'title', 'created_at']
+            has_expected_structure = any(key in data for key in expected_keys)
+            if not has_expected_structure:
+                success = False
+                details += " - Missing expected enhanced tab info response structure"
+        
+        self.log_test("Enhanced Real Browser Tab Info", success, details)
+        return success, data
+
+    def test_enhanced_navigate_to_url(self, tab_id):
+        """Test Enhanced Real Browser Navigation - POST /api/real-browser/enhanced/navigate"""
+        if not tab_id:
+            self.log_test("Enhanced Real Browser Navigate", False, "No tab_id available")
+            return False
+        
+        # Test navigation to real websites with AI analysis
+        test_urls = [
+            "https://google.com",
+            "https://github.com"
+        ]
+        
+        for url in test_urls:
+            test_data = {
+                "url": url,
+                "tab_id": tab_id
+            }
+            
+            success, data, details = self.make_request(
+                'POST', '/api/real-browser/enhanced/navigate',
+                test_data, 200
+            )
+            
+            test_name = f"Enhanced Real Browser Navigate to {url}"
+            self.log_test(test_name, success, details)
+            
+            if success:
+                break  # At least one navigation worked
+        
+        return success
+
+    def test_enhanced_tab_navigation(self, tab_id):
+        """Test Enhanced Real Browser Tab Navigation - back, forward, reload"""
+        if not tab_id:
+            self.log_test("Enhanced Real Browser Tab Navigation", False, "No tab_id available")
+            return False
+        
+        # Test back navigation
+        success_back, data_back, details_back = self.make_request(
+            'POST', f'/api/real-browser/enhanced/tabs/{tab_id}/back'
+        )
+        self.log_test("Enhanced Real Browser Tab Back", success_back, details_back)
+        
+        # Test forward navigation
+        success_forward, data_forward, details_forward = self.make_request(
+            'POST', f'/api/real-browser/enhanced/tabs/{tab_id}/forward'
+        )
+        self.log_test("Enhanced Real Browser Tab Forward", success_forward, details_forward)
+        
+        # Test reload with AI analysis
+        success_reload, data_reload, details_reload = self.make_request(
+            'POST', f'/api/real-browser/enhanced/tabs/{tab_id}/reload'
+        )
+        self.log_test("Enhanced Real Browser Tab Reload", success_reload, details_reload)
+        
+        return success_back or success_forward or success_reload
+
+    def test_enhanced_page_content(self, tab_id):
+        """Test Enhanced Real Browser Page Content - GET /api/real-browser/enhanced/tabs/{tab_id}/content"""
+        if not tab_id:
+            self.log_test("Enhanced Real Browser Page Content", False, "No tab_id available")
+            return False
+        
+        success, data, details = self.make_request(
+            'GET', f'/api/real-browser/enhanced/tabs/{tab_id}/content'
+        )
+        
+        if success and data:
+            # Verify enhanced content response structure
+            expected_keys = ['success', 'tab_id', 'url', 'title', 'html_content', 'text_content', 'meta_info']
+            has_expected_structure = any(key in data for key in expected_keys)
+            if not has_expected_structure:
+                success = False
+                details += " - Missing expected enhanced content response structure"
+        
+        self.log_test("Enhanced Real Browser Page Content", success, details)
+        return success, data
+
+    def test_enhanced_screenshot(self, tab_id):
+        """Test Enhanced Real Browser Screenshot - POST /api/real-browser/enhanced/tabs/{tab_id}/screenshot"""
+        if not tab_id:
+            self.log_test("Enhanced Real Browser Screenshot", False, "No tab_id available")
+            return False
+        
+        success, data, details = self.make_request(
+            'POST', f'/api/real-browser/enhanced/tabs/{tab_id}/screenshot'
+        )
+        
+        if success and data:
+            # Verify enhanced screenshot response structure
+            expected_keys = ['success', 'tab_id', 'screenshot', 'size']
+            has_expected_structure = any(key in data for key in expected_keys)
+            if not has_expected_structure:
+                success = False
+                details += " - Missing expected enhanced screenshot response structure"
+        
+        self.log_test("Enhanced Real Browser Screenshot", success, details)
+        return success, data
+
+    def test_enhanced_content_analysis(self, tab_id):
+        """Test Enhanced Real Browser Content Analysis - POST /api/real-browser/enhanced/tabs/{tab_id}/analyze"""
+        if not tab_id:
+            self.log_test("Enhanced Real Browser Content Analysis", False, "No tab_id available")
+            return False
+        
+        test_data = {
+            "analysis_type": "full"
+        }
+        
+        success, data, details = self.make_request(
+            'POST', f'/api/real-browser/enhanced/tabs/{tab_id}/analyze',
+            test_data, 200
+        )
+        
+        if success and data:
+            # Verify enhanced analysis response structure
+            expected_keys = ['success', 'tab_id', 'url', 'analysis', 'analysis_type']
+            has_expected_structure = any(key in data for key in expected_keys)
+            if not has_expected_structure:
+                success = False
+                details += " - Missing expected enhanced analysis response structure"
+        
+        self.log_test("Enhanced Real Browser Content Analysis", success, details)
+        return success, data
+
+    def test_enhanced_javascript_execution(self, tab_id):
+        """Test Enhanced Real Browser JavaScript Execution - POST /api/real-browser/enhanced/tabs/{tab_id}/evaluate"""
+        if not tab_id:
+            self.log_test("Enhanced Real Browser JavaScript Execution", False, "No tab_id available")
+            return False
+        
+        test_data = {
+            "script": "document.title"
+        }
+        
+        success, data, details = self.make_request(
+            'POST', f'/api/real-browser/enhanced/tabs/{tab_id}/evaluate',
+            test_data, 200
+        )
+        
+        if success and data:
+            # Verify enhanced JavaScript execution response structure
+            expected_keys = ['success', 'tab_id', 'script', 'result']
+            has_expected_structure = any(key in data for key in expected_keys)
+            if not has_expected_structure:
+                success = False
+                details += " - Missing expected enhanced JavaScript execution response structure"
+        
+        self.log_test("Enhanced Real Browser JavaScript Execution", success, details)
+        return success, data
+
+    def test_enhanced_sessions_list(self):
+        """Test Enhanced Real Browser Sessions List - GET /api/real-browser/enhanced/sessions"""
+        success, data, details = self.make_request('GET', '/api/real-browser/enhanced/sessions')
+        
+        if success and data:
+            # Verify enhanced sessions response structure
+            expected_keys = ['success', 'sessions', 'total_sessions']
+            has_expected_structure = any(key in data for key in expected_keys)
+            if not has_expected_structure:
+                success = False
+                details += " - Missing expected enhanced sessions response structure"
+        
+        self.log_test("Enhanced Real Browser Sessions List", success, details)
+        return success, data
+
+    def test_enhanced_tab_close(self, tab_id):
+        """Test Enhanced Real Browser Tab Close - DELETE /api/real-browser/enhanced/tabs/{tab_id}"""
+        if not tab_id:
+            self.log_test("Enhanced Real Browser Tab Close", False, "No tab_id available")
+            return False
+        
+        success, data, details = self.make_request(
+            'DELETE', f'/api/real-browser/enhanced/tabs/{tab_id}'
+        )
+        
+        if success and data:
+            # Verify enhanced close response structure
+            expected_keys = ['success', 'tab_id']
+            has_expected_structure = any(key in data for key in expected_keys)
+            if not has_expected_structure:
+                success = False
+                details += " - Missing expected enhanced close response structure"
+        
+        self.log_test("Enhanced Real Browser Tab Close", success, details)
+        return success, data
+
+    def test_enhanced_session_cleanup(self, session_id):
+        """Test Enhanced Real Browser Session Cleanup - DELETE /api/real-browser/enhanced/sessions/{session_id}"""
+        if not session_id:
+            self.log_test("Enhanced Real Browser Session Cleanup", False, "No session_id available")
+            return False
+        
+        success, data, details = self.make_request(
+            'DELETE', f'/api/real-browser/enhanced/sessions/{session_id}'
+        )
+        
+        if success and data:
+            # Verify enhanced cleanup response structure
+            expected_keys = ['success', 'session_id']
+            has_expected_structure = any(key in data for key in expected_keys)
+            if not has_expected_structure:
+                success = False
+                details += " - Missing expected enhanced cleanup response structure"
+        
+        self.log_test("Enhanced Real Browser Session Cleanup", success, details)
+        return success, data
+
+    def print_unified_browser_test_summary(self):
+        """Print comprehensive Unified AI Browser test summary"""
+        print("\n" + "="*80)
+        print("🎯 UNIFIED AI BROWSER TEST SUMMARY")
+        print("="*80)
+        
+        success_rate = (self.tests_passed / self.tests_run * 100) if self.tests_run > 0 else 0
+        
+        print(f"📊 Test Results:")
+        print(f"   Total Tests: {self.tests_run}")
+        print(f"   Passed: {self.tests_passed} ✅")
+        print(f"   Failed: {self.tests_run - self.tests_passed} ❌")
+        print(f"   Success Rate: {success_rate:.1f}%")
+        
+        print(f"\n🔍 Test Categories:")
+        print(f"   ✅ Enhanced Real Browser Engine (Health, Capabilities)")
+        print(f"   ✅ Enhanced Session & Tab Management (Create, Info, List)")
+        print(f"   ✅ Enhanced Navigation with AI (Navigate, Back/Forward/Reload)")
+        print(f"   ✅ Enhanced Content & AI Analysis (Content, Screenshot, Analysis, JavaScript)")
+        print(f"   ✅ Enhanced Session Management (Close Tab, Cleanup Session)")
+        
+        print(f"\n🌐 Base URL: {self.base_url}")
+        print(f"🕒 Test Completed: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        
+        if success_rate >= 80:
+            print(f"\n🎉 UNIFIED AI BROWSER TESTING: SUCCESS")
+            print(f"   The Unified AI Browser with Enhanced Real Browser Engine is operational!")
+        else:
+            print(f"\n⚠️  UNIFIED AI BROWSER TESTING: NEEDS ATTENTION")
+            print(f"   Some Unified AI Browser features may need debugging.")
+        
+        print("="*80)
 
     def test_real_browser_health(self):
         """Test Real Browser Engine Health Check - GET /api/real-browser/health"""
