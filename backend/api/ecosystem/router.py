@@ -56,7 +56,7 @@ async def get_ecosystem_service():
     db = await get_database()
     return EcosystemIntegrationService(db)
 
-@router.post("/api/ecosystem/register-endpoint")
+@router.post("/register-endpoint")
 async def register_integration_endpoint(
     config: IntegrationEndpointConfig,
     current_user: User = Depends(get_current_user),
