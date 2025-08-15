@@ -18,7 +18,17 @@ from groq import Groq
 
 class PerformanceOptimizationService:
     def __init__(self):
-        self.groq_client = Groq(api_key=os.getenv('GROQ_API_KEY'))
+        # Initialize GROQ client only if API key is available
+        groq_api_key = os.getenv('GROQ_API_KEY')
+        if groq_api_key:
+            try:
+                self.groq_client = Groq(api_key=groq_api_key)
+            except Exception as e:
+                logging.warning(f"GROQ client initialization failed: {e}")
+                self.groq_client = None
+        else:
+            logging.warning("GROQ API key not found")
+            self.groq_client = None
         self.cache_store = {}
         self.user_behavior_patterns = {}
         self.background_tasks = {}
