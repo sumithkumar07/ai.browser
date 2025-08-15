@@ -380,6 +380,15 @@ export default function SimplifiedBrowser() {
               <Activity size={16} className="text-purple-300" />
             </button>
             
+            {/* Real Browser Access Button */}
+            <button 
+              className="nav-btn bg-gradient-to-r from-green-600/20 to-blue-600/20 hover:from-green-600/30 hover:to-blue-600/30 border border-green-500/30"
+              onClick={() => setShowRealBrowser(true)}
+              title="Real Chromium Browser"
+            >
+              <Globe size={16} className="text-green-300" />
+            </button>
+            
             {/* Mobile Menu Toggle */}
             <button 
               className="nav-btn md:hidden"
