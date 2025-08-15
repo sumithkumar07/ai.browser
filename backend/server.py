@@ -19,20 +19,22 @@ from api.automation.enhanced_router import router as enhanced_automation_router
 from api.content.router import router as content_router
 from api.user_management.router import router as user_router
 
-# Import new enhanced features router
-from api.enhanced_features.router import router as enhanced_features_router
-
-# Import new parallel implementation routers
+# Import comprehensive features router
 try:
-    from api.advanced_navigation.router import router as advanced_navigation_router
-    from api.cross_site_intelligence.router import router as cross_site_intelligence_router
-    from api.enhanced_performance.router import router as enhanced_performance_router
-    from api.template_automation.router import router as template_automation_router
-    from api.voice_actions.router import router as voice_actions_router
-    PARALLEL_ROUTERS_AVAILABLE = True
+    from api.comprehensive_features.router import router as comprehensive_features_router
+    COMPREHENSIVE_FEATURES_AVAILABLE = True
+    print("✅ Comprehensive features router loaded successfully")
 except Exception as e:
-    print(f"Warning: Parallel routers not available: {e}")
-    PARALLEL_ROUTERS_AVAILABLE = False
+    print(f"⚠️ Comprehensive features router not available: {e}")
+    COMPREHENSIVE_FEATURES_AVAILABLE = False
+
+# Import enhanced features router (fallback)
+try:
+    from api.enhanced_features.router import router as enhanced_features_router
+    ENHANCED_FEATURES_AVAILABLE = True
+except Exception as e:
+    print(f"Warning: Enhanced features router not available: {e}")
+    ENHANCED_FEATURES_AVAILABLE = False
 
 # Import Phase 2-4 advanced routers
 try:
@@ -88,22 +90,23 @@ app.include_router(automation_router, prefix="/api/automation", tags=["automatio
 app.include_router(enhanced_automation_router, prefix="/api/automation/enhanced", tags=["enhanced_automation"])
 app.include_router(content_router, prefix="/api/content", tags=["content"])
 
-# Include new enhanced features router
-app.include_router(enhanced_features_router, prefix="/api/enhanced-features", tags=["enhanced_features"])
-
-# Include new parallel implementation routers
-if PARALLEL_ROUTERS_AVAILABLE:
+# Include comprehensive features router (if available)
+if COMPREHENSIVE_FEATURES_AVAILABLE:
     try:
-        app.include_router(advanced_navigation_router, prefix="/api/advanced-navigation", tags=["advanced_navigation"])
-        app.include_router(cross_site_intelligence_router, prefix="/api/cross-site-intelligence", tags=["cross_site_intelligence"])
-        app.include_router(enhanced_performance_router, prefix="/api/enhanced-performance", tags=["enhanced_performance"])
-        app.include_router(template_automation_router, prefix="/api/template-automation", tags=["template_automation"])
-        app.include_router(voice_actions_router, prefix="/api/voice-actions", tags=["voice_actions"])
-        print("✅ Parallel implementation routers loaded successfully")
+        app.include_router(comprehensive_features_router, prefix="/api/comprehensive-features", tags=["comprehensive_features"])
+        print("✅ Comprehensive features router included successfully")
     except Exception as e:
-        print(f"⚠️ Error loading parallel routers: {e}")
+        print(f"⚠️ Error including comprehensive features router: {e}")
+
+# Include enhanced features router (fallback)
+if ENHANCED_FEATURES_AVAILABLE:
+    try:
+        app.include_router(enhanced_features_router, prefix="/api/enhanced-features", tags=["enhanced_features"])
+        print("✅ Enhanced features router included successfully")
+    except Exception as e:
+        print(f"⚠️ Error including enhanced features router: {e}")
 else:
-    print("⚠️ Parallel routers skipped due to import errors")
+    print("⚠️ Enhanced features router skipped due to import errors")
 
 # Include Phase 2-4 advanced routers with proper prefixes
 if ADVANCED_ROUTERS_AVAILABLE:
