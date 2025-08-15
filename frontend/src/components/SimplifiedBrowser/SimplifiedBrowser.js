@@ -565,6 +565,12 @@ export default function SimplifiedBrowser() {
           AI Browser v2.0 Enhanced
         </div>
       </div>
+
+      {/* Hybrid Browser Panel */}
+      <HybridBrowserPanel 
+        isVisible={showHybridPanel}
+        onClose={() => setShowHybridPanel(false)}
+      />
     </div>
   );
 }
