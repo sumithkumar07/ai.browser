@@ -349,5 +349,3 @@ export default function AccessibilityContextProvider({ children }) {
     </AccessibilityContext.Provider>
   );
 }
-
-export default AccessibilityContextProvider;
