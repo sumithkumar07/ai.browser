@@ -460,7 +460,11 @@ export default function SimplifiedBrowser() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
                     onClick={() => handleQuickAction(item.action)}
-                    className="p-4 bg-gray-800/50 hover:bg-gray-700/50 rounded-xl border border-gray-700/30 transition-colors"
+                    className={`p-4 rounded-xl border border-gray-700/30 transition-colors ${
+                      item.special 
+                        ? 'bg-gradient-to-r from-purple-600/20 to-blue-600/20 hover:from-purple-600/30 hover:to-blue-600/30 border-purple-500/30'
+                        : 'bg-gray-800/50 hover:bg-gray-700/50'
+                    }`}
                   >
                     <item.icon size={24} className="mx-auto mb-2 text-gray-400" />
                     <div className="text-sm text-gray-300">{item.text}</div>
