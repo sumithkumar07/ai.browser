@@ -48,7 +48,7 @@ class SystemMetrics(BaseModel):
 async def get_edge_service():
     return EdgeComputingService()
 
-@router.post("/api/edge-computing/distributed-ai-processing")
+@router.post("/distributed-ai-processing")
 async def distributed_ai_processing(
     task: AIProcessingTask,
     current_user: User = Depends(get_current_user),
@@ -74,7 +74,7 @@ async def distributed_ai_processing(
             detail=f"Distributed AI processing failed: {str(e)}"
         )
 
-@router.post("/api/edge-computing/predictive-caching")
+@router.post("/predictive-caching")
 async def predictive_caching(
     request: PredictiveCachingRequest,
     current_user: User = Depends(get_current_user),
@@ -100,7 +100,7 @@ async def predictive_caching(
             detail=f"Predictive caching failed: {str(e)}"
         )
 
-@router.post("/api/edge-computing/quantum-ready-processing")
+@router.post("/quantum-ready-processing")
 async def quantum_ready_processing(
     quantum_task: QuantumTask,
     current_user: User = Depends(get_current_user),
@@ -123,7 +123,7 @@ async def quantum_ready_processing(
             detail=f"Quantum-ready processing failed: {str(e)}"
         )
 
-@router.post("/api/edge-computing/adaptive-optimization")
+@router.post("/adaptive-optimization")
 async def adaptive_performance_optimization(
     metrics: SystemMetrics,
     current_user: User = Depends(get_current_user),
@@ -146,7 +146,7 @@ async def adaptive_performance_optimization(
             detail=f"Adaptive optimization failed: {str(e)}"
         )
 
-@router.get("/api/edge-computing/performance-metrics")
+@router.get("/performance-metrics")
 async def get_edge_performance_metrics(
     current_user: User = Depends(get_current_user),
     edge_service: EdgeComputingService = Depends(get_edge_service)
@@ -167,7 +167,7 @@ async def get_edge_performance_metrics(
             detail=f"Failed to get performance metrics: {str(e)}"
         )
 
-@router.get("/api/edge-computing/status")
+@router.get("/status")
 async def get_edge_computing_status(
     edge_service: EdgeComputingService = Depends(get_edge_service)
 ):

@@ -51,7 +51,7 @@ class BCISignalData(BaseModel):
 async def get_emerging_tech_service():
     return EmergingTechService()
 
-@router.post("/api/emerging-tech/voice-command")
+@router.post("/voice-command")
 async def process_voice_command(
     voice_request: VoiceCommandRequest,
     current_user: User = Depends(get_current_user),
@@ -77,7 +77,7 @@ async def process_voice_command(
             detail=f"Voice command processing failed: {str(e)}"
         )
 
-@router.post("/api/emerging-tech/gesture-recognition")
+@router.post("/gesture-recognition")
 async def process_gesture_input(
     gesture_data: GestureFrame,
     current_user: User = Depends(get_current_user),
@@ -104,7 +104,7 @@ async def process_gesture_input(
             detail=f"Gesture recognition failed: {str(e)}"
         )
 
-@router.post("/api/emerging-tech/ar-overlay")
+@router.post("/ar-overlay")
 async def create_ar_overlay(
     ar_request: AROverlayRequest,
     current_user: User = Depends(get_current_user),
@@ -130,7 +130,7 @@ async def create_ar_overlay(
             detail=f"AR overlay creation failed: {str(e)}"
         )
 
-@router.post("/api/emerging-tech/eye-tracking")
+@router.post("/eye-tracking")
 async def eye_tracking_navigation(
     eye_data: EyeTrackingData,
     current_user: User = Depends(get_current_user),
@@ -153,7 +153,7 @@ async def eye_tracking_navigation(
             detail=f"Eye tracking processing failed: {str(e)}"
         )
 
-@router.post("/api/emerging-tech/brain-computer-interface")
+@router.post("/brain-computer-interface")
 async def brain_computer_interface(
     bci_data: BCISignalData,
     current_user: User = Depends(get_current_user),
@@ -179,7 +179,7 @@ async def brain_computer_interface(
             detail=f"BCI processing failed: {str(e)}"
         )
 
-@router.get("/api/emerging-tech/voice-commands")
+@router.get("/voice-commands")
 async def get_available_voice_commands(
     current_user: User = Depends(get_current_user),
     emerging_service: EmergingTechService = Depends(get_emerging_tech_service)
@@ -207,7 +207,7 @@ async def get_available_voice_commands(
             detail=f"Failed to get voice commands: {str(e)}"
         )
 
-@router.get("/api/emerging-tech/gesture-mappings")
+@router.get("/gesture-mappings")
 async def get_gesture_mappings(
     current_user: User = Depends(get_current_user),
     emerging_service: EmergingTechService = Depends(get_emerging_tech_service)
@@ -236,7 +236,7 @@ async def get_gesture_mappings(
             detail=f"Failed to get gesture mappings: {str(e)}"
         )
 
-@router.get("/api/emerging-tech/status")
+@router.get("/status")
 async def get_emerging_tech_status(
     emerging_service: EmergingTechService = Depends(get_emerging_tech_service)
 ):
