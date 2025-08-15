@@ -12,7 +12,7 @@ from datetime import datetime
 from typing import Dict, Any, Optional
 
 class AIBrowserAPITester:
-    def __init__(self, base_url="https://deepaction-browser.preview.emergentagent.com"):
+    def __init__(self, base_url="https://browser-engine-hub.preview.emergentagent.com"):
         self.base_url = base_url
         self.token = None
         self.user_id = None
@@ -475,7 +475,7 @@ class AIBrowserAPITester:
         print("=" * 80)
         print("Testing newly implemented hybrid AI capabilities that combine Neon AI browser")
         print("features with Fellou.ai browser features while preserving existing functionality.")
-        print("Base URL: https://deepaction-browser.preview.emergentagent.com")
+        print("Base URL: https://browser-engine-hub.preview.emergentagent.com")
         print("=" * 80)
         
         # 1) Authentication setup
@@ -539,7 +539,7 @@ class AIBrowserAPITester:
         print("🚀 COMPREHENSIVE ENHANCED FEATURES TESTING")
         print("=" * 80)
         print("Testing ALL 25 newly implemented enhanced features API endpoints")
-        print("Base URL: https://deepaction-browser.preview.emergentagent.com")
+        print("Base URL: https://browser-engine-hub.preview.emergentagent.com")
         print("=" * 80)
         
         # 1) Authentication setup
@@ -601,7 +601,7 @@ class AIBrowserAPITester:
         print("🚀 COMPREHENSIVE AI AGENTIC BROWSER BACKEND TESTING")
         print("=" * 80)
         print("Testing ALL implemented features across all 4 phases of the roadmap")
-        print("Base URL: https://deepaction-browser.preview.emergentagent.com")
+        print("Base URL: https://browser-engine-hub.preview.emergentagent.com")
         print("=" * 80)
         
         # 1) Authentication setup
@@ -2799,9 +2799,9 @@ class AIBrowserAPITester:
 def main():
     """Main function to run hybrid AI backend testing as per review request"""
     print("🚀 HYBRID AI BACKEND TESTING - NEON AI + FELLOU.AI INTEGRATION")
-    print("Testing against: https://deepaction-browser.preview.emergentagent.com")
+    print("Testing against: https://browser-engine-hub.preview.emergentagent.com")
     
-    tester = AIBrowserAPITester("https://deepaction-browser.preview.emergentagent.com")
+    tester = AIBrowserAPITester("https://browser-engine-hub.preview.emergentagent.com")
     
     try:
         # Run hybrid AI backend testing as per review request
