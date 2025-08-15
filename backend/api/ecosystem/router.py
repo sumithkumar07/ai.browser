@@ -214,7 +214,7 @@ async def get_integration_analytics(
             detail=f"Failed to get analytics: {str(e)}"
         )
 
-@router.get("/api/ecosystem/status")
+@router.get("/status")
 async def get_ecosystem_status(
     ecosystem_service: EcosystemIntegrationService = Depends(get_ecosystem_service)
 ):
