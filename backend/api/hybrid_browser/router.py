@@ -32,6 +32,12 @@ agentic_memory_service = AgenticMemoryService()
 deep_search_service = DeepSearchIntegrationService()
 virtual_workspace_service = VirtualWorkspaceService()
 browser_engine_service = BrowserEngineFoundationService()
+electron_service = ElectronService()
+workspace_service = WorkspaceService()
+engine_service = EngineService()
+os_integration_service = OSIntegrationService()
+memory_service = MemoryService()
+search_service = SearchService()
 
 # === PYDANTIC MODELS ===
 
