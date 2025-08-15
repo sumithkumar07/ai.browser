@@ -29,7 +29,7 @@ from services.ui_enhancement_service import UIEnhancementService
 from services.performance_service import PerformanceService
 
 # Database
-from database.connection import get_database
+from database.connection import get_database, connect_to_mongo, close_mongo_connection
 
 
 @asynccontextmanager
