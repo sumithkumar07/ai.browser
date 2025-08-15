@@ -18,6 +18,7 @@ export default function SimplifiedBrowser() {
   const [onboardingStep, setOnboardingStep] = useState(0);
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [showHybridPanel, setShowHybridPanel] = useState(false);
   
   const urlInputRef = useRef(null);
 
