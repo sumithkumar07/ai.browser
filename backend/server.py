@@ -91,6 +91,20 @@ app.include_router(content_router, prefix="/api/content", tags=["content"])
 # Include new enhanced features router
 app.include_router(enhanced_features_router, prefix="/api/enhanced-features", tags=["enhanced_features"])
 
+# Include new parallel implementation routers
+if PARALLEL_ROUTERS_AVAILABLE:
+    try:
+        app.include_router(advanced_navigation_router, prefix="/api/advanced-navigation", tags=["advanced_navigation"])
+        app.include_router(cross_site_intelligence_router, prefix="/api/cross-site-intelligence", tags=["cross_site_intelligence"])
+        app.include_router(enhanced_performance_router, prefix="/api/enhanced-performance", tags=["enhanced_performance"])
+        app.include_router(template_automation_router, prefix="/api/template-automation", tags=["template_automation"])
+        app.include_router(voice_actions_router, prefix="/api/voice-actions", tags=["voice_actions"])
+        print("✅ Parallel implementation routers loaded successfully")
+    except Exception as e:
+        print(f"⚠️ Error loading parallel routers: {e}")
+else:
+    print("⚠️ Parallel routers skipped due to import errors")
+
 # Include Phase 2-4 advanced routers with proper prefixes
 if ADVANCED_ROUTERS_AVAILABLE:
     try:
