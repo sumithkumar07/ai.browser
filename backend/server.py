@@ -11,7 +11,7 @@ from api.ai_agents.enhanced_router import router as ai_router
 from api.ai_agents.hybrid_router import router as hybrid_router
 from api.browser.router import router as browser_router
 from api.automation.router import router as automation_router
-from api.user.router import router as user_router
+from api.user_management.router import router as user_router
 
 # Import new enhanced routers
 from api.browser.enhanced_router import router as enhanced_browser_router
