@@ -80,7 +80,7 @@ async def register_integration_endpoint(
             detail=f"Failed to register integration endpoint: {str(e)}"
         )
 
-@router.post("/api/ecosystem/browser-extension/sync")
+@router.post("/browser-extension/sync")
 async def sync_browser_extension(
     sync_data: BrowserExtensionSync,
     current_user: User = Depends(get_current_user),
