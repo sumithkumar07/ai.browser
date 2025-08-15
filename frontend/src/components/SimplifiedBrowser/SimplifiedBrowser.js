@@ -582,6 +582,12 @@ export default function SimplifiedBrowser() {
         isVisible={showHybridPanel}
         onClose={() => setShowHybridPanel(false)}
       />
+
+      {/* Real Browser Interface */}
+      <RealBrowserInterface 
+        isVisible={showRealBrowser}
+        onClose={() => setShowRealBrowser(false)}
+      />
     </div>
   );
 }
