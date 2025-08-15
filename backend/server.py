@@ -18,13 +18,13 @@ from api.automation.enhanced_router import router as enhanced_automation_router
 from api.content.router import router as content_router
 from api.user_management.router import router as user_router
 
-# Import Phase 2-4 advanced routers - TEMPORARILY DISABLED FOR DEBUGGING
-# from api.ecosystem.router import router as ecosystem_router
-# from api.edge_computing.router import router as edge_computing_router
-# from api.emerging_tech.router import router as emerging_tech_router
-# from api.modular_ai.router import router as modular_ai_router
-# from api.global_intelligence.router import router as global_intelligence_router
-# from api.phase_capabilities.router import router as phase_capabilities_router
+# Import Phase 2-4 advanced routers
+from api.ecosystem.router import router as ecosystem_router
+from api.edge_computing.router import router as edge_computing_router
+from api.emerging_tech.router import router as emerging_tech_router
+from api.modular_ai.router import router as modular_ai_router
+from api.global_intelligence.router import router as global_intelligence_router
+from api.phase_capabilities.router import router as phase_capabilities_router
 
 # Import database connection
 from database.connection import connect_to_mongo, close_mongo_connection
