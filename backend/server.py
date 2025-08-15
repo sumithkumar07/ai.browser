@@ -171,6 +171,7 @@ app.include_router(browser_router, prefix="/api/browser", tags=["Browser Core"])
 app.include_router(enhanced_browser_router, prefix="/api/browser/enhanced", tags=["Browser Enhanced"])
 app.include_router(hybrid_browser_router, prefix="/api/hybrid-browser", tags=["Hybrid Browser"])
 app.include_router(real_browser_router, prefix="/api/real-browser", tags=["Real Browser Engine"])
+app.include_router(enhanced_real_browser_router, prefix="/api/real-browser/enhanced", tags=["Enhanced Real Browser"])
 app.include_router(automation_router, prefix="/api/automation", tags=["Automation"])
 app.include_router(user_router, prefix="/api/users", tags=["User Management"])
 
