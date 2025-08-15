@@ -11,7 +11,7 @@ import time
 from datetime import datetime
 
 class HybridAITester:
-    def __init__(self, base_url="https://neon-fellow-fusion.preview.emergentagent.com"):
+    def __init__(self, base_url="https://neon-hybrid-browser.preview.emergentagent.com"):
         self.base_url = base_url
         self.token = None
         self.tests_run = 0
@@ -218,7 +218,7 @@ class HybridAITester:
         print("🚀 HYBRID AI TESTING - NEON AI + FELLOU.AI CAPABILITIES")
         print("=" * 70)
         print("Testing hybrid AI endpoints as per review request")
-        print("Base URL: https://neon-fellow-fusion.preview.emergentagent.com")
+        print("Base URL: https://neon-hybrid-browser.preview.emergentagent.com")
         print("=" * 70)
         
         # 1) Basic connectivity tests
@@ -297,9 +297,9 @@ class HybridAITester:
 def main():
     """Main test execution"""
     print("Hybrid AI Testing - Neon AI + Fellou.ai Capabilities")
-    print("Testing against: https://neon-fellow-fusion.preview.emergentagent.com")
+    print("Testing against: https://neon-hybrid-browser.preview.emergentagent.com")
     
-    tester = HybridAITester("https://neon-fellow-fusion.preview.emergentagent.com")
+    tester = HybridAITester("https://neon-hybrid-browser.preview.emergentagent.com")
     
     try:
         success = tester.run_hybrid_ai_testing()
