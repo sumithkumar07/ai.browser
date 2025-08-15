@@ -301,6 +301,7 @@ export default function AccessibilityContextProvider({ children }) {
     
     // Check if element should be announced
     shouldAnnounce: (element) => {
+      if (!element || typeof element.hasAttribute !== 'function') return false;
       return state.screenReaderMode || element.hasAttribute('data-announce-always');
     },
     
