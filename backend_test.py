@@ -12,7 +12,7 @@ from datetime import datetime
 from typing import Dict, Any, Optional
 
 class AIBrowserAPITester:
-    def __init__(self, base_url="https://browser-engine-hub.preview.emergentagent.com"):
+    def __init__(self, base_url="https://chromium-tests.preview.emergentagent.com"):
         self.base_url = base_url
         self.token = None
         self.user_id = None
@@ -475,7 +475,7 @@ class AIBrowserAPITester:
         print("=" * 80)
         print("Testing newly implemented hybrid AI capabilities that combine Neon AI browser")
         print("features with Fellou.ai browser features while preserving existing functionality.")
-        print("Base URL: https://browser-engine-hub.preview.emergentagent.com")
+        print("Base URL: https://chromium-tests.preview.emergentagent.com")
         print("=" * 80)
         
         # 1) Authentication setup
@@ -539,7 +539,7 @@ class AIBrowserAPITester:
         print("🚀 COMPREHENSIVE ENHANCED FEATURES TESTING")
         print("=" * 80)
         print("Testing ALL 25 newly implemented enhanced features API endpoints")
-        print("Base URL: https://browser-engine-hub.preview.emergentagent.com")
+        print("Base URL: https://chromium-tests.preview.emergentagent.com")
         print("=" * 80)
         
         # 1) Authentication setup
@@ -601,7 +601,7 @@ class AIBrowserAPITester:
         print("🚀 COMPREHENSIVE AI AGENTIC BROWSER BACKEND TESTING")
         print("=" * 80)
         print("Testing ALL implemented features across all 4 phases of the roadmap")
-        print("Base URL: https://browser-engine-hub.preview.emergentagent.com")
+        print("Base URL: https://chromium-tests.preview.emergentagent.com")
         print("=" * 80)
         
         # 1) Authentication setup
@@ -658,7 +658,7 @@ class AIBrowserAPITester:
         print("🚀 REAL BROWSER ENGINE TESTING - Chromium Integration")
         print("=" * 80)
         print("Testing newly implemented Real Browser Engine capabilities with Chromium integration")
-        print("Base URL: https://browser-engine-hub.preview.emergentagent.com")
+        print("Base URL: https://chromium-tests.preview.emergentagent.com")
         print("=" * 80)
         
         # Priority 1: Core Real Browser Engine
@@ -3142,9 +3142,9 @@ def main():
         test_type = "real_browser"  # Default to Real Browser Engine testing as per review request
     
     print(f"🚀 BACKEND TESTING - {test_type.upper()}")
-    print("Testing against: https://browser-engine-hub.preview.emergentagent.com")
+    print("Testing against: https://chromium-tests.preview.emergentagent.com")
     
-    tester = AIBrowserAPITester("https://browser-engine-hub.preview.emergentagent.com")
+    tester = AIBrowserAPITester("https://chromium-tests.preview.emergentagent.com")
     
     try:
         if test_type == "real_browser":

@@ -3,7 +3,7 @@
 ## Test Execution Summary
 - **Date**: 2025-01-11
 - **Test Type**: Backend Smoke Test for AI-enhanced endpoints
-- **Base URL**: https://browser-engine-hub.preview.emergentagent.com
+- **Base URL**: https://chromium-tests.preview.emergentagent.com
 - **Total Tests**: 9
 - **Passed**: 9
 - **Failed**: 0
