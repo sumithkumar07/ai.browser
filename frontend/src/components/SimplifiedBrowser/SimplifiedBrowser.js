@@ -20,6 +20,7 @@ export default function SimplifiedBrowser() {
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [showHybridPanel, setShowHybridPanel] = useState(false);
+  const [showRealBrowser, setShowRealBrowser] = useState(false);
   
   const urlInputRef = useRef(null);
 
