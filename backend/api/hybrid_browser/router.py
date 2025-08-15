@@ -701,3 +701,85 @@ async def get_engine_status(engine_id: Optional[str] = None):
         return JSONResponse(content=result)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+# Native OS Integration Endpoints
+@router.post("/phase3/os/register-file-association")
+async def register_file_association(
+    file_type: str,
+    association_config: Dict
+):
+    """🔧 Register file type association with the system"""
+    try:
+        result = await os_integration_service.register_file_association(file_type, association_config)
+        return JSONResponse(content=result)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/phase3/os/setup-notifications")
+async def setup_system_notifications(notification_config: Dict):
+    """🔧 Setup system-level notification integration"""
+    try:
+        result = await os_integration_service.setup_system_notifications(notification_config)
+        return JSONResponse(content=result)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/phase3/os/send-notification/{channel_id}")
+async def send_system_notification(
+    channel_id: str,
+    notification: Dict
+):
+    """🔧 Send system notification through registered channel"""
+    try:
+        result = await os_integration_service.send_system_notification(channel_id, notification)
+        return JSONResponse(content=result)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/phase3/os/register-shortcut")
+async def register_global_shortcut(shortcut_config: Dict):
+    """🔧 Register system-wide keyboard shortcut"""
+    try:
+        result = await os_integration_service.register_global_shortcut(shortcut_config)
+        return JSONResponse(content=result)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/phase3/os/setup-protocol/{protocol}")
+async def setup_protocol_handler(
+    protocol: str,
+    handler_config: Dict
+):
+    """🔧 Setup custom protocol handler (e.g., myapp://)"""
+    try:
+        result = await os_integration_service.setup_protocol_handler(protocol, handler_config)
+        return JSONResponse(content=result)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/phase3/os/setup-system-tray")
+async def setup_system_tray(tray_config: Dict):
+    """🔧 Setup system tray integration"""
+    try:
+        result = await os_integration_service.setup_system_tray(tray_config)
+        return JSONResponse(content=result)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/phase3/os/integration-status")
+async def get_system_integration_status():
+    """🔧 Get comprehensive system integration status"""
+    try:
+        result = await os_integration_service.get_system_integration_status()
+        return JSONResponse(content=result)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.delete("/phase3/os/cleanup")
+async def cleanup_system_integrations(cleanup_options: Optional[Dict] = None):
+    """🔧 Cleanup system integrations"""
+    try:
+        result = await os_integration_service.cleanup_system_integrations(cleanup_options)
+        return JSONResponse(content=result)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
