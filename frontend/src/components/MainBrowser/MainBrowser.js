@@ -540,6 +540,12 @@ export default function MainBrowser() {
 
       {/* 🚀 MINIMAL ENHANCED FEATURES INTEGRATION */}
       <FloatingActionButton userId={user?.id || 'anonymous'} />
+
+      {/* 🚀 COMPREHENSIVE FEATURES PANEL */}
+      <ComprehensiveFeaturesPanel 
+        isVisible={showComprehensiveFeatures}
+        onClose={() => setShowComprehensiveFeatures(false)}
+      />
     </div>
   );
 }
