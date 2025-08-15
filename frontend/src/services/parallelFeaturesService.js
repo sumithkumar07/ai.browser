@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'https://ai-browser-boost.preview.emergentagent.com';
+const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'https://web-ai-navigator.preview.emergentagent.com';
 
 // Helper function to get auth token
 const getAuthToken = () => {
