@@ -200,7 +200,7 @@ async def get_new_api_endpoints():
         "existing_endpoints": "unchanged"
     }
 
-@router.get("/api/phase-capabilities/feature-matrix")
+@router.get("/feature-matrix")
 async def get_feature_implementation_matrix():
     """Get detailed feature implementation matrix showing what's completed"""
     
