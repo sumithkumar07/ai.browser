@@ -783,3 +783,55 @@ async def cleanup_system_integrations(cleanup_options: Optional[Dict] = None):
         return JSONResponse(content=result)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+# ===============================
+# ADDITIONAL PHASE 1 ENDPOINTS
+# ===============================
+
+@router.get("/phase1/deep-action/templates")
+async def get_workflow_templates():
+    """🚀 Get all available workflow templates"""
+    try:
+        result = await deep_action_service.get_workflow_templates()
+        return JSONResponse(content=result)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/phase1/deep-action/analytics")
+async def get_workflow_analytics(workflow_id: Optional[str] = None):
+    """🚀 Get comprehensive workflow analytics"""
+    try:
+        result = await deep_action_service.get_workflow_analytics(workflow_id)
+        return JSONResponse(content=result)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/phase1/memory/analytics")
+async def get_memory_analytics(user_id: Optional[str] = None):
+    """🧠 Get comprehensive memory system analytics"""
+    try:
+        result = await memory_service.get_memory_analytics(user_id)
+        return JSONResponse(content=result)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/phase1/search/platform-status")
+async def get_platform_status():
+    """🔍 Get status of all integrated platforms"""
+    try:
+        result = await search_service.get_platform_status()
+        return JSONResponse(content=result)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/phase1/search/configure-auth/{platform}")
+async def configure_authentication(
+    platform: str,
+    auth_data: Dict
+):
+    """🔍 Configure authentication for a platform"""
+    try:
+        result = await search_service.configure_authentication(platform, auth_data)
+        return JSONResponse(content=result)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
