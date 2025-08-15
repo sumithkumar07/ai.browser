@@ -350,13 +350,4 @@ export default function AccessibilityContextProvider({ children }) {
   );
 }
 
-// Hook to use the accessibility context
-export const useAccessibility = () => {
-  const context = useContext(AccessibilityContext);
-  if (context === undefined) {
-    throw new Error('useAccessibility must be used within an AccessibilityContextProvider');
-  }
-  return context;
-};
-
 export default AccessibilityContextProvider;
