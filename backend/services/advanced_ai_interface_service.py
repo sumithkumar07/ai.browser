@@ -5,6 +5,7 @@ Handles advanced AI interaction features without disrupting existing UI
 
 import asyncio
 import json
+import logging
 import re
 from typing import List, Dict, Any, Optional
 from datetime import datetime, timedelta
