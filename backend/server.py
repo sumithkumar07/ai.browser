@@ -19,6 +19,9 @@ from api.automation.enhanced_router import router as enhanced_automation_router
 from api.content.router import router as content_router
 from api.user_management.router import router as user_router
 
+# Import new enhanced features router
+from api.enhanced_features.router import router as enhanced_features_router
+
 # Import Phase 2-4 advanced routers
 try:
     from api.ecosystem.router import router as ecosystem_router
