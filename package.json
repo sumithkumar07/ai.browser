@@ -1,4 +1,20 @@
 {
+  "name": "ai-agentic-browser",
+  "version": "1.0.0",
+  "description": "AI-powered browser with real Chromium browsing capabilities",
+  "main": "electron.js",
+  "homepage": "./",
+  "scripts": {
+    "start": "concurrently \"cd backend && python server.py\" \"cd frontend && npm start\"",
+    "dev": "concurrently \"cd backend && python server.py\" \"cd frontend && npm start\" --kill-others-on-fail",
+    "build": "cd frontend && npm run build && cd ../backend && echo 'Backend ready for production'",
+    "test": "cd frontend && npm test && cd ../backend && python -m pytest",
+    "install-deps": "cd frontend && npm install && cd ../backend && pip install -r requirements.txt",
+    "electron": "electron .",
+    "electron-dev": "concurrently \"cd backend && python server.py\" \"cd frontend && npm start\" \"wait-on http://localhost:3000 && electron .\"",
+    "electron-pack": "cd frontend && npm run build && cd .. && electron-builder",
+    "dist": "cd frontend && npm run build && cd .. && electron-builder --publish=never"
+  },
   "devDependencies": {
     "concurrently": "^9.2.0",
     "electron": "^37.3.0",
