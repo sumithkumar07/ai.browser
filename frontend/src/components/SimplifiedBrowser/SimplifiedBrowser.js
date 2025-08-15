@@ -3,8 +3,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ArrowLeft, ArrowRight, RotateCcw, Home, Star, Download, 
   History, Bookmark, Settings, HelpCircle, Plus, X, Search,
-  Globe, Shield, ExternalLink, Menu, BookOpen, Clock
+  Globe, Shield, ExternalLink, Menu, BookOpen, Clock, Activity, Zap
 } from 'lucide-react';
+import HybridBrowserPanel from '../HybridBrowser/HybridBrowserPanel';
+import HybridBrowserService from '../../services/HybridBrowserService';
 
 export default function SimplifiedBrowser() {
   // Simplified state management - focusing only on essentials
