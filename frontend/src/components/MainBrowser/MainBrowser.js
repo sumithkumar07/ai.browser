@@ -339,10 +339,10 @@ export default function MainBrowser() {
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    onClick={() => toggleAssistant()}
-                    className="px-8 py-4 bg-gradient-to-r from-cyan-600 to-teal-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-cyan-500/25 transition-all duration-300"
+                    onClick={() => setShowComprehensiveFeatures(true)}
+                    className="px-8 py-4 bg-gradient-to-r from-emerald-600 to-green-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-emerald-500/25 transition-all duration-300 border border-emerald-500/30"
                   >
-                    Meet Enhanced ARIA AI
+                    🚀 All 17 Features Ready
                   </motion.button>
                 </motion.div>
 
