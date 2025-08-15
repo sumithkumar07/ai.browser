@@ -19,18 +19,20 @@ function App() {
         <UserContextProvider>
           <PerformanceContextProvider>
             <AccessibilityContextProvider>
-              <AIContextProvider>
-                <BrowserContextProvider>
-                  <Router>
-                    <AuthWrapper>
-                      <Routes>
-                        <Route path="/" element={<MainBrowser />} />
-                        <Route path="/browser" element={<MainBrowser />} />
-                      </Routes>
-                    </AuthWrapper>
-                  </Router>
-                </BrowserContextProvider>
-              </AIContextProvider>
+              <ParallelFeaturesProvider>
+                <AIContextProvider>
+                  <BrowserContextProvider>
+                    <Router>
+                      <AuthWrapper>
+                        <Routes>
+                          <Route path="/" element={<MainBrowser />} />
+                          <Route path="/browser" element={<MainBrowser />} />
+                        </Routes>
+                      </AuthWrapper>
+                    </Router>
+                  </BrowserContextProvider>
+                </AIContextProvider>
+              </ParallelFeaturesProvider>
             </AccessibilityContextProvider>
           </PerformanceContextProvider>
         </UserContextProvider>
