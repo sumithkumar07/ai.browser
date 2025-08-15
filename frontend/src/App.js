@@ -9,12 +9,16 @@ import PerformanceContextProvider from './contexts/PerformanceContext';
 import AccessibilityContextProvider from './contexts/AccessibilityContext';
 import { ParallelFeaturesProvider } from './contexts/ParallelFeaturesContext';
 import MainBrowser from './components/MainBrowser/MainBrowser';
+import SimplifiedBrowser from './components/SimplifiedBrowser/SimplifiedBrowser';
 import AuthWrapper from './components/Auth/AuthWrapper';
 import './App.css';
 
 function App() {
+  // Check if user wants simplified browser (can be toggled later)
+  const useSimplifiedBrowser = true; // Set to true for actual browsing experience
+
   return (
-    <div className="App h-screen w-screen overflow-hidden bg-gradient-to-br from-ai-dark via-slate-800 to-ai-dark">
+    <div className="App h-screen w-screen overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
       <DndProvider backend={HTML5Backend}>
         <UserContextProvider>
           <PerformanceContextProvider>
@@ -25,8 +29,11 @@ function App() {
                     <Router>
                       <AuthWrapper>
                         <Routes>
-                          <Route path="/" element={<MainBrowser />} />
-                          <Route path="/browser" element={<MainBrowser />} />
+                          <Route path="/" element={
+                            useSimplifiedBrowser ? <SimplifiedBrowser /> : <MainBrowser />
+                          } />
+                          <Route path="/browser" element={<SimplifiedBrowser />} />
+                          <Route path="/advanced" element={<MainBrowser />} />
                         </Routes>
                       </AuthWrapper>
                     </Router>
