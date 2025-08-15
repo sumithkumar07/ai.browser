@@ -40,11 +40,26 @@ export default function MainBrowser() {
   const { preferences } = useAccessibility();
   const containerRef = useRef(null);
 
+  // 🚀 Enhanced UI Discovery State
+  const [showFeaturePanel, setShowFeaturePanel] = useState(false);
+  const [activeTooltip, setActiveTooltip] = useState(null);
+  const [discoveryMode, setDiscoveryMode] = useState(false);
+
   useEffect(() => {
     // Initialize hybrid AI features on component mount
     if (user && !hybridFeatures?.hybridIntelligence) {
       // Initialize hybrid features
       console.log('Initializing hybrid AI capabilities...');
+    }
+
+    // Show discovery mode for new users
+    const hasSeenFeatures = localStorage.getItem('hasSeenHybridFeatures');
+    if (!hasSeenFeatures) {
+      const timer = setTimeout(() => {
+        setDiscoveryMode(true);
+        localStorage.setItem('hasSeenHybridFeatures', 'true');
+      }, 3000);
+      return () => clearTimeout(timer);
     }
   }, [user, hybridFeatures]);
 
