@@ -1,653 +1,449 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useBrowser } from '../../contexts/BrowserContext';
 import { useAI } from '../../contexts/AIContext';
 import { useUser } from '../../contexts/UserContext';
-import EnhancedBubbleTabWorkspace from '../BubbleTab/EnhancedBubbleTabWorkspace';
-import EnhancedAIAssistant from '../AIAssistant/EnhancedAIAssistant';
-import ResponsiveNavigationBar from '../Navigation/ResponsiveNavigationBar';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Brain, Sparkles, Zap, TrendingUp, Globe, Shield, Wifi, WifiOff, Command, Eye, Settings } from 'lucide-react';
+import { usePerformance } from '../../contexts/PerformanceContext';
+import { useAccessibility } from '../../contexts/AccessibilityContext';
 
-const API_BASE = `${process.env.REACT_APP_BACKEND_URL}/api`;
+// Import components
+import Navigation from '../Navigation/Navigation';
+import BubbleTab from '../BubbleTab/BubbleTab';
+import EnhancedAIAssistant from '../AIAssistant/EnhancedAIAssistant';
+import PerformanceMonitor from '../Performance/PerformanceMonitor';
+import InteractiveTutorial from '../Tutorial/InteractiveTutorial';
+
+// Icons
+import { 
+  Brain, 
+  Sparkles, 
+  Zap, 
+  Shield, 
+  Globe,
+  BarChart3,
+  Users,
+  Lightbulb
+} from 'lucide-react';
 
 export default function MainBrowser() {
-  const { currentSession, tabs, addTab } = useBrowser();
-  const { isAssistantVisible, toggleAssistant } = useAI();
+  const { tabs, currentView, addTab, setCurrentView } = useBrowser();
+  const { isAssistantVisible, toggleAssistant, hybridFeatures, aiCapabilities } = useAI();
   const { user } = useUser();
-  const [isInitializing, setIsInitializing] = useState(true);
-  const [showWelcomeAnimation, setShowWelcomeAnimation] = useState(false);
-  const [performanceMetrics, setPerformanceMetrics] = useState(null);
-  const [isOnline, setIsOnline] = useState(navigator.onLine);
-  const [showPerformancePanel, setShowPerformancePanel] = useState(false);
-  const [appVersion] = useState('2.0.0');
-  const [shortcuts, setShortcuts] = useState([]);
+  const { performanceScore } = usePerformance();
+  const { preferences } = useAccessibility();
+  const containerRef = useRef(null);
 
   useEffect(() => {
-    // Initialize browser session with enhanced error handling
-    const initializeBrowser = async () => {
-      try {
-        // Create initial session if none exists
-        if (!currentSession) {
-          const mockSession = {
-            id: 'session-1',
-            user_id: user.id,
-            name: 'Enhanced AI Browser Session',
-            tabs: [],
-            created_at: new Date().toISOString(),
-            metadata: {
-              version: appVersion,
-              enhanced_features: true,
-              ai_powered: true
+    // Initialize hybrid AI features on component mount
+    if (user && !hybridFeatures?.hybridIntelligence) {
+      // Initialize hybrid features
+      console.log('Initializing hybrid AI capabilities...');
+    }
+  }, [user, hybridFeatures]);
+
+  const handleCreateFirstTab = () => {
+    const welcomeTab = {
+      id: 'welcome-' + Date.now(),
+      title: 'Welcome to Enhanced AI Browser',
+      url: 'about:welcome',
+      isActive: true,
+      content: {
+        type: 'welcome',
+        data: {
+          title: 'AI Agentic Browser - Enhanced Edition',
+          subtitle: 'Now with Advanced Hybrid AI Intelligence',
+          features: [
+            {
+              icon: Brain,
+              title: 'Advanced AI Analysis',
+              description: 'Real-time collaborative analysis, industry-specific intelligence, and visual content understanding'
+            },
+            {
+              icon: Sparkles,
+              title: 'Hybrid AI Intelligence',
+              description: 'Neon AI + Fellou.ai integration for contextual understanding and workflow automation'
+            },
+            {
+              icon: Zap,
+              title: 'Enhanced Automation',
+              description: 'Deep Action workflows with intelligent multi-step task execution'
+            },
+            {
+              icon: BarChart3,
+              title: 'Professional Reports',
+              description: 'Advanced research capabilities with visual report generation and export'
+            },
+            {
+              icon: Users,
+              title: 'Collaborative AI',
+              description: 'Multiple AI models working together for complex analysis and insights'
+            },
+            {
+              icon: Lightbulb,
+              title: 'Predictive Assistance',
+              description: 'Behavioral learning with proactive suggestions and workflow optimization'
             }
-          };
-        }
-        
-        // Load enhanced performance metrics
-        await loadPerformanceMetrics();
-        
-        // Initialize keyboard shortcuts
-        initializeShortcuts();
-        
-      } catch (error) {
-        console.error('Error initializing enhanced browser:', error);
-      } finally {
-        setIsInitializing(false);
-        if (tabs.length === 0) {
-          setShowWelcomeAnimation(true);
-          // Auto-hide welcome after 10 seconds if no interaction
-          setTimeout(() => setShowWelcomeAnimation(false), 10000);
+          ]
         }
       }
     };
+    addTab(welcomeTab);
+  };
 
-    if (user) {
-      initializeBrowser();
-    }
-  }, [user, currentSession, tabs.length, appVersion]);
-
-  // Enhanced online/offline detection
-  useEffect(() => {
-    const handleOnline = () => setIsOnline(true);
-    const handleOffline = () => setIsOnline(false);
-    
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
-    
-    return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
-    };
-  }, []);
-
-  // Enhanced performance metrics loading with caching
-  const loadPerformanceMetrics = useCallback(async () => {
-    try {
-      const response = await fetch(`${API_BASE}/ai/enhanced/performance-metrics`, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-        }
-      });
-      
-      if (response.ok) {
-        const metrics = await response.json();
-        setPerformanceMetrics(metrics);
-        
-        // Store in localStorage for offline access
-        localStorage.setItem('lastPerformanceMetrics', JSON.stringify({
-          data: metrics,
-          timestamp: Date.now()
-        }));
-      }
-    } catch (error) {
-      console.error('Could not load performance metrics:', error);
-      
-      // Try to load from localStorage if online request fails
-      const cached = localStorage.getItem('lastPerformanceMetrics');
-      if (cached) {
-        const { data, timestamp } = JSON.parse(cached);
-        // Use cached data if less than 5 minutes old
-        if (Date.now() - timestamp < 5 * 60 * 1000) {
-          setPerformanceMetrics(data);
-        }
-      }
-    }
-  }, []);
-
-  // Initialize enhanced keyboard shortcuts
-  const initializeShortcuts = useCallback(() => {
-    const shortcutList = [
-      { key: '⌘T', description: 'New Tab', action: () => handleNewTab() },
-      { key: '⌘K', description: 'AI Assistant', action: toggleAssistant },
-      { key: '⌘P', description: 'Performance Panel', action: () => setShowPerformancePanel(!showPerformancePanel) },
-      { key: 'Space', description: 'Zen Mode', action: () => {} }, // Handled in workspace
-      { key: 'G', description: 'Grid View', action: () => {} },
-      { key: 'L', description: 'List View', action: () => {} }
-    ];
-    setShortcuts(shortcutList);
-  }, [toggleAssistant, showPerformancePanel]);
-
-  // Enhanced tab creation with intelligent positioning
-  const handleNewTab = useCallback((type = 'blank') => {
-    const newTab = {
-      id: `tab-${Date.now()}`,
-      url: type === 'blank' ? 'about:blank' : 'https://google.com',
-      title: type === 'blank' ? 'New Tab' : 'Google Search',
-      position_x: Math.random() * 400 + 200,
-      position_y: Math.random() * 300 + 150,
-      is_active: false,
-      created_at: new Date().toISOString(),
-      metadata: {
-        type: type,
-        ai_analyzed: false,
-        created_by: 'user',
-        session_id: currentSession?.id || 'default',
-        enhanced_features: true,
-        performance_score: 100
-      }
-    };
-    addTab(newTab);
-    setShowWelcomeAnimation(false);
-  }, [addTab, currentSession]);
-
-  // Enhanced loading screen
-  if (isInitializing) {
-    return (
-      <motion.div 
-        className="flex items-center justify-center h-screen bg-gradient-to-br from-ai-dark via-purple-900/20 to-blue-900/20"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-      >
-        <div className="text-center">
-          <motion.div
-            className="w-20 h-20 border-4 border-ai-primary/30 border-t-ai-primary rounded-full mx-auto mb-8"
-            animate={{ rotate: 360 }}
-            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-          />
-          
-          <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.2 }}
-          >
-            <h2 className="text-3xl font-bold text-white mb-3 flex items-center justify-center">
-              <Brain className="mr-3 text-purple-400 animate-pulse" size={32} />
-              Enhanced AI Browser
-            </h2>
-            <p className="text-gray-400 text-lg mb-4">Initializing intelligent workspace...</p>
-            
-            {/* Enhanced loading features */}
-            <div className="space-y-2 text-sm text-gray-500">
-              <motion.div
-                className="flex items-center justify-center"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
-              >
-                <Sparkles className="mr-2" size={16} />
-                Loading AI capabilities...
-              </motion.div>
-              <motion.div
-                className="flex items-center justify-center"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.8 }}
-              >
-                <Globe className="mr-2" size={16} />
-                Setting up enhanced workspace...
-              </motion.div>
-              <motion.div
-                className="flex items-center justify-center"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.1 }}
-              >
-                <TrendingUp className="mr-2" size={16} />
-                Optimizing performance...
-              </motion.div>
-            </div>
-          </motion.div>
-          
-          {/* Connection status */}
-          <motion.div
-            className="mt-8 flex items-center justify-center text-sm"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.4 }}
-          >
-            {isOnline ? (
-              <>
-                <Wifi className="mr-2 text-green-400" size={16} />
-                <span className="text-green-400">Connected & Enhanced</span>
-              </>
-            ) : (
-              <>
-                <WifiOff className="mr-2 text-red-400" size={16} />
-                <span className="text-red-400">Offline Mode</span>
-              </>
-            )}
-          </motion.div>
+  const StatCard = ({ icon: Icon, title, value, color }) => (
+    <motion.div
+      whileHover={{ scale: 1.05 }}
+      className={`bg-gradient-to-br ${color} p-4 rounded-xl backdrop-blur-lg border border-white/10`}
+    >
+      <div className="flex items-center space-x-3">
+        <Icon size={24} className="text-white" />
+        <div>
+          <p className="text-white/80 text-sm">{title}</p>
+          <p className="text-white font-semibold text-lg">{value}</p>
         </div>
-      </motion.div>
-    );
-  }
+      </div>
+    </motion.div>
+  );
 
   return (
-    <div className="browser-container relative bg-gradient-to-br from-ai-dark via-purple-900/5 to-blue-900/5 min-h-screen overflow-hidden">
-      {/* Enhanced Navigation Bar */}
-      <ResponsiveNavigationBar />
-      
-      {/* Main Content Area */}
-      <div className="main-content-area relative">
-        {/* Enhanced Bubble Tab Workspace */}
-        <EnhancedBubbleTabWorkspace />
-        
-        {/* Enhanced AI Assistant */}
-        <EnhancedAIAssistant />
+    <div 
+      ref={containerRef}
+      className={`main-browser h-screen w-screen flex flex-col relative overflow-hidden
+        ${preferences.highContrast ? 'high-contrast' : ''}
+        ${preferences.reducedMotion ? 'reduced-motion' : ''}
+      `}
+      style={{ fontSize: preferences.fontSize }}
+    >
+      {/* Enhanced Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,119,198,0.1),transparent_50%)]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-purple-500/5 to-transparent" />
       </div>
 
-      {/* Enhanced Welcome Screen */}
-      <AnimatePresence>
-        {showWelcomeAnimation && tabs.length === 0 && (
-          <motion.div 
-            className="fixed inset-0 flex items-center justify-center bg-gradient-to-br from-ai-dark/98 via-purple-900/30 to-blue-900/30 backdrop-blur-md z-40"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.6 }}
-          >
+      {/* Navigation */}
+      <Navigation />
+
+      {/* Main Content Area */}
+      <div className="flex-1 flex relative">
+        {/* Browser Content */}
+        <div className="flex-1 flex flex-col">
+          {tabs.length === 0 ? (
+            /* Enhanced Welcome Screen */
             <motion.div 
-              className="text-center max-w-4xl mx-auto px-8"
-              initial={{ scale: 0.8, y: 50 }}
-              animate={{ scale: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.8, type: "spring", stiffness: 120 }}
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="flex-1 flex items-center justify-center p-8"
             >
-              {/* Enhanced Animated Logo */}
-              <motion.div
-                className="relative mb-12"
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ delay: 0.4, duration: 1, type: "spring", bounce: 0.3 }}
-              >
-                <div className="w-32 h-32 mx-auto bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-600 rounded-full flex items-center justify-center mb-6 shadow-2xl relative">
-                  <Brain size={64} className="text-white" />
-                  
-                  {/* Animated rings */}
-                  <motion.div
-                    className="absolute inset-0 w-32 h-32 border-4 border-purple-500/30 rounded-full"
-                    animate={{ scale: [1, 1.3, 1], opacity: [0.5, 0, 0.5] }}
-                    transition={{ repeat: Infinity, duration: 3 }}
-                  />
-                  <motion.div
-                    className="absolute inset-0 w-32 h-32 border-2 border-blue-500/20 rounded-full"
-                    animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0, 0.3] }}
-                    transition={{ repeat: Infinity, duration: 2, delay: 0.5 }}
-                  />
-                </div>
-                
+              <div className="max-w-6xl mx-auto text-center space-y-12">
+                {/* Hero Section */}
                 <motion.div
-                  className="text-sm text-purple-400 font-medium"
-                  animate={{ opacity: [0.5, 1, 0.5] }}
-                  transition={{ repeat: Infinity, duration: 2 }}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="space-y-6"
                 >
-                  v{appVersion} Enhanced
-                </motion.div>
-              </motion.div>
-
-              <motion.h1 
-                className="text-7xl font-bold text-white mb-8"
-                initial={{ y: 30, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.6 }}
-              >
-                Welcome to the 
-                <span className="bg-gradient-to-r from-purple-400 via-blue-400 to-cyan-400 text-transparent bg-clip-text">
-                  {" "}Enhanced Future
-                </span>
-              </motion.h1>
-
-              {/* 🚀 HYBRID AI BRANDING */}
-              <motion.div
-                className="mb-8"
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.8 }}
-              >
-                <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-900/50 to-blue-900/50 rounded-full border border-purple-500/30 backdrop-blur-sm">
-                  <Brain className="mr-2 text-purple-400" size={20} />
-                  <span className="text-white font-medium">Powered by</span>
-                  <span className="ml-2 text-transparent bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text font-bold">
-                    Neon AI + Fellou.ai
-                  </span>
-                  <Sparkles className="ml-2 text-yellow-400" size={16} />
-                </div>
-              </motion.div>
-              
-              <motion.p 
-                className="text-2xl text-gray-300 mb-10 leading-relaxed max-w-3xl mx-auto"
-                initial={{ y: 30, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.8 }}
-              >
-                Your AI-powered browser with floating bubble tabs, intelligent automation, 
-                enhanced performance, and advanced capabilities that adapt to your workflow
-              </motion.p>
-
-              {/* Enhanced Feature Highlights */}
-              <motion.div
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12"
-                initial={{ y: 30, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 1.0 }}
-              >
-                {[
-                  { 
-                    icon: Globe, 
-                    title: "3D Bubble Workspace", 
-                    desc: "Physics-based floating tabs with intelligent organization",
-                    color: "from-blue-500 to-cyan-500"
-                  },
-                  { 
-                    icon: Brain, 
-                    title: "Hybrid AI Assistant", 
-                    desc: "Neon AI + Fellou.ai powered with GROQ Llama3-70B intelligence",
-                    color: "from-purple-500 to-pink-500",
-                    isHybrid: true
-                  },
-                  { 
-                    icon: Zap, 
-                    title: "Deep Action Automation", 
-                    desc: "Multi-step workflows, professional research, and smart app generation",
-                    color: "from-yellow-500 to-orange-500",
-                    isHybrid: true
-                  },
-                  { 
-                    icon: TrendingUp, 
-                    title: "Enhanced Performance", 
-                    desc: "Agentic memory, predictive assistance, and real-time optimization",
-                    color: "from-green-500 to-emerald-500",
-                    isHybrid: true
-                  }
-                ].map((feature, index) => (
-                  <motion.div
-                    key={feature.title}
-                    className={`p-6 glass-light rounded-2xl border transition-all duration-300 relative overflow-hidden ${
-                      feature.isHybrid 
-                        ? 'border-purple-500/50 hover:border-purple-400/70 bg-gradient-to-br from-purple-900/10 to-blue-900/10' 
-                        : 'border-gray-700/30 hover:border-purple-500/30'
-                    }`}
-                    initial={{ scale: 0, rotate: -10 }}
-                    animate={{ scale: 1, rotate: 0 }}
-                    transition={{ delay: 1.2 + index * 0.15, type: "spring", stiffness: 120 }}
-                    whileHover={{ y: -5, scale: 1.02 }}
-                  >
-                    {feature.isHybrid && (
-                      <div className="absolute top-2 right-2">
-                        <div className="px-2 py-1 bg-gradient-to-r from-green-400 to-blue-400 rounded-full text-xs font-bold text-white">
-                          HYBRID
-                        </div>
-                      </div>
-                    )}
-                    <div className={`w-12 h-12 bg-gradient-to-r ${feature.color} rounded-xl flex items-center justify-center mx-auto mb-4 relative`}>
-                      <feature.icon className="text-white" size={24} />
-                      {feature.isHybrid && (
-                        <motion.div
-                          className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full"
-                          animate={{ scale: [1, 1.3, 1] }}
-                          transition={{ repeat: Infinity, duration: 2 }}
-                        />
-                      )}
-                    </div>
-                    <h3 className="text-white font-bold mb-3 text-lg">{feature.title}</h3>
-                    <p className="text-gray-400 text-sm leading-relaxed">{feature.desc}</p>
-                  </motion.div>
-                ))}
-              </motion.div>
-
-              {/* Enhanced Action Buttons */}
-              <motion.div 
-                className="space-y-6"
-                initial={{ y: 30, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 1.8 }}
-              >
-                <motion.button
-                  onClick={() => handleNewTab('blank')}
-                  className="w-full max-w-md bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white py-6 px-10 rounded-2xl font-bold text-xl transition-all shadow-2xl relative overflow-hidden group mx-auto block"
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-400/20 to-blue-400/20 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500"></div>
-                  <div className="relative flex items-center justify-center">
-                    <Sparkles className="mr-3" size={28} />
-                    Create Your First Enhanced Tab
+                  <div className="relative">
+                    <h1 className="text-5xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-purple-200 to-blue-200 mb-4">
+                      Welcome to the Enhanced Future
+                    </h1>
+                    <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                      Experience the next generation of AI-powered browsing with advanced hybrid intelligence, 
+                      professional-grade automation, and world-class analysis capabilities.
+                    </p>
                   </div>
-                </motion.button>
-                
-                <div className="flex flex-wrap gap-4 justify-center">
+
+                  {/* Status Cards */}
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+                    <StatCard 
+                      icon={Brain} 
+                      title="AI Intelligence" 
+                      value="Enhanced" 
+                      color="from-purple-600/30 to-blue-600/30" 
+                    />
+                    <StatCard 
+                      icon={Sparkles} 
+                      title="Hybrid AI" 
+                      value={hybridFeatures?.hybridIntelligence ? "Active" : "Ready"} 
+                      color="from-blue-600/30 to-cyan-600/30" 
+                    />
+                    <StatCard 
+                      icon={Shield} 
+                      title="Performance" 
+                      value={`${performanceScore}%`} 
+                      color="from-green-600/30 to-emerald-600/30" 
+                    />
+                    <StatCard 
+                      icon={Globe} 
+                      title="Mode" 
+                      value={user?.subscription || "Power"} 
+                      color="from-amber-600/30 to-orange-600/30" 
+                    />
+                  </div>
+                </motion.div>
+
+                {/* Feature Cards */}
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 }}
+                  className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto"
+                >
+                  {[
+                    {
+                      icon: Brain,
+                      title: "Advanced AI Analysis",
+                      description: "Real-time collaboration, industry intelligence, visual & audio analysis",
+                      gradient: "from-purple-500/20 to-blue-500/20",
+                      border: "border-purple-500/30",
+                      features: ["Collaborative Analysis", "Industry-Specific", "Visual Intelligence", "Audio Processing"]
+                    },
+                    {
+                      icon: Sparkles,
+                      title: "Hybrid AI Intelligence",
+                      description: "Neon AI + Fellou.ai integration with behavioral learning",
+                      gradient: "from-blue-500/20 to-cyan-500/20",
+                      border: "border-blue-500/30",
+                      features: ["Neon Chat Enhanced", "Deep Search Pro", "Agentic Memory", "Workflow Builder"]
+                    },
+                    {
+                      icon: BarChart3,
+                      title: "Professional Reports",
+                      description: "Research, trends, and visual reports with export capabilities",
+                      gradient: "from-green-500/20 to-teal-500/20",
+                      border: "border-green-500/30",
+                      features: ["Academic Research", "Trend Detection", "Knowledge Graphs", "Visual Reports"]
+                    },
+                    {
+                      icon: Zap,
+                      title: "Creative & Automation",
+                      description: "Content generation, code creation, and workflow automation",
+                      gradient: "from-amber-500/20 to-orange-500/20",
+                      border: "border-amber-500/30",
+                      features: ["Content Generation", "Code Creation", "Data Visualization", "Smart Automation"]
+                    }
+                  ].map((feature, index) => (
+                    <motion.div
+                      key={feature.title}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.6 + index * 0.1 }}
+                      whileHover={{ scale: 1.02, y: -5 }}
+                      className={`bg-gradient-to-br ${feature.gradient} backdrop-blur-lg border ${feature.border} rounded-2xl p-6 space-y-4 hover:shadow-2xl transition-all duration-300`}
+                    >
+                      <div className="flex items-center space-x-3">
+                        <feature.icon size={28} className="text-white" />
+                        <h3 className="text-lg font-semibold text-white">{feature.title}</h3>
+                      </div>
+                      <p className="text-gray-300 text-sm leading-relaxed">{feature.description}</p>
+                      <div className="space-y-1">
+                        {feature.features.map((item, i) => (
+                          <div key={i} className="text-xs text-gray-400 flex items-center">
+                            <span className="w-1 h-1 bg-gray-400 rounded-full mr-2"></span>
+                            {item}
+                          </div>
+                        ))}
+                      </div>
+                    </motion.div>
+                  ))}
+                </motion.div>
+
+                {/* Action Buttons */}
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.8 }}
+                  className="flex flex-wrap justify-center gap-4"
+                >
                   <motion.button
-                    onClick={() => handleNewTab('search')}
-                    className="btn-secondary py-4 px-8 text-lg flex items-center"
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={handleCreateFirstTab}
+                    className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-purple-500/25 transition-all duration-300"
                   >
-                    <Globe className="mr-2" size={24} />
+                    Create Your First Enhanced Tab
+                  </motion.button>
+                  
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => setCurrentView('zen')}
+                    className="px-8 py-4 bg-gradient-to-r from-slate-700 to-slate-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-slate-500/25 transition-all duration-300"
+                  >
                     Start with Smart Search
                   </motion.button>
                   
                   <motion.button
-                    onClick={toggleAssistant}
-                    className="btn-secondary py-4 px-8 text-lg flex items-center"
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => toggleAssistant()}
+                    className="px-8 py-4 bg-gradient-to-r from-cyan-600 to-teal-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-cyan-500/25 transition-all duration-300"
                   >
-                    <Brain className="mr-2" size={24} />
                     Meet Enhanced ARIA AI
                   </motion.button>
-                  
-                  <motion.button
-                    onClick={() => setShowPerformancePanel(true)}
-                    className="btn-secondary py-4 px-8 text-lg flex items-center"
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
-                  >
-                    <TrendingUp className="mr-2" size={24} />
-                    Performance Metrics
-                  </motion.button>
-                </div>
-              </motion.div>
+                </motion.div>
 
-              {/* Enhanced Status Information */}
-              <motion.div
-                className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 2.2 }}
-              >
-                <div className="glass-light rounded-xl p-4 border border-gray-700/30">
-                  <div className="flex items-center justify-center text-sm text-gray-400 space-x-2">
-                    <Shield className="w-5 h-5 text-green-400" />
-                    <span>Enhanced Security</span>
+                {/* Capabilities Preview */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 1.0 }}
+                  className="text-center space-y-4"
+                >
+                  <p className="text-gray-400 text-sm">Available AI Capabilities:</p>
+                  <div className="flex flex-wrap justify-center gap-2 max-w-4xl mx-auto">
+                    {[
+                      "Real-time Collaborative Analysis", "Industry-Specific Intelligence", "Visual Content Analysis",
+                      "Audio Intelligence", "Creative Content Generation", "Academic Research", "Trend Detection",
+                      "Knowledge Graph Building", "Neon Chat Enhanced", "Deep Search Professional", 
+                      "Controllable Workflows", "Agentic Memory", "Cross-Platform Integration"
+                    ].map((capability, index) => (
+                      <motion.span
+                        key={capability}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 1.1 + index * 0.05 }}
+                        className="px-3 py-1 bg-gray-800/50 text-gray-300 text-xs rounded-full border border-gray-700/50"
+                      >
+                        {capability}
+                      </motion.span>
+                    ))}
                   </div>
-                </div>
-                
-                <div className="glass-light rounded-xl p-4 border border-gray-700/30">
-                  <div className="flex items-center justify-center text-sm text-gray-400 space-x-2">
-                    {isOnline ? (
-                      <>
-                        <Wifi className="w-5 h-5 text-green-400" />
-                        <span>AI Connected</span>
-                      </>
-                    ) : (
-                      <>
-                        <WifiOff className="w-5 h-5 text-red-400" />
-                        <span>Offline Mode</span>
-                      </>
-                    )}
-                  </div>
-                </div>
-                
-                <div className="glass-light rounded-xl p-4 border border-gray-700/30">
-                  <div className="flex items-center justify-center text-sm text-gray-400 space-x-2">
-                    <TrendingUp className="w-5 h-5 text-purple-400" />
-                    <span>Performance Ready</span>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Enhanced Keyboard Shortcuts Hint */}
-              <motion.div
-                className="mt-8 text-sm text-gray-500 space-y-2"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 2.5 }}
-              >
-                <p className="mb-4 font-medium text-gray-400">💡 Enhanced Keyboard Shortcuts:</p>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-2 max-w-2xl mx-auto">
-                  {shortcuts.map((shortcut, index) => (
-                    <div key={index} className="flex items-center justify-between text-xs">
-                      <span>{shortcut.description}</span>
-                      <kbd className="bg-gray-800/50 text-gray-400 px-2 py-1 rounded border border-gray-700/50">
-                        {shortcut.key}
-                      </kbd>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-              
-              {/* Close welcome screen button */}
-              <motion.button
-                onClick={() => setShowWelcomeAnimation(false)}
-                className="mt-8 text-gray-500 hover:text-gray-300 text-sm transition-colors"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 3 }}
-              >
-                Skip welcome (or press Escape)
-              </motion.button>
+                </motion.div>
+              </div>
             </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          ) : (
+            /* Browser Tabs Content */
+            <div className="flex-1 relative">
+              {/* Tabs Header */}
+              <div className="flex bg-gray-900/50 border-b border-gray-700/50 px-4 py-2">
+                {tabs.map((tab) => (
+                  <div
+                    key={tab.id}
+                    className={`px-4 py-2 mr-2 rounded-t-lg cursor-pointer transition-colors ${
+                      tab.isActive 
+                        ? 'bg-gray-800 text-white border-t-2 border-purple-500' 
+                        : 'bg-gray-700/50 text-gray-300 hover:bg-gray-700'
+                    }`}
+                  >
+                    <span className="text-sm">{tab.title}</span>
+                  </div>
+                ))}
+              </div>
 
-      {/* Enhanced Performance Panel */}
-      <AnimatePresence>
-        {showPerformancePanel && performanceMetrics && (
-          <motion.div
-            className="fixed top-20 right-6 w-96 glass-strong rounded-2xl p-6 z-30 border border-gray-700/50 shadow-2xl"
-            initial={{ opacity: 0, x: 100, scale: 0.9 }}
-            animate={{ opacity: 1, x: 0, scale: 1 }}
-            exit={{ opacity: 0, x: 100, scale: 0.9 }}
-          >
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-white font-bold text-lg flex items-center">
-                <TrendingUp className="mr-2 text-green-400" size={20} />
-                Performance Metrics
-              </h3>
-              <button
-                onClick={() => setShowPerformancePanel(false)}
-                className="text-gray-400 hover:text-white transition-colors"
-              >
-                ×
-              </button>
-            </div>
-            
-            {performanceMetrics && (
-              <div className="space-y-4 text-sm">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-gray-800/30 rounded-lg p-3">
-                    <div className="text-gray-400 mb-1">Cache Status</div>
-                    <div className="text-white font-medium">
-                      {performanceMetrics.cache_status?.entries || 0} entries
-                    </div>
-                    <div className={`text-xs ${performanceMetrics.cache_status?.enabled ? 'text-green-400' : 'text-red-400'}`}>
-                      {performanceMetrics.cache_status?.enabled ? '✅ Enabled' : '❌ Disabled'}
-                    </div>
+              {/* Tab Content */}
+              <div className="flex-1 relative">
+                {currentView === 'bubble' && (
+                  <div className="absolute inset-0">
+                    <BubbleTab />
                   </div>
-                  
-                  <div className="bg-gray-800/30 rounded-lg p-3">
-                    <div className="text-gray-400 mb-1">AI Response</div>
-                    <div className="text-white font-medium">Enhanced</div>
-                    <div className="text-xs text-purple-400">GROQ Powered</div>
-                  </div>
-                </div>
+                )}
                 
-                {performanceMetrics.performance_summary && (
-                  <div className="bg-gray-800/30 rounded-lg p-3">
-                    <div className="text-gray-400 mb-2">System Health</div>
-                    <div className="space-y-2">
-                      <div className="flex justify-between">
-                        <span className="text-gray-300">Performance Score</span>
-                        <span className="text-green-400">
-                          {performanceMetrics.performance_summary.trends?.performance_score || 'N/A'}
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-300">Memory Usage</span>
-                        <span className="text-blue-400">Optimized</span>
-                      </div>
+                {currentView === 'grid' && (
+                  <div className="absolute inset-0 p-4">
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 h-full">
+                      {tabs.map((tab) => (
+                        <motion.div
+                          key={tab.id}
+                          whileHover={{ scale: 1.02 }}
+                          className="bg-gray-800/50 backdrop-blur-lg rounded-xl p-4 border border-gray-700/50"
+                        >
+                          <h3 className="text-white font-medium text-sm mb-2">{tab.title}</h3>
+                          <p className="text-gray-400 text-xs">{tab.url}</p>
+                        </motion.div>
+                      ))}
                     </div>
                   </div>
                 )}
                 
-                <button
-                  onClick={loadPerformanceMetrics}
-                  className="w-full btn-secondary text-sm py-2 flex items-center justify-center"
-                >
-                  <TrendingUp size={14} className="mr-2" />
-                  Refresh Metrics
-                </button>
+                {currentView === 'list' && (
+                  <div className="absolute inset-0 p-4">
+                    <div className="space-y-2">
+                      {tabs.map((tab) => (
+                        <motion.div
+                          key={tab.id}
+                          whileHover={{ x: 5 }}
+                          className="bg-gray-800/50 backdrop-blur-lg rounded-lg p-4 border border-gray-700/50 flex items-center justify-between"
+                        >
+                          <div>
+                            <h3 className="text-white font-medium">{tab.title}</h3>
+                            <p className="text-gray-400 text-sm">{tab.url}</p>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <span className="w-3 h-3 bg-green-500 rounded-full"></span>
+                          </div>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                
+                {currentView === 'zen' && (
+                  <div className="absolute inset-0 flex items-center justify-center p-8">
+                    <div className="max-w-2xl w-full space-y-8">
+                      <div className="text-center">
+                        <h2 className="text-3xl font-bold text-white mb-4">Zen Mode</h2>
+                        <p className="text-gray-400">Focus on what matters with distraction-free browsing</p>
+                      </div>
+                      
+                      <div className="bg-gray-800/50 backdrop-blur-lg rounded-2xl p-8 border border-gray-700/50">
+                        <input
+                          type="text"
+                          placeholder="Enter URL or search with enhanced AI..."
+                          className="w-full bg-transparent text-white text-xl placeholder-gray-400 focus:outline-none"
+                        />
+                      </div>
+                      
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                        {["Enhanced Analysis", "Smart Automation", "AI Research", "Creative Tools"].map((feature) => (
+                          <div key={feature} className="p-4 bg-gray-800/30 rounded-xl">
+                            <p className="text-gray-300 text-sm">{feature}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Enhanced Status Bar */}
-      <motion.div 
-        className="fixed bottom-4 left-4 glass rounded-lg px-4 py-2 text-sm z-20 border border-gray-700/30"
-        initial={{ x: -100, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ delay: 0.5 }}
-      >
-        <div className="flex items-center space-x-4 text-gray-400">
-          <div className="flex items-center space-x-1">
-            <div className={`w-2 h-2 rounded-full ${isOnline ? 'bg-green-400 animate-pulse' : 'bg-red-400'}`} />
-            <span className="font-medium text-white">{user?.user_mode || 'Guest'} Mode</span>
-          </div>
-          <span>•</span>
-          <span>Enhanced v{appVersion}</span>
-          <span>•</span>
-          <span>{tabs.length} tabs</span>
-          {performanceMetrics && (
-            <>
-              <span>•</span>
-              <span className="text-purple-400">
-                {performanceMetrics.cache_status?.entries || 0} cached
-              </span>
-            </>
+            </div>
           )}
         </div>
-      </motion.div>
 
-      {/* Floating Help Button */}
-      <motion.button
-        onClick={() => setShowPerformancePanel(!showPerformancePanel)}
-        className="fixed bottom-4 right-4 w-12 h-12 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 rounded-full shadow-lg text-white z-20 transition-all"
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ delay: 1 }}
-      >
-        <Settings size={20} />
-      </motion.button>
+        {/* Enhanced AI Assistant */}
+        <AnimatePresence>
+          {isAssistantVisible && (
+            <motion.div
+              key="ai-assistant"
+              initial={{ x: 400, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: 400, opacity: 0 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="w-96 h-full border-l border-gray-700/50"
+            >
+              <EnhancedAIAssistant />
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-      {/* Enhanced Keyboard Shortcuts Handler */}
-      <div className="hidden">
-        {shortcuts.map((shortcut, index) => (
-          <div key={index} onClick={shortcut.action}></div>
-        ))}
+        {/* AI Assistant Toggle Button */}
+        {!isAssistantVisible && (
+          <motion.button
+            initial={{ x: 100 }}
+            animate={{ x: 0 }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={() => toggleAssistant()}
+            className="fixed right-6 top-1/2 transform -translate-y-1/2 w-14 h-14 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full flex items-center justify-center text-white text-2xl shadow-lg hover:shadow-purple-500/25 transition-all duration-300 z-50"
+          >
+            <Brain size={24} />
+          </motion.button>
+        )}
       </div>
+
+      {/* Performance Monitor */}
+      <PerformanceMonitor />
+      
+      {/* Interactive Tutorial */}
+      <InteractiveTutorial />
     </div>
   );
 }
