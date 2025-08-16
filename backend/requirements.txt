@@ -49,3 +49,4 @@ attrs==25.3.0
 yarl==1.20.1
 aiosignal==1.4.0
 frozenlist==1.7.0
+propcache==0.3.2
