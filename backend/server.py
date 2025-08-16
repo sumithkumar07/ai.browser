@@ -397,6 +397,14 @@ try:
 except Exception as e:
     print(f"❌ Enhanced user management router failed: {e}")
 
+# Include Minimal Browser Router - Fellou.ai Style
+try:
+    from api.minimal_browser.router import router as minimal_browser_router
+    app.include_router(minimal_browser_router, prefix="/api/minimal-browser", tags=["Minimal Browser"])
+    print("✅ Minimal Browser router included - Fellou.ai Style")
+except Exception as e:
+    print(f"❌ Minimal Browser router failed: {e}")
+
 # Include missing routers that frontend is trying to access (if available)
 if advanced_navigation_router:
     app.include_router(advanced_navigation_router, prefix="/api/advanced-navigation", tags=["Advanced Navigation"])
