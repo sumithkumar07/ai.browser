@@ -283,8 +283,7 @@ async def one_click_ai_actions(
 
 @router.get("/actions/personalized-quick-actions")
 async def quick_actions_bar(
-    user_id: str = "anonymous",
-    token: str = Depends(security)
+    user_id: str = "anonymous"
 ):
     """
     🚀 QUICK ACTIONS BAR - Personalized floating toolbar
