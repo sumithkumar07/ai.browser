@@ -237,8 +237,7 @@ async def natural_language_browsing(
 
 @router.post("/voice/hey-aria-commands")
 async def voice_commands(
-    request: VoiceCommandRequest,
-    token: str = Depends(security)
+    request: VoiceCommandRequest
 ):
     """
     🎙️ VOICE COMMANDS - "Hey ARIA" hands-free operation
