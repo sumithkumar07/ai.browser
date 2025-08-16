@@ -199,6 +199,33 @@ class MobileOptimizationService:
             logger.error(f"Offline capabilities implementation error: {str(e)}")
             return {"success": False, "error": str(e)}
 
+    async def _generate_mobile_recommendations(self, device_analysis: Dict, network_optimization: Dict, optimization_targets: List[str]) -> List[str]:
+        """Generate mobile-specific recommendations"""
+        recommendations = []
+        
+        performance_class = device_analysis.get('performance_class', 'medium_performance')
+        
+        if 'performance' in optimization_targets:
+            if performance_class in ['low_performance', 'very_low_performance']:
+                recommendations.append("Enable aggressive resource optimization for low-end devices")
+                recommendations.append("Implement lazy loading for all non-critical resources")
+            else:
+                recommendations.append("Optimize for high-quality experience on capable devices")
+        
+        if 'battery' in optimization_targets:
+            recommendations.append("Enable battery-conscious mode during low battery")
+            recommendations.append("Reduce background activity when device is idle")
+        
+        if 'offline' in optimization_targets:
+            recommendations.append("Pre-cache frequently accessed content for offline use")
+            recommendations.append("Implement intelligent sync strategies")
+        
+        if 'responsive' in optimization_targets:
+            recommendations.append("Optimize touch targets for better accessibility")
+            recommendations.append("Ensure consistent experience across screen sizes")
+        
+        return recommendations
+
     # Helper methods for mobile optimization
     async def _analyze_device_capabilities(self, device_info: Dict) -> Dict:
         """Analyze device capabilities and constraints"""
