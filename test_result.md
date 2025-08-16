@@ -3118,10 +3118,13 @@ metadata:
 
 test_plan:
   current_focus:
-    - "All frontend tasks completed successfully"
-  stuck_tasks: []
-  test_all: true
-  test_priority: "high_first"
+    - "Hybrid Browser Capabilities implementation needed (0/4 endpoints working)"
+    - "Comprehensive Features validation issues (10/17 features need fixes)"
+    - "Automation endpoints implementation (4/7 missing)"
+  stuck_tasks:
+    - "Hybrid Browser Capabilities - All endpoints returning 404 errors"
+  test_all: false
+  test_priority: "hybrid_browser_first"
 
 agent_communication:
     -agent: "testing"
