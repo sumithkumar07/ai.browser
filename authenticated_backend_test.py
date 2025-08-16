@@ -3,7 +3,7 @@
 🧪 AUTHENTICATED COMPREHENSIVE BACKEND TESTING - PHASE 2 & 3 COMPLETION VALIDATION
 Testing Agent: Backend SDET (Testing Agent)
 Test Type: Complete validation of 25 new endpoints with proper authentication
-Base URL: https://service-recovery.preview.emergentagent.com
+Base URL: https://ui-test-suite-1.preview.emergentagent.com
 Test Date: January 16, 2025
 """
 
@@ -15,7 +15,7 @@ from typing import Dict, List, Any
 
 class AuthenticatedBackendTester:
     def __init__(self):
-        self.base_url = "https://service-recovery.preview.emergentagent.com"
+        self.base_url = "https://ui-test-suite-1.preview.emergentagent.com"
         self.test_results = []
         self.passed_tests = 0
         self.failed_tests = 0
