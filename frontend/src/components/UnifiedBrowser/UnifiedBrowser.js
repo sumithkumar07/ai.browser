@@ -18,6 +18,9 @@ import AIInsightsPanel from './components/AIInsightsPanel';
 import SmartUrlBar from './components/SmartUrlBar';
 import EnhancedTabManager from './components/EnhancedTabManager';
 import EmbeddedWebView from './components/EmbeddedWebView';
+import ComprehensiveFeaturesPanel from '../ComprehensiveFeatures/ComprehensiveFeaturesPanel';
+import { useParallelFeatures } from '../../contexts/ParallelFeaturesContext';
+import comprehensiveFeaturesService from '../../services/comprehensiveFeaturesService';
 
 export default function UnifiedBrowser() {
   // Core browser state
