@@ -447,7 +447,7 @@ export default function EnhancedAIAssistant() {
                   disabled={isProcessing}
                   className="bg-gradient-to-r from-cyan-500/20 to-blue-500/20 hover:from-cyan-500/30 hover:to-blue-500/30 border border-cyan-400/30 p-3 rounded-lg text-sm text-cyan-300"
                 >
-                  <Memory size={16} className="mb-1" />
+                  <MemoryStick size={16} className="mb-1" />
                   Agentic Memory
                 </button>
               </div>
