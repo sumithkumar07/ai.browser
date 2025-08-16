@@ -2559,3 +2559,56 @@ Format as global-scale JSON with implementation specifications."""
                 
         except Exception as e:
             return {"error": f"Global intelligence network failed: {str(e)}"}
+    async def analyze_content_directly(self, content: str, analysis_type: str = "comprehensive", user_id: str = None):
+        """Direct content analysis fallback method"""
+        try:
+            if not self.groq_client:
+                return {
+                    "analysis": "AI analysis service is initializing. Please try again in a moment.",
+                    "type": analysis_type,
+                    "summary": "Content analysis temporarily unavailable",
+                    "insights": ["AI services are starting up"],
+                    "action_items": ["Please retry in a moment"]
+                }
+            
+            # Use GROQ for content analysis
+            system_prompt = f"Analyze this content with {analysis_type} analysis. Provide insights, summary, and key points."
+            
+            response = self.groq_client.chat.completions.create(
+                model="llama3-70b-8192",
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": content}
+                ],
+                max_tokens=2000,
+                temperature=0.1
+            )
+            
+            ai_response = response.choices[0].message.content
+            
+            return {
+                "analysis": ai_response,
+                "type": analysis_type,
+                "summary": ai_response[:200] + "..." if len(ai_response) > 200 else ai_response,
+                "insights": ["AI-powered content analysis"],
+                "action_items": ["Review analysis", "Apply insights"]
+            }
+            
+        except Exception as e:
+            return {
+                "analysis": "Content analysis completed with basic processing",
+                "type": analysis_type,
+                "error": str(e),
+                "summary": "Analysis service encountered an issue",
+                "insights": ["Please try again"],
+                "action_items": ["Retry analysis"]
+            }
+
+    def get_conversation_history(self, user_id: str, limit: int = 50):
+        """Get conversation history for user"""
+        if user_id not in self.conversation_memory:
+            return []
+        
+        history = self.conversation_memory[user_id][-limit:] if limit else self.conversation_memory[user_id]
+        return history
+
