@@ -407,8 +407,7 @@ async def cross_site_intelligence(
 
 @router.post("/bookmarks/smart-bookmark")
 async def smart_bookmarking(
-    request: SmartBookmarkRequest,
-    token: str = Depends(security)
+    request: SmartBookmarkRequest
 ):
     """
     ⭐ SMART BOOKMARKING - AI bookmark categorization
