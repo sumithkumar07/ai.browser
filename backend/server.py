@@ -251,15 +251,7 @@ async def api_health():
             }
         )
 
-# Import all missing routers
-from api.advanced_navigation.router import router as advanced_navigation_router
-from api.cross_site_intelligence.router import router as cross_site_intelligence_router
-from api.enhanced_performance.router import router as enhanced_performance_router
-from api.template_automation.router import router as template_automation_router
-from api.voice_actions.router import router as voice_actions_router
-from api.enhanced_features.router import router as enhanced_features_router
-from api.comprehensive_features.router import router as comprehensive_features_router
-from api.ecosystem.router import router as ecosystem_router
+# Note: Router imports are handled in try-except blocks above to avoid import errors
 
 # Include all routers with proper prefixes
 app.include_router(ai_router, prefix="/api/ai/enhanced", tags=["AI Enhanced"])
