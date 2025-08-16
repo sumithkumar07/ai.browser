@@ -5,7 +5,7 @@
 
 import axios from 'axios';
 
-const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'https://quick-feature-fix.preview.emergentagent.com';
+const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'https://browser-agent-eval.preview.emergentagent.com';
 
 class ComprehensiveFeaturesService {
     constructor() {

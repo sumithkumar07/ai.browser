@@ -163,7 +163,7 @@ App Mount → Context Initialization → Service Connection → UI Render → Us
 ```
 
 ### **2. API Integration Points**
-- **Backend URL**: `https://quick-feature-fix.preview.emergentagent.com`
+- **Backend URL**: `https://browser-agent-eval.preview.emergentagent.com`
 - **API Routes**: All prefixed with `/api`
 - **AI Services**: GROQ integration for chat and analysis
 - **Performance Metrics**: Real-time system monitoring
