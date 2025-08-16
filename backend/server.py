@@ -5,6 +5,10 @@ from fastapi.staticfiles import StaticFiles
 import uvicorn
 import os
 from contextlib import asynccontextmanager
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 # Import existing routers
 from api.ai_agents.enhanced_router import router as ai_router
