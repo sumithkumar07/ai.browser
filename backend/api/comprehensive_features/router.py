@@ -71,6 +71,19 @@ class SelectionContextRequest(BaseModel):
     page_url: str = Field(..., description="URL of the current page")
     element_attributes: Dict[str, Any] = Field(default_factory=dict, description="Element attributes")
 
+class CrossSiteAnalysisRequest(BaseModel):
+    domains: List[str] = Field(..., description="List of domains to analyze")
+    user_history: Optional[Dict[str, Any]] = Field(default=None, description="User browsing history")
+
+class DomainsRequest(BaseModel):
+    domains: List[str] = Field(..., description="List of domains")
+
+class ContextualMenuRequest(BaseModel):
+    selected_text: str = Field(default="", description="Selected text content")
+    element_type: str = Field(default="text", description="Type of selected element")
+    page_url: str = Field(..., description="URL of the current page")
+    element_attributes: Dict[str, Any] = Field(default_factory=dict, description="Element attributes")
+
 # ═══════════════════════════════════════════════════════════════
 # ENHANCED MEMORY & PERFORMANCE FEATURES (4 features)
 # ═══════════════════════════════════════════════════════════════
