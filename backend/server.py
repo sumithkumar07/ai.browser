@@ -383,6 +383,14 @@ if comprehensive_features_router:
         print("✅ Comprehensive features router included")
     except Exception as e:
         print(f"❌ Comprehensive features router inclusion failed: {e}")
+
+# Add fixed comprehensive features router for HTTP 405 issues
+try:
+    from api.comprehensive_features.fixed_router import router as fixed_features_router
+    app.include_router(fixed_features_router, prefix="/api/comprehensive-features-fixed", tags=["Fixed Comprehensive Features"])
+    print("✅ Fixed comprehensive features router included")
+except Exception as e:
+    print(f"❌ Fixed comprehensive features router failed: {e}")
 if ecosystem_router:
     app.include_router(ecosystem_router, prefix="/api/ecosystem", tags=["Ecosystem Integration"])
 
