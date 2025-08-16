@@ -369,8 +369,7 @@ async def visual_task_builder():
 
 @router.post("/builder/create-workflow")
 async def create_visual_workflow(
-    request: WorkflowRequest,
-    token: str = Depends(security)
+    request: WorkflowRequest
 ):
     """
     🔧 CREATE VISUAL WORKFLOW - Build custom automation workflows
