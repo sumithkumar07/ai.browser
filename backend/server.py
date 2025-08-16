@@ -59,6 +59,7 @@ except Exception as e:
     enhanced_features_router = None
 try:
     from api.comprehensive_features.router import router as comprehensive_features_router
+    print("✅ Comprehensive features router imported successfully")
 except Exception as e:
     print(f"⚠️ Comprehensive features router not available: {e}")
     comprehensive_features_router = None
