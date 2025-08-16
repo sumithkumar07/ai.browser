@@ -3757,4 +3757,20 @@ def main():
         return 1
 
 if __name__ == "__main__":
-    sys.exit(main())
+    print("🚀 AI AGENTIC BROWSER - COMPREHENSIVE BACKEND TESTING")
+    print("=" * 80)
+    print("Testing all endpoints mentioned in review request for 404 errors")
+    print("Focus: Core API Health, AI Features, Missing Endpoints, Browser Management")
+    print("=" * 80)
+    
+    tester = AIBrowserAPITester()
+    
+    # Run comprehensive 404 endpoint testing as per review request
+    success = tester.run_comprehensive_404_endpoint_testing()
+    
+    if success:
+        print("\n🎉 COMPREHENSIVE BACKEND TESTING COMPLETED SUCCESSFULLY!")
+        sys.exit(0)
+    else:
+        print("\n⚠️  COMPREHENSIVE BACKEND TESTING COMPLETED WITH ISSUES")
+        sys.exit(1)
