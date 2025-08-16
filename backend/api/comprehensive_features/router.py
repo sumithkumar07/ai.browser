@@ -103,8 +103,7 @@ async def intelligent_memory_management(
 
 @router.get("/performance-monitoring/real-time-metrics")
 async def real_time_performance_monitoring(
-    include_history: bool = True,
-    token: str = Depends(security)
+    include_history: bool = True
 ):
     """
     📊 REAL-TIME PERFORMANCE MONITORING - Enhanced with predictive caching algorithms
