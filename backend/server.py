@@ -21,6 +21,40 @@ from api.hybrid_browser.router import router as hybrid_browser_router
 from api.real_browser.router import router as real_browser_router
 from api.real_browser.enhanced_router import router as enhanced_real_browser_router
 
+# Import missing routers that frontend needs
+try:
+    from api.advanced_navigation.router import router as advanced_navigation_router
+except ImportError:
+    advanced_navigation_router = None
+try:
+    from api.cross_site_intelligence.router import router as cross_site_intelligence_router
+except ImportError:
+    cross_site_intelligence_router = None
+try:
+    from api.enhanced_performance.router import router as enhanced_performance_router
+except ImportError:
+    enhanced_performance_router = None
+try:
+    from api.template_automation.router import router as template_automation_router
+except ImportError:
+    template_automation_router = None
+try:
+    from api.voice_actions.router import router as voice_actions_router
+except ImportError:
+    voice_actions_router = None
+try:
+    from api.enhanced_features.router import router as enhanced_features_router
+except ImportError:
+    enhanced_features_router = None
+try:
+    from api.comprehensive_features.router import router as comprehensive_features_router
+except ImportError:
+    comprehensive_features_router = None
+try:
+    from api.ecosystem.router import router as ecosystem_router
+except ImportError:
+    ecosystem_router = None
+
 # Import services
 from services.enhanced_ai_orchestrator import EnhancedAIOrchestratorService
 from services.browser_engine_service import BrowserEngineService
