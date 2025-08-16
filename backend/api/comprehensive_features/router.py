@@ -60,6 +60,17 @@ class PredictiveCachingRequest(BaseModel):
 class BandwidthOptimizationRequest(BaseModel):
     content_data: Dict[str, Any] = Field(..., description="Content data to optimize")
 
+class PageContextRequest(BaseModel):
+    url: str = Field(..., description="Current page URL")
+    content_type: str = Field(default="webpage", description="Type of content")
+    page_text: str = Field(default="", description="Page text content")
+
+class SelectionContextRequest(BaseModel):
+    selected_text: str = Field(default="", description="Selected text content")
+    element_type: str = Field(default="text", description="Type of selected element")
+    page_url: str = Field(..., description="URL of the current page")
+    element_attributes: Dict[str, Any] = Field(default_factory=dict, description="Element attributes")
+
 # ═══════════════════════════════════════════════════════════════
 # ENHANCED MEMORY & PERFORMANCE FEATURES (4 features)
 # ═══════════════════════════════════════════════════════════════
