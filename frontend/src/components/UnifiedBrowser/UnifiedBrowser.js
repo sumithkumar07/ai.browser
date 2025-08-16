@@ -58,8 +58,19 @@ export default function UnifiedBrowser() {
   // Initialize browser on mount
   useEffect(() => {
     initializeUnifiedBrowser();
+    loadComprehensiveFeatures();
     return () => cleanup();
   }, []);
+
+  // Load comprehensive features overview
+  const loadComprehensiveFeatures = async () => {
+    try {
+      const features = await comprehensiveFeaturesService.getComprehensiveFeaturesOverview();
+      setComprehensiveFeatures(features.data);
+    } catch (error) {
+      console.error('Failed to load comprehensive features:', error);
+    }
+  };
 
   // Real-time AI analysis when active tab changes
   useEffect(() => {
