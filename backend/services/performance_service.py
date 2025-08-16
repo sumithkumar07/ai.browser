@@ -601,6 +601,59 @@ class PerformanceService:
                 "error": f"Settings update failed: {str(e)}"
             }
 
+    async def get_cached_data(self, cache_key: str) -> Optional[Any]:
+        """Get data from cache if it exists and hasn't expired"""
+        try:
+            if not self.optimization_settings.get("cache_enabled", True):
+                return None
+                
+            cache_entry = self.performance_cache.get(cache_key)
+            if not cache_entry:
+                return None
+                
+            # Check if cache entry has expired
+            if time.time() - cache_entry["timestamp"] > self.optimization_settings.get("cache_ttl_seconds", 300):
+                # Remove expired entry
+                del self.performance_cache[cache_key]
+                return None
+                
+            return cache_entry["data"]
+            
+        except Exception as e:
+            print(f"Error getting cached data: {e}")
+            return None
+
+    async def cache_data(self, cache_key: str, data: Any) -> bool:
+        """Store data in cache with timestamp"""
+        try:
+            if not self.optimization_settings.get("cache_enabled", True):
+                return False
+                
+            # Clean up expired entries periodically
+            current_time = time.time()
+            ttl = self.optimization_settings.get("cache_ttl_seconds", 300)
+            
+            # Clean expired entries (limit cleanup to avoid performance impact)
+            if len(self.performance_cache) > 100:
+                expired_keys = [
+                    k for k, v in self.performance_cache.items()
+                    if current_time - v["timestamp"] > ttl
+                ]
+                for key in expired_keys[:20]:  # Clean up to 20 expired entries
+                    del self.performance_cache[key]
+            
+            # Store new data
+            self.performance_cache[cache_key] = {
+                "data": data,
+                "timestamp": current_time
+            }
+            
+            return True
+            
+        except Exception as e:
+            print(f"Error caching data: {e}")
+            return False
+
     async def health_check(self) -> Dict:
         """Comprehensive health check"""
         try:
