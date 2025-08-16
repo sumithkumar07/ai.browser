@@ -390,6 +390,13 @@ try:
 except Exception as e:
     print(f"❌ User management router failed: {e}")
 
+# Add enhanced user management endpoints
+try:
+    app.include_router(enhanced_user_router, prefix="/api/users/enhanced", tags=["Enhanced User Management"])
+    print("✅ Enhanced user management router included")
+except Exception as e:
+    print(f"❌ Enhanced user management router failed: {e}")
+
 # Include missing routers that frontend is trying to access (if available)
 if advanced_navigation_router:
     app.include_router(advanced_navigation_router, prefix="/api/advanced-navigation", tags=["Advanced Navigation"])
