@@ -489,11 +489,10 @@ async def custom_rendering_engine(
 # ═══════════════════════════════════════════════════════════════
 
 @router.get("/overview/all-features")
-async def comprehensive_features_overview(
-    token: str = Depends(security)
-):
+async def comprehensive_features_overview():
     """
     📋 COMPREHENSIVE FEATURES OVERVIEW - Status of all 17 implemented features
+    PUBLIC ENDPOINT: No authentication required for feature discovery
     """
     try:
         features_status = {
