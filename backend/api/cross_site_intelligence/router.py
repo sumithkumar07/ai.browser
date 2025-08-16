@@ -136,6 +136,85 @@ async def website_ecosystem_mapping(
             detail=f"Ecosystem mapping failed: {str(e)}"
         )
 
+# ====================================
+# PHASE 2 COMPLETION - MISSING BOOKMARK ENDPOINTS  
+# ====================================
+
+class BookmarkSmartCategorizeRequest(BaseModel):
+    bookmarks: List[Dict] = Field(..., description="Bookmarks to categorize")
+    categorization_depth: Optional[int] = Field(3, description="Categorization depth")
+
+class BookmarkDuplicateAnalysisRequest(BaseModel):
+    bookmark_collection: List[Dict] = Field(..., description="Bookmark collection to analyze")
+    similarity_threshold: Optional[float] = Field(0.8, description="Similarity threshold for duplicates")
+
+class BookmarkContentTaggingRequest(BaseModel):
+    bookmark_data: Dict = Field(..., description="Bookmark to tag")
+    tagging_strategy: Optional[str] = Field("ai_powered", description="Tagging strategy")
+
+@router.post("/bookmarks/smart-categorize")
+async def smart_bookmark_categorize(
+    request: BookmarkSmartCategorizeRequest,
+    token: str = Depends(security)
+):
+    """
+    AI-powered smart categorization of bookmarks with deep content analysis
+    """
+    try:
+        result = await intelligence_service.smart_bookmark_categorize(
+            request.bookmarks,
+            request.categorization_depth
+        )
+        return result
+        
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Smart bookmark categorization failed: {str(e)}"
+        )
+
+@router.get("/bookmarks/duplicate-analysis")
+async def bookmark_duplicate_analysis(
+    collection_id: str = None,
+    similarity_threshold: float = 0.8
+):
+    """
+    Analyze bookmark collection for duplicates and similar entries
+    """
+    try:
+        result = await intelligence_service.bookmark_duplicate_analysis(
+            collection_id,
+            similarity_threshold
+        )
+        return result
+        
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Bookmark duplicate analysis failed: {str(e)}"
+        )
+
+@router.post("/bookmarks/content-tagging")
+async def bookmark_content_tagging(
+    request: BookmarkContentTaggingRequest,
+    token: str = Depends(security)
+):
+    """
+    AI-powered content tagging for bookmarks with topic extraction
+    """
+    try:
+        result = await intelligence_service.bookmark_content_tagging(
+            request.bookmark_data,
+            request.tagging_strategy
+        )
+        return result
+        
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Bookmark content tagging failed: {str(e)}"
+        )
+
 @router.get("/intelligence-capabilities")
 async def get_intelligence_capabilities():
     """
@@ -148,7 +227,10 @@ async def get_intelligence_capabilities():
                 "smart_bookmark_categorization",
                 "cross_domain_insights",
                 "intelligent_bookmark_suggestions",
-                "website_ecosystem_mapping"
+                "website_ecosystem_mapping",
+                "smart_bookmark_categorize",
+                "bookmark_duplicate_analysis",
+                "bookmark_content_tagging"
             ],
             "features": {
                 "relationship_analysis": True,
@@ -157,14 +239,19 @@ async def get_intelligence_capabilities():
                 "topic_overlap_detection": True,
                 "ai_categorization": True,
                 "behavioral_insights": True,
-                "ecosystem_visualization": True
+                "ecosystem_visualization": True,
+                "smart_categorization": True,
+                "duplicate_detection": True,
+                "content_tagging": True
             },
             "supported_analysis_types": [
                 "content_similarity",
                 "category_clustering",
                 "authority_scoring",
                 "topic_extraction",
-                "metadata_analysis"
+                "metadata_analysis",
+                "duplicate_detection",
+                "semantic_tagging"
             ]
         }
         
