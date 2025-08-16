@@ -72,7 +72,8 @@ class EnhancedAuthService:
                 full_name=user_doc["full_name"],
                 is_active=user_doc["is_active"],
                 created_at=user_doc["created_at"],
-                updated_at=user_doc["updated_at"]
+                updated_at=user_doc["updated_at"],
+                last_login=user_doc["last_login"]
             )
             
         except ValueError:
