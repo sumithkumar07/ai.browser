@@ -403,15 +403,14 @@ async def create_visual_workflow(
 
 @router.post("/intelligence/cross-site-analysis")
 async def cross_site_intelligence(
-    domains: List[str],
-    user_history: Optional[Dict[str, Any]] = None,
+    request: CrossSiteAnalysisRequest,
     token: str = Depends(security)
 ):
     """
     🕸️ CROSS-SITE INTELLIGENCE - Website relationship mapping
     """
     try:
-        result = await automation_intelligence_service.analyze_cross_site_intelligence(domains, user_history)
+        result = await automation_intelligence_service.analyze_cross_site_intelligence(request.domains, request.user_history)
         return {
             "feature": "cross_site_intelligence",
             "status": result.get("status", "success"),
