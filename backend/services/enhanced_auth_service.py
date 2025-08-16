@@ -112,8 +112,9 @@ class EnhancedAuthService:
                 email=user_data["email"],
                 full_name=user_data.get("full_name"),
                 is_active=user_data.get("is_active", True),
-                created_at=user_data.get("created_at"),
-                updated_at=user_data.get("updated_at")
+                created_at=user_data.get("created_at", datetime.utcnow()),
+                updated_at=user_data.get("updated_at", datetime.utcnow()),
+                last_login=user_data.get("last_login")
             )
             
         except Exception as e:
