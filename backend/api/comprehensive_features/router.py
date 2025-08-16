@@ -447,8 +447,7 @@ async def native_browser_controls():
 
 @router.get("/browser/custom-rendering-engine")
 async def custom_rendering_engine(
-    engine_type: str = "aria_webkit",
-    token: str = Depends(security)
+    engine_type: str = "aria_webkit"
 ):
     """
     🎨 CUSTOM RENDERING ENGINE - Independent browser engine
