@@ -5,7 +5,7 @@ import {
   Brain, Eye, Mic, PenTool, BarChart3, BookOpen, TrendingUp, 
   Network, Lightbulb, Palette, Code, Globe, Users, Target,
   Cpu, Factory, Briefcase, GraduationCap, Heart, Scale,
-  Search, Workflow, Memory, ArrowRight, Sparkles, Layers,
+  Search, Workflow, MemoryStick, ArrowRight, Sparkles, Layers,
   MessageCircle, PlayCircle, PauseCircle
 } from 'lucide-react';
 
