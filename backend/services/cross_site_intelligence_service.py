@@ -15,11 +15,29 @@ from collections import defaultdict, Counter
 
 class CrossSiteIntelligenceService:
     def __init__(self):
-        self.groq_client = AsyncGroq(api_key=os.getenv("GROQ_API_KEY"))
+        # Initialize GROQ client lazily to avoid import-time failures
+        self._groq_client = None
         self.site_relationships = defaultdict(dict)
         self.bookmark_intelligence = {}
         self.content_similarity_cache = {}
         self.domain_categories = {}
+    
+    @property
+    def groq_client(self):
+        """Lazy initialization of GROQ client"""
+        if self._groq_client is None:
+            api_key = os.getenv("GROQ_API_KEY")
+            if api_key:
+                try:
+                    from groq import AsyncGroq
+                    self._groq_client = AsyncGroq(api_key=api_key)
+                except Exception as e:
+                    print(f"⚠️ GROQ client initialization failed: {e}")
+                    self._groq_client = False  # Mark as failed to avoid retry
+            else:
+                print("⚠️ GROQ API key not found")
+                self._groq_client = False
+        return self._groq_client if self._groq_client is not False else None
         
     async def analyze_website_relationships(self, urls: List[str], depth: int = 2) -> Dict:
         """
