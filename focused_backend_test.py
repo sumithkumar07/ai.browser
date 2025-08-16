@@ -11,7 +11,7 @@ import time
 from datetime import datetime
 
 class FocusedAPITester:
-    def __init__(self, base_url="https://quiet-fixes.preview.emergentagent.com"):
+    def __init__(self, base_url="https://minimal-ui-redesign.preview.emergentagent.com"):
         self.base_url = base_url
         self.token = None
         self.tests_run = 0
