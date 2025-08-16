@@ -370,6 +370,21 @@ if comprehensive_features_router:
 if ecosystem_router:
     app.include_router(ecosystem_router, prefix="/api/ecosystem", tags=["Ecosystem Integration"])
 
+# Include new Phase 2 & 3 completion routers
+if reliability_router:
+    try:
+        app.include_router(reliability_router, prefix="/api/reliability", tags=["Enhanced Reliability"])
+        print("✅ Enhanced Reliability router included")
+    except Exception as e:
+        print(f"❌ Enhanced Reliability router inclusion failed: {e}")
+
+if mobile_optimization_router:
+    try:
+        app.include_router(mobile_optimization_router, prefix="/api/mobile-optimization", tags=["Mobile Optimization"])
+        print("✅ Mobile Optimization router included")
+    except Exception as e:
+        print(f"❌ Mobile Optimization router inclusion failed: {e}")
+
 # ====================================
 # NEW PARALLEL ENHANCEMENT ENDPOINTS
 # ====================================
