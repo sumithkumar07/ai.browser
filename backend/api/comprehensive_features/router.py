@@ -189,8 +189,7 @@ async def advanced_tab_management(
 
 @router.post("/navigation/natural-language")
 async def ai_powered_navigation(
-    request: NavigationRequest,
-    token: str = Depends(security)
+    request: NavigationRequest
 ):
     """
     🧭 AI-POWERED NAVIGATION - Natural language URL parsing
