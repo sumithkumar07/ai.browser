@@ -90,6 +90,86 @@ async def complex_query_processing(
             detail=f"Complex query processing failed: {str(e)}"
         )
 
+# ====================================
+# PHASE 2 COMPLETION - MISSING ENDPOINTS
+# ====================================
+
+class TabOrganizationRequest(BaseModel):
+    tabs_data: List[Dict] = Field(..., description="Tab data for smart organization")
+    organization_strategy: Optional[str] = Field("ai_categorized", description="Organization strategy")
+
+class TabRelationshipRequest(BaseModel):
+    tab_ids: List[str] = Field(..., description="Tab IDs to analyze relationships")
+    include_content: Optional[bool] = Field(True, description="Include content analysis")
+
+class TabSuspensionRequest(BaseModel):
+    tab_criteria: Dict = Field(..., description="Criteria for intelligent tab suspension")
+    user_preferences: Optional[Dict] = Field(None, description="User suspension preferences")
+
+@router.post("/tabs/smart-organization")
+async def smart_tab_organization(
+    request: TabOrganizationRequest,
+    token: str = Depends(security)
+):
+    """
+    AI-powered smart tab organization with 3D workspace categorization
+    """
+    try:
+        result = await navigation_service.smart_tab_organization(
+            request.tabs_data,
+            request.organization_strategy
+        )
+        return result
+        
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Smart tab organization failed: {str(e)}"
+        )
+
+@router.get("/tabs/relationship-analysis")
+async def tab_relationship_analysis(
+    tab_ids: str,  # Comma-separated tab IDs
+    include_content: bool = True
+):
+    """
+    Analyze relationships and connections between browser tabs
+    """
+    try:
+        tab_id_list = tab_ids.split(",") if tab_ids else []
+        result = await navigation_service.tab_relationship_analysis(
+            tab_id_list,
+            include_content
+        )
+        return result
+        
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Tab relationship analysis failed: {str(e)}"
+        )
+
+@router.post("/tabs/intelligent-suspend")
+async def intelligent_tab_suspend(
+    request: TabSuspensionRequest,
+    token: str = Depends(security)
+):
+    """
+    Intelligently suspend tabs based on usage patterns and AI analysis
+    """
+    try:
+        result = await navigation_service.intelligent_tab_suspend(
+            request.tab_criteria,
+            request.user_preferences
+        )
+        return result
+        
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Intelligent tab suspension failed: {str(e)}"
+        )
+
 @router.get("/navigation-capabilities")
 async def get_navigation_capabilities():
     """
@@ -100,7 +180,10 @@ async def get_navigation_capabilities():
             "capabilities": [
                 "natural_language_navigation",
                 "ai_powered_url_parsing", 
-                "complex_query_processing"
+                "complex_query_processing",
+                "smart_tab_organization",
+                "tab_relationship_analysis", 
+                "intelligent_tab_suspend"
             ],
             "supported_intents": [
                 "shopping", "research", "news", "entertainment", "business", "technology"
@@ -109,7 +192,10 @@ async def get_navigation_capabilities():
                 "multi_step_queries": True,
                 "context_awareness": True,
                 "personalization": True,
-                "fallback_suggestions": True
+                "fallback_suggestions": True,
+                "smart_tab_management": True,
+                "relationship_mapping": True,
+                "intelligent_suspension": True
             },
             "timestamp": datetime.now().isoformat()
         }
