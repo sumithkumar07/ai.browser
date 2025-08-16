@@ -319,7 +319,7 @@ async def quick_actions_bar(
 
 @router.post("/actions/contextual-menu")
 async def contextual_actions(
-    request: SelectionContextRequest,
+    request: ContextualMenuRequest,
     token: str = Depends(security)
 ):
     """
