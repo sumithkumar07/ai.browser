@@ -325,6 +325,27 @@ try:
 except Exception as e:
     print(f"❌ Browser router failed: {e}")
 
+# Add missing browser health endpoints
+try:
+    app.include_router(browser_health_router, prefix="/api/browser", tags=["Browser Health"])
+    print("✅ Browser health router included")
+except Exception as e:
+    print(f"❌ Browser health router failed: {e}")
+
+# Add enhanced AI chat endpoints  
+try:
+    app.include_router(enhanced_chat_router, prefix="/api/ai/enhanced", tags=["Enhanced AI Chat"])
+    print("✅ Enhanced AI chat router included")
+except Exception as e:
+    print(f"❌ Enhanced AI chat router failed: {e}")
+
+# Add enhanced user management endpoints
+try:
+    app.include_router(enhanced_user_router, prefix="/api/users/enhanced", tags=["Enhanced User Management"])
+    print("✅ Enhanced user management router included")
+except Exception as e:
+    print(f"❌ Enhanced user management router failed: {e}")
+
 try:
     app.include_router(enhanced_browser_router, prefix="/api/browser/enhanced", tags=["Browser Enhanced"])
     print("✅ Enhanced browser router included")
