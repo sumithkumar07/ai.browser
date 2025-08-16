@@ -65,12 +65,6 @@ class PageContextRequest(BaseModel):
     content_type: str = Field(default="webpage", description="Type of content")
     page_text: str = Field(default="", description="Page text content")
 
-class SelectionContextRequest(BaseModel):
-    selected_text: str = Field(default="", description="Selected text content")
-    element_type: str = Field(default="text", description="Type of selected element")
-    page_url: str = Field(..., description="URL of the current page")
-    element_attributes: Dict[str, Any] = Field(default_factory=dict, description="Element attributes")
-
 class CrossSiteAnalysisRequest(BaseModel):
     domains: List[str] = Field(..., description="List of domains to analyze")
     user_history: Optional[Dict[str, Any]] = Field(default=None, description="User browsing history")
