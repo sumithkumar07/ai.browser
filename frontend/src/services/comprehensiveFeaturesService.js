@@ -5,7 +5,7 @@
 
 import axios from 'axios';
 
-const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'https://issue-resolver-16.preview.emergentagent.com';
+const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'https://bugfix-central-17.preview.emergentagent.com';
 
 class ComprehensiveFeaturesService {
     constructor() {
