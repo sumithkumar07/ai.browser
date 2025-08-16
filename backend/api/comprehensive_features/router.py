@@ -333,8 +333,7 @@ async def contextual_actions(
 @router.get("/templates/workflow-library")
 async def template_library(
     category: Optional[str] = None,
-    difficulty: Optional[str] = None,
-    token: str = Depends(security)
+    difficulty: Optional[str] = None
 ):
     """
     📚 TEMPLATE LIBRARY - Pre-built automation workflows
