@@ -782,6 +782,127 @@ class PerformanceService:
                 "timestamp": datetime.utcnow().isoformat()
             }
 
+    async def batch_process(self, tasks: List, batch_size: int = 3) -> List:
+        """Simple batch processing wrapper"""
+        try:
+            results = []
+            
+            # Process tasks in batches
+            for i in range(0, len(tasks), batch_size):
+                batch = tasks[i:i + batch_size]
+                
+                # Execute batch
+                batch_results = await asyncio.gather(*batch, return_exceptions=True)
+                results.extend(batch_results)
+                
+                # Small delay between batches
+                if i + batch_size < len(tasks):
+                    await asyncio.sleep(0.1)
+            
+            return results
+            
+        except Exception as e:
+            print(f"Batch processing error: {e}")
+            return [{"error": f"Batch processing failed: {str(e)}"} for _ in tasks]
+
+    async def get_performance_summary(self) -> Dict:
+        """Get performance summary"""
+        try:
+            # Get recent metrics from history
+            recent_metrics = self.metrics_history[-10:] if self.metrics_history else []
+            
+            if not recent_metrics:
+                return {
+                    "average_response_time": 0.0,
+                    "total_requests": 0,
+                    "cache_hit_rate": 0.0,
+                    "performance_score": 100.0,
+                    "status": "no_data"
+                }
+            
+            # Calculate average response time
+            response_times = [m.get("response_time", 0) for m in recent_metrics]
+            avg_response_time = sum(response_times) / len(response_times) if response_times else 0
+            
+            # Calculate performance score
+            performance_score = max(0, 100 - (avg_response_time * 20))
+            
+            return {
+                "average_response_time": round(avg_response_time, 3),
+                "total_requests": len(recent_metrics),
+                "cache_hit_rate": 85.0,  # Placeholder value
+                "performance_score": round(performance_score, 1),
+                "cache_entries": len(self.performance_cache),
+                "status": "operational"
+            }
+            
+        except Exception as e:
+            return {
+                "error": f"Performance summary failed: {str(e)}",
+                "status": "error"
+            }
+
+    async def get_response_time_analytics(self) -> Dict:
+        """Get response time analytics"""
+        try:
+            recent_metrics = self.metrics_history[-20:] if self.metrics_history else []
+            
+            if not recent_metrics:
+                return {
+                    "endpoints": {},
+                    "average_response_time": 0.0,
+                    "slowest_endpoint": "none",
+                    "fastest_endpoint": "none",
+                    "status": "no_data"
+                }
+            
+            # Group by endpoint
+            endpoint_metrics = {}
+            for metric in recent_metrics:
+                endpoint = metric.get("endpoint", "unknown")
+                response_time = metric.get("response_time", 0)
+                
+                if endpoint not in endpoint_metrics:
+                    endpoint_metrics[endpoint] = []
+                endpoint_metrics[endpoint].append(response_time)
+            
+            # Calculate analytics for each endpoint
+            endpoint_analytics = {}
+            all_response_times = []
+            
+            for endpoint, times in endpoint_metrics.items():
+                avg_time = sum(times) / len(times)
+                endpoint_analytics[endpoint] = {
+                    "average_response_time": round(avg_time, 3),
+                    "request_count": len(times),
+                    "min_response_time": round(min(times), 3),
+                    "max_response_time": round(max(times), 3)
+                }
+                all_response_times.extend(times)
+            
+            # Find slowest and fastest endpoints
+            slowest_endpoint = max(endpoint_analytics.items(), 
+                                 key=lambda x: x[1]["average_response_time"])[0] if endpoint_analytics else "none"
+            fastest_endpoint = min(endpoint_analytics.items(), 
+                                 key=lambda x: x[1]["average_response_time"])[0] if endpoint_analytics else "none"
+            
+            overall_avg = sum(all_response_times) / len(all_response_times) if all_response_times else 0
+            
+            return {
+                "endpoints": endpoint_analytics,
+                "average_response_time": round(overall_avg, 3),
+                "slowest_endpoint": slowest_endpoint,
+                "fastest_endpoint": fastest_endpoint,
+                "total_requests": len(recent_metrics),
+                "status": "operational"
+            }
+            
+        except Exception as e:
+            return {
+                "error": f"Response time analytics failed: {str(e)}",
+                "status": "error"
+            }
+
 
 # Global service instance
 performance_service = PerformanceService()
