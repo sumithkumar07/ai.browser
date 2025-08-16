@@ -84,8 +84,7 @@ class ContextualMenuRequest(BaseModel):
 
 @router.post("/memory-management/intelligent-suspension")
 async def intelligent_memory_management(
-    request: MemoryManagementRequest,
-    token: str = Depends(security)
+    request: MemoryManagementRequest
 ):
     """
     🧠 INTELLIGENT MEMORY MANAGEMENT - Enhanced with intelligent tab suspension
