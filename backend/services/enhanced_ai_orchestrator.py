@@ -191,8 +191,8 @@ class EnhancedAIOrchestratorService:
         """Generate enhanced system prompt with advanced personality and intelligence"""
         
         # Get user preferences and history
-        user_prefs = await self._get_user_preferences(user_id, db) if db else {}
-        recent_tasks = await self._get_recent_user_tasks(user_id, db) if db else []
+        user_prefs = await self._get_user_preferences(user_id, db) if db is not None else {}
+        recent_tasks = await self._get_recent_user_tasks(user_id, db) if db is not None else []
         conversation_themes = self.conversation_themes.get(user_id, [])
         
         base_prompt = """You are ARIA (AI Research and Intelligence Assistant) - an advanced, emotionally intelligent AI assistant for the AI Agentic Browser. You are:
