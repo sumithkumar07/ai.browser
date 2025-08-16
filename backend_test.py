@@ -3,7 +3,7 @@
 🧪 COMPREHENSIVE END-TO-END BACKEND TESTING - PHASE 2 & 3 COMPLETION VALIDATION
 Testing Agent: Backend SDET (Testing Agent)
 Test Type: Complete validation of 25 new endpoints for AI Agentic Browser completion
-Base URL: https://smooth-test-flow.preview.emergentagent.com
+Base URL: https://quiet-fixes.preview.emergentagent.com
 Test Date: January 16, 2025
 """
 
@@ -15,7 +15,7 @@ from typing import Dict, List, Any
 
 class ComprehensiveBackendTester:
     def __init__(self):
-        self.base_url = "https://smooth-test-flow.preview.emergentagent.com"
+        self.base_url = "https://quiet-fixes.preview.emergentagent.com"
         self.test_results = []
         self.passed_tests = 0
         self.failed_tests = 0
@@ -324,7 +324,7 @@ from datetime import datetime
 from typing import Dict, Any, Optional
 
 class AIBrowserAPITester:
-    def __init__(self, base_url="https://smooth-test-flow.preview.emergentagent.com"):
+    def __init__(self, base_url="https://quiet-fixes.preview.emergentagent.com"):
         self.base_url = base_url
         self.token = None
         self.user_id = None
@@ -787,7 +787,7 @@ class AIBrowserAPITester:
         print("=" * 80)
         print("Testing newly implemented hybrid AI capabilities that combine Neon AI browser")
         print("features with Fellou.ai browser features while preserving existing functionality.")
-        print("Base URL: https://smooth-test-flow.preview.emergentagent.com")
+        print("Base URL: https://quiet-fixes.preview.emergentagent.com")
         print("=" * 80)
         
         # 1) Authentication setup
@@ -851,7 +851,7 @@ class AIBrowserAPITester:
         print("🚀 COMPREHENSIVE ENHANCED FEATURES TESTING")
         print("=" * 80)
         print("Testing ALL 25 newly implemented enhanced features API endpoints")
-        print("Base URL: https://smooth-test-flow.preview.emergentagent.com")
+        print("Base URL: https://quiet-fixes.preview.emergentagent.com")
         print("=" * 80)
         
         # 1) Authentication setup
@@ -913,7 +913,7 @@ class AIBrowserAPITester:
         print("🚀 COMPREHENSIVE AI AGENTIC BROWSER BACKEND TESTING")
         print("=" * 80)
         print("Testing ALL implemented features across all 4 phases of the roadmap")
-        print("Base URL: https://smooth-test-flow.preview.emergentagent.com")
+        print("Base URL: https://quiet-fixes.preview.emergentagent.com")
         print("=" * 80)
         
         # 1) Authentication setup
@@ -970,7 +970,7 @@ class AIBrowserAPITester:
         print("🚀 UNIFIED AI BROWSER TESTING - Enhanced Real Browser Implementation")
         print("=" * 80)
         print("Testing newly implemented Unified Browser with Enhanced Real Browser Engine")
-        print("Base URL: https://smooth-test-flow.preview.emergentagent.com")
+        print("Base URL: https://quiet-fixes.preview.emergentagent.com")
         print("=" * 80)
         
         # Priority 1: Enhanced Real Browser Engine Health
@@ -1022,7 +1022,7 @@ class AIBrowserAPITester:
         print("🚀 COMPREHENSIVE 404 ENDPOINT TESTING - AI AGENTIC BROWSER")
         print("=" * 80)
         print("Testing all endpoints mentioned in review request that frontend is trying to access")
-        print("Base URL: https://smooth-test-flow.preview.emergentagent.com")
+        print("Base URL: https://quiet-fixes.preview.emergentagent.com")
         print("=" * 80)
         
         # 1) Authentication setup
@@ -4033,9 +4033,9 @@ def main():
         test_type = "unified"  # Default to Unified Browser testing as per review request
     
     print(f"🚀 BACKEND TESTING - {test_type.upper()}")
-    print("Testing against: https://smooth-test-flow.preview.emergentagent.com")
+    print("Testing against: https://quiet-fixes.preview.emergentagent.com")
     
-    tester = AIBrowserAPITester("https://smooth-test-flow.preview.emergentagent.com")
+    tester = AIBrowserAPITester("https://quiet-fixes.preview.emergentagent.com")
     
     try:
         if test_type == "unified":

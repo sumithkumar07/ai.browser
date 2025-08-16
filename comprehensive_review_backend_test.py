@@ -3,7 +3,7 @@
 AI Agentic Browser - Comprehensive Backend Testing per Review Request
 Testing Agent: Backend SDET
 Test Type: Complete End-to-End Backend Validation per Review Request
-Base URL: https://smooth-test-flow.preview.emergentagent.com
+Base URL: https://quiet-fixes.preview.emergentagent.com
 Date: January 16, 2025
 """
 
@@ -15,7 +15,7 @@ from typing import Dict, List, Any
 
 class AIAgenticBrowserTester:
     def __init__(self):
-        self.base_url = "https://smooth-test-flow.preview.emergentagent.com"
+        self.base_url = "https://quiet-fixes.preview.emergentagent.com"
         self.api_base = f"{self.base_url}/api"
         self.test_results = []
         self.total_tests = 0
