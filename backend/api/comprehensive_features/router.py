@@ -3,8 +3,7 @@ Comprehensive Features Router
 Handles all 17 parallel-implemented features through a unified API interface
 """
 
-from fastapi import APIRouter, HTTPException, Depends, status
-from fastapi.security import HTTPBearer
+from fastapi import APIRouter, HTTPException, status
 from typing import Dict, List, Any, Optional
 from pydantic import BaseModel, Field
 from datetime import datetime
