@@ -27,13 +27,15 @@ async def register(user_data: UserCreate, db=Depends(get_database)):
 async def login(login_data: LoginRequest, db=Depends(get_database)):
     """Login user and return access token - Fixed to accept JSON body"""
     try:
-        # Try authenticating with username or email
-        user = None
-        if login_data.email:
-            user = await auth_service.authenticate_user(login_data.email, login_data.password, db)
-        elif login_data.username:
-            # If username is provided, treat it as email for now
-            user = await auth_service.authenticate_user(login_data.username, login_data.password, db)
+        # Use username or email for authentication
+        identifier = login_data.username or login_data.email
+        if not identifier:
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail="Either username or email is required"
+            )
+            
+        user = await auth_service.authenticate_user(identifier, login_data.password, db)
         
         if not user:
             raise HTTPException(
@@ -41,8 +43,14 @@ async def login(login_data: LoginRequest, db=Depends(get_database)):
                 detail="Incorrect username/email or password",
                 headers={"WWW-Authenticate": "Bearer"},
             )
-        access_token = auth_service.create_access_token(data={"sub": user.email if hasattr(user, 'email') else user.username})
+        
+        # Create token with email as subject (or username if no email)
+        token_subject = user.email if hasattr(user, 'email') and user.email else user.username
+        access_token = auth_service.create_access_token(data={"sub": token_subject})
         return {"access_token": access_token, "token_type": "bearer"}
+        
+    except HTTPException:
+        raise
     except Exception as e:
         # Return a more specific error for debugging
         raise HTTPException(
