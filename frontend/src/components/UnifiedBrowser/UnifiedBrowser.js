@@ -554,6 +554,71 @@ export default function UnifiedBrowser() {
                     ))}
                   </div>
 
+                  {/* Feature Showcase */}
+                  <div className="mt-8 pt-8 border-t border-gray-700/30">
+                    <h3 className="text-xl font-semibold text-white mb-4 text-center">
+                      🚀 All 17 Features Available
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                      {[
+                        {
+                          icon: '🧠',
+                          title: 'Memory & Performance',
+                          features: ['Smart Memory Management', 'Predictive Caching', 'Real-time Monitoring', 'Bandwidth Optimization'],
+                          color: 'from-blue-500 to-cyan-500'
+                        },
+                        {
+                          icon: '🎯',
+                          title: 'Tab & Navigation',
+                          features: ['3D Tab Workspace', 'Natural Language Navigation', 'AI-Powered Browsing'],
+                          color: 'from-green-500 to-teal-500'
+                        },
+                        {
+                          icon: '🤖',
+                          title: 'AI Actions & Voice',
+                          features: ['Hey ARIA Commands', 'One-Click Actions', 'Smart Context Menu', 'Quick Actions Bar'],
+                          color: 'from-purple-500 to-pink-500'
+                        }
+                      ].map((category, index) => (
+                        <motion.div
+                          key={index}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.5 + index * 0.1 }}
+                          className="bg-gray-800/30 rounded-xl p-4 border border-gray-700/30"
+                        >
+                          <div className="text-center mb-3">
+                            <div className="text-2xl mb-2">{category.icon}</div>
+                            <h4 className="text-white font-medium text-sm">{category.title}</h4>
+                          </div>
+                          <ul className="space-y-1">
+                            {category.features.map((feature, idx) => (
+                              <li key={idx} className="text-xs text-gray-400 flex items-center">
+                                <span className="w-1 h-1 bg-green-400 rounded-full mr-2"></span>
+                                {feature}
+                              </li>
+                            ))}
+                          </ul>
+                        </motion.div>
+                      ))}
+                    </div>
+                    
+                    <div className="text-center">
+                      <button
+                        onClick={() => setShowComprehensiveFeatures(true)}
+                        className="px-6 py-3 bg-gradient-to-r from-green-600 to-blue-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-green-500/25 transition-all duration-300 mr-4"
+                      >
+                        🚀 Explore All 17 Features
+                      </button>
+                      <button
+                        onClick={() => setShowVoiceCommands(true)}
+                        className="px-6 py-3 bg-gradient-to-r from-red-600 to-pink-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-red-500/25 transition-all duration-300"
+                      >
+                        🎙️ Try Voice Commands
+                      </button>
+                    </div>
+                  </div>
+
                   <div className="text-center">
                     <button
                       onClick={() => {
