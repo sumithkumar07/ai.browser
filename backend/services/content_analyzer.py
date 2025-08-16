@@ -696,3 +696,6 @@ Analyze and compare the sources on the specified criteria. Return as JSON:
                 
         except Exception as e:
             return {"error": f"Source comparison failed: {str(e)}"}
+
+# Alias for backward compatibility
+ContentAnalyzer = ContentAnalyzerService
