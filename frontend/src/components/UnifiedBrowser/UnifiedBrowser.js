@@ -787,7 +787,7 @@ export default function UnifiedBrowser() {
         )}
       </AnimatePresence>
 
-      {/* Status Bar */}
+      {/* Enhanced Status Bar */}
       <div className="status-bar bg-gray-900/80 border-t border-gray-700/30 px-4 py-1 flex items-center justify-between text-xs text-gray-500">
         <div className="flex items-center space-x-4">
           <span>Tabs: {tabs.length}</span>
@@ -803,9 +803,28 @@ export default function UnifiedBrowser() {
               <span>AI Analysis Active</span>
             </span>
           )}
+          {comprehensiveFeatures && (
+            <span className="flex items-center space-x-1">
+              <Sparkles size={10} className="text-green-400" />
+              <span>17 Features Available</span>
+            </span>
+          )}
+          {parallelFeatures.voiceActive && (
+            <span className="flex items-center space-x-1">
+              <MessageSquare size={10} className="text-red-400" />
+              <span>Voice Commands Active</span>
+            </span>
+          )}
         </div>
-        <div>
-          Unified AI Browser v3.0 - Powered by Real Chromium + Advanced AI
+        <div className="flex items-center space-x-4">
+          <span>
+            Unified AI Browser v3.0 - Powered by Real Chromium + Advanced AI
+          </span>
+          {comprehensiveFeatures?.implementation_summary && (
+            <span className="text-green-400">
+              {comprehensiveFeatures.implementation_summary.implementation_rate} Complete
+            </span>
+          )}
         </div>
       </div>
     </div>
