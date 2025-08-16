@@ -87,27 +87,11 @@ class FocusedRetester:
             return False, {}, f"Request failed: {str(e)}"
 
     def test_authentication_flow(self):
-        """Test authentication flow - register and login"""
+        """Test authentication flow - use existing user"""
         print("\n🔐 TESTING AUTHENTICATION FLOW...")
         
-        # Register user
-        test_user_data = {
-            "email": "retester@example.com",
-            "username": "retester", 
-            "full_name": "Re-Test User",
-            "password": "retest123",
-            "user_mode": "power"
-        }
-        
-        success, data, details = self.make_request('POST', '/api/users/register', test_user_data, 200)
-        
-        if success and 'id' in data:
-            self.user_id = data['id']
-        
-        self.log_test("User Registration", success, details)
-        
-        # Login user
-        url = f"{self.base_url}/api/users/login?email=retester@example.com&password=retest123"
+        # Use existing user credentials
+        url = f"{self.base_url}/api/users/login?email=testuser@example.com&password=testpass123"
         headers = {'Content-Type': 'application/json'}
         
         try:
