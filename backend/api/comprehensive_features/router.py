@@ -211,8 +211,7 @@ async def ai_powered_navigation(
 
 @router.post("/navigation/complex-query-processing")
 async def natural_language_browsing(
-    request: NavigationRequest,
-    token: str = Depends(security)
+    request: NavigationRequest
 ):
     """
     🌐 NATURAL LANGUAGE BROWSING - Complex query processing
