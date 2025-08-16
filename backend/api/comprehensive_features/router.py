@@ -429,9 +429,7 @@ async def smart_bookmarking(
 # ═══════════════════════════════════════════════════════════════
 
 @router.get("/browser/native-controls")
-async def native_browser_controls(
-    token: str = Depends(security)
-):
+async def native_browser_controls():
     """
     🔧 NATIVE BROWSER CONTROLS - Direct browser engine access
     """
