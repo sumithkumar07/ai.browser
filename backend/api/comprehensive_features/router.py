@@ -144,8 +144,7 @@ async def predictive_content_caching(
 
 @router.post("/bandwidth/intelligent-optimization")
 async def intelligent_bandwidth_optimization(
-    request: BandwidthOptimizationRequest,
-    token: str = Depends(security)
+    request: BandwidthOptimizationRequest
 ):
     """
     📡 BANDWIDTH OPTIMIZATION - Smart content compression
