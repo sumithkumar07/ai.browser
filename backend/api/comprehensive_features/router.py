@@ -303,8 +303,7 @@ async def quick_actions_bar(
 
 @router.post("/actions/contextual-menu")
 async def contextual_actions(
-    request: ContextualMenuRequest,
-    token: str = Depends(security)
+    request: ContextualMenuRequest
 ):
     """
     🖱️ CONTEXTUAL ACTIONS - Right-click AI menu integration
