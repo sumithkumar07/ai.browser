@@ -1,8 +1,11 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request
+from fastapi.responses import JSONResponse
 from models.user import User
 from models.session import BrowserSession, TabState, TabCreate
 from services.auth_service import AuthService
 from services.session_manager import SessionManager
+from services.advanced_tab_navigation_service import AdvancedTabNavigationService
+from services.cross_site_intelligence_service import CrossSiteIntelligenceService
 from database.connection import get_database
 from typing import List
 
