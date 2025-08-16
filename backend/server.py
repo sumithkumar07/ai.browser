@@ -25,6 +25,21 @@ from api.hybrid_browser.router import router as hybrid_browser_router
 from api.real_browser.router import router as real_browser_router
 from api.real_browser.enhanced_router import router as enhanced_real_browser_router
 
+# Import new routers for Phase 2 & 3 completion
+try:
+    from api.reliability.router import router as reliability_router
+    print("✅ Enhanced Reliability router imported successfully")
+except Exception as e:
+    print(f"⚠️ Enhanced Reliability router not available: {e}")
+    reliability_router = None
+
+try:
+    from api.mobile_optimization.router import router as mobile_optimization_router
+    print("✅ Mobile Optimization router imported successfully")
+except Exception as e:
+    print(f"⚠️ Mobile Optimization router not available: {e}")
+    mobile_optimization_router = None
+
 # Import missing routers that frontend needs
 # Temporarily disable problematic routers to get core system working
 try:
