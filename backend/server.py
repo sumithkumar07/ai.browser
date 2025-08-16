@@ -76,6 +76,12 @@ from services.app_simplicity_service import AppSimplicityService
 from services.ui_enhancement_service import UIEnhancementService
 from services.performance_service import PerformanceService
 
+# Import new parallel enhancement services
+from hybrid_browser_service import HybridBrowserService
+from enhanced_features_service import EnhancedFeaturesService  
+from deployment_optimization_service import DeploymentOptimizationService
+from enhanced_comprehensive_features_service import EnhancedComprehensiveFeaturesService
+
 # Database
 from database.connection import get_database, connect_to_mongo, close_mongo_connection
 
