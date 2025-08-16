@@ -269,13 +269,14 @@ async def one_click_ai_actions(
 
 @router.get("/actions/personalized-quick-actions")
 async def quick_actions_bar(
-    user_context: Dict[str, Any] = {},
+    user_id: str = "anonymous",
     token: str = Depends(security)
 ):
     """
     🚀 QUICK ACTIONS BAR - Personalized floating toolbar
     """
     try:
+        user_context = {"user_id": user_id}
         result = await intelligent_actions_service.get_personalized_quick_actions(user_context)
         return {
             "feature": "quick_actions_bar",
