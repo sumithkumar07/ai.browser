@@ -253,16 +253,60 @@ async def api_health():
 
 # Note: Router imports are handled in try-except blocks above to avoid import errors
 
-# Include all routers with proper prefixes
-app.include_router(ai_router, prefix="/api/ai/enhanced", tags=["AI Enhanced"])
-app.include_router(hybrid_router, prefix="/api/ai/hybrid", tags=["Hybrid AI"])
-app.include_router(browser_router, prefix="/api/browser", tags=["Browser Core"])
-app.include_router(enhanced_browser_router, prefix="/api/browser/enhanced", tags=["Browser Enhanced"])
-app.include_router(hybrid_browser_router, prefix="/api/hybrid-browser", tags=["Hybrid Browser"])
-app.include_router(real_browser_router, prefix="/api/real-browser", tags=["Real Browser Engine"])
-app.include_router(enhanced_real_browser_router, prefix="/api/real-browser/enhanced", tags=["Enhanced Real Browser"])
-app.include_router(automation_router, prefix="/api/automation", tags=["Automation"])
-app.include_router(user_router, prefix="/api/users", tags=["User Management"])
+# Include all routers with proper prefixes - with safety checks
+try:
+    app.include_router(ai_router, prefix="/api/ai/enhanced", tags=["AI Enhanced"])
+    print("✅ AI router included")
+except Exception as e:
+    print(f"❌ AI router failed: {e}")
+
+try:
+    app.include_router(hybrid_router, prefix="/api/ai/hybrid", tags=["Hybrid AI"])
+    print("✅ Hybrid AI router included")
+except Exception as e:
+    print(f"❌ Hybrid AI router failed: {e}")
+
+try:
+    app.include_router(browser_router, prefix="/api/browser", tags=["Browser Core"])
+    print("✅ Browser router included")
+except Exception as e:
+    print(f"❌ Browser router failed: {e}")
+
+try:
+    app.include_router(enhanced_browser_router, prefix="/api/browser/enhanced", tags=["Browser Enhanced"])
+    print("✅ Enhanced browser router included")
+except Exception as e:
+    print(f"❌ Enhanced browser router failed: {e}")
+
+try:
+    app.include_router(hybrid_browser_router, prefix="/api/hybrid-browser", tags=["Hybrid Browser"])
+    print("✅ Hybrid browser router included")
+except Exception as e:
+    print(f"❌ Hybrid browser router failed: {e}")
+
+try:
+    app.include_router(real_browser_router, prefix="/api/real-browser", tags=["Real Browser Engine"])
+    print("✅ Real browser router included")
+except Exception as e:
+    print(f"❌ Real browser router failed: {e}")
+
+try:
+    app.include_router(enhanced_real_browser_router, prefix="/api/real-browser/enhanced", tags=["Enhanced Real Browser"])
+    print("✅ Enhanced real browser router included")
+except Exception as e:
+    print(f"❌ Enhanced real browser router failed: {e}")
+
+try:
+    app.include_router(automation_router, prefix="/api/automation", tags=["Automation"])
+    print("✅ Automation router included")
+except Exception as e:
+    print(f"❌ Automation router failed: {e}")
+
+try:
+    app.include_router(user_router, prefix="/api/users", tags=["User Management"])
+    print("✅ User management router included")
+except Exception as e:
+    print(f"❌ User management router failed: {e}")
 
 # Include missing routers that frontend is trying to access (if available)
 if advanced_navigation_router:
