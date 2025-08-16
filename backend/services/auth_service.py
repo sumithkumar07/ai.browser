@@ -52,17 +52,22 @@ class AuthService:
         await db.users.insert_one(user_in_db.dict())
         return User(**user_in_db.dict())
 
-    async def authenticate_user(self, email: str, password: str, db):
-        user_data = await db.users.find_one({"email": email})
+    async def authenticate_user(self, email_or_username: str, password: str, db):
+        # Try to find user by email first, then by username
+        user_data = await db.users.find_one({"email": email_or_username})
+        if not user_data:
+            user_data = await db.users.find_one({"username": email_or_username})
+        
         if not user_data:
             return False
+            
         user = UserInDB(**user_data)
         if not self.verify_password(password, user.hashed_password):
             return False
         
         # Update last login
         await db.users.update_one(
-            {"email": email},
+            {"$or": [{"email": email_or_username}, {"username": email_or_username}]},
             {"$set": {"last_login": datetime.utcnow()}}
         )
         return User(**user.dict())
