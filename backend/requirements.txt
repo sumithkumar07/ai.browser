@@ -20,7 +20,8 @@ bcrypt==4.1.1
 email-validator==2.1.0
 SpeechRecognition==3.10.0
 aiofiles==23.2.1
-greenlet==3.0.3
+greenlet==3.2.4
+pyee==13.0.0
 
 # Phase 2-4 Advanced Dependencies
 redis==5.0.1
