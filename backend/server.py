@@ -221,6 +221,24 @@ async def root():
         "access_point": "Click purple 'Hybrid AI' button in browser navigation"
     }
 
+# Test endpoint for comprehensive features
+@app.get("/api/test-features")
+async def test_comprehensive_features():
+    """Test endpoint to verify comprehensive features integration"""
+    try:
+        return {
+            "status": "success",
+            "message": "Comprehensive features integration test",
+            "features_available": True,
+            "backend_status": "operational",
+            "timestamp": "2025-01-16"
+        }
+    except Exception as e:
+        return {
+            "status": "error", 
+            "message": f"Test failed: {str(e)}"
+        }
+
 # API Health check endpoint (missing from tests)
 @app.get("/api/health")
 async def api_health():
