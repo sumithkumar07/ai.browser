@@ -258,11 +258,6 @@ async def voice_commands(
         logger.error(f"Error in voice commands: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
-class PageContextRequest(BaseModel):
-    url: str = Field(..., description="Current page URL")
-    content_type: str = Field(default="webpage", description="Type of content")
-    page_text: str = Field(default="", description="Page text content")
-
 @router.post("/actions/contextual-ai-actions")
 async def one_click_ai_actions(
     request: PageContextRequest,
