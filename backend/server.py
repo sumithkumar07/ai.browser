@@ -300,6 +300,14 @@ try:
 except Exception as e:
     print(f"❌ AI router failed: {e}")
 
+# Add missing AI chat endpoints
+try:
+    from api.ai_agents.enhanced_chat_router import router as ai_chat_router
+    app.include_router(ai_chat_router, prefix="/api/ai/enhanced", tags=["AI Enhanced Chat"])
+    print("✅ AI Chat router included")
+except Exception as e:
+    print(f"❌ AI Chat router failed: {e}")
+
 try:
     app.include_router(hybrid_router, prefix="/api/ai/hybrid", tags=["Hybrid AI"])
     print("✅ Hybrid AI router included")
@@ -329,6 +337,14 @@ try:
     print("✅ Real browser router included")
 except Exception as e:
     print(f"❌ Real browser router failed: {e}")
+
+# Add missing browser session management endpoints  
+try:
+    from api.real_browser.session_router import router as session_router
+    app.include_router(session_router, prefix="/api/real-browser", tags=["Browser Sessions"])
+    print("✅ Browser session router included")
+except Exception as e:
+    print(f"❌ Browser session router failed: {e}")
 
 try:
     app.include_router(enhanced_real_browser_router, prefix="/api/real-browser/enhanced", tags=["Enhanced Real Browser"])
