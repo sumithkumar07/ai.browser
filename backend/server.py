@@ -26,37 +26,46 @@ from api.real_browser.router import router as real_browser_router
 from api.real_browser.enhanced_router import router as enhanced_real_browser_router
 
 # Import missing routers that frontend needs
+# Temporarily disable problematic routers to get core system working
 try:
     from api.advanced_navigation.router import router as advanced_navigation_router
-except ImportError:
+except Exception as e:
+    print(f"⚠️ Advanced navigation router not available: {e}")
     advanced_navigation_router = None
 try:
     from api.cross_site_intelligence.router import router as cross_site_intelligence_router
-except ImportError:
+except Exception as e:
+    print(f"⚠️ Cross site intelligence router not available: {e}")
     cross_site_intelligence_router = None
 try:
     from api.enhanced_performance.router import router as enhanced_performance_router
-except ImportError:
+except Exception as e:
+    print(f"⚠️ Enhanced performance router not available: {e}")
     enhanced_performance_router = None
 try:
     from api.template_automation.router import router as template_automation_router
-except ImportError:
+except Exception as e:
+    print(f"⚠️ Template automation router not available: {e}")
     template_automation_router = None
 try:
     from api.voice_actions.router import router as voice_actions_router
-except ImportError:
+except Exception as e:
+    print(f"⚠️ Voice actions router not available: {e}")
     voice_actions_router = None
 try:
     from api.enhanced_features.router import router as enhanced_features_router
-except ImportError:
+except Exception as e:
+    print(f"⚠️ Enhanced features router not available: {e}")
     enhanced_features_router = None
 try:
     from api.comprehensive_features.router import router as comprehensive_features_router
-except ImportError:
+except Exception as e:
+    print(f"⚠️ Comprehensive features router not available: {e}")
     comprehensive_features_router = None
 try:
     from api.ecosystem.router import router as ecosystem_router
-except ImportError:
+except Exception as e:
+    print(f"⚠️ Ecosystem router not available: {e}")
     ecosystem_router = None
 
 # Import services
