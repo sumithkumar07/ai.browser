@@ -629,25 +629,31 @@ class CrossSiteIntelligenceService:
         
         return categories if categories else ["General"]
 
-    async def _calculate_content_relevance(self, url: str, content: str, tags: List[str]) -> float:
-        """Calculate relevance score for the content"""
-        # Simple relevance calculation based on content quality indicators
-        relevance_score = 0.5  # Base score
-        
-        # URL quality indicators
-        domain = urlparse(url).netloc
-        if any(quality_domain in domain for quality_domain in ["edu", "gov", "org"]):
-            relevance_score += 0.2
-        
-        # Content quality indicators
-        if content:
-            if len(content) > 100:  # Substantial content
-                relevance_score += 0.15
-            if len(content.split()) > 20:  # Good word count
-                relevance_score += 0.10
-        
-        # Tag quality indicators
-        if len(tags) >= 3:  # Good tag coverage
-            relevance_score += 0.05
-        
-        return min(relevance_score, 1.0)  # Cap at 1.0
+    async def smart_bookmark_categorize(self, bookmarks: List[Dict], categorization_depth: int = 3) -> Dict:
+        """AI-powered smart categorization of bookmarks with deep content analysis"""
+        return await self.categorize_bookmarks_intelligently({
+            "bookmarks": bookmarks,
+            "strategy": "deep_content_analysis",
+            "depth": categorization_depth
+        })
+    
+    async def bookmark_duplicate_analysis(self, collection_id: str = None, similarity_threshold: float = 0.8) -> Dict:
+        """Analyze bookmark collection for duplicates and similar entries"""
+        return await self.analyze_bookmark_duplicates({
+            "collection_id": collection_id,
+            "similarity_threshold": similarity_threshold,
+            "user_id": collection_id or "default_user"
+        })
+    
+    async def bookmark_content_tagging(self, bookmark_data: Dict, tagging_strategy: str = "ai_powered") -> Dict:
+        """AI-powered content tagging for bookmarks with topic extraction"""
+        return await self.tag_bookmark_content({
+            "url": bookmark_data.get("url"),
+            "content": bookmark_data.get("content", ""),
+            "title": bookmark_data.get("title", ""),
+            "options": {
+                "strategy": tagging_strategy,
+                "auto_tags": True,
+                "content_analysis": True
+            }
+        })
