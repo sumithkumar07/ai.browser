@@ -41,6 +41,9 @@ export default function UnifiedBrowser() {
   const [bookmarks, setBookmarks] = useState([]);
   const [recentlyClosedTabs, setRecentlyClosedTabs] = useState([]);
   const [showSmartSuggestions, setShowSmartSuggestions] = useState(false);
+  const [showComprehensiveFeatures, setShowComprehensiveFeatures] = useState(false);
+  const [showVoiceCommands, setShowVoiceCommands] = useState(false);
+  const [comprehensiveFeatures, setComprehensiveFeatures] = useState(null);
 
   // UI state
   const [showBookmarkBar, setShowBookmarkBar] = useState(true);
