@@ -204,6 +204,16 @@ async def api_health():
             }
         )
 
+# Import all missing routers
+from api.advanced_navigation.router import router as advanced_navigation_router
+from api.cross_site_intelligence.router import router as cross_site_intelligence_router
+from api.enhanced_performance.router import router as enhanced_performance_router
+from api.template_automation.router import router as template_automation_router
+from api.voice_actions.router import router as voice_actions_router
+from api.enhanced_features.router import router as enhanced_features_router
+from api.comprehensive_features.router import router as comprehensive_features_router
+from api.ecosystem.router import router as ecosystem_router
+
 # Include all routers with proper prefixes
 app.include_router(ai_router, prefix="/api/ai", tags=["AI Enhanced"])
 app.include_router(hybrid_router, prefix="/api/ai/hybrid", tags=["Hybrid AI"])
@@ -214,6 +224,16 @@ app.include_router(real_browser_router, prefix="/api/real-browser", tags=["Real 
 app.include_router(enhanced_real_browser_router, prefix="/api/real-browser/enhanced", tags=["Enhanced Real Browser"])
 app.include_router(automation_router, prefix="/api/automation", tags=["Automation"])
 app.include_router(user_router, prefix="/api/users", tags=["User Management"])
+
+# Include missing routers that frontend is trying to access
+app.include_router(advanced_navigation_router, prefix="/api/advanced-navigation", tags=["Advanced Navigation"])
+app.include_router(cross_site_intelligence_router, prefix="/api/cross-site-intelligence", tags=["Cross Site Intelligence"])
+app.include_router(enhanced_performance_router, prefix="/api/enhanced-performance", tags=["Enhanced Performance"])
+app.include_router(template_automation_router, prefix="/api/template-automation", tags=["Template Automation"])
+app.include_router(voice_actions_router, prefix="/api/voice-actions", tags=["Voice Actions"])
+app.include_router(enhanced_features_router, prefix="/api/enhanced-features", tags=["Enhanced Features"])
+app.include_router(comprehensive_features_router, prefix="/api/comprehensive-features", tags=["Comprehensive Features"])
+app.include_router(ecosystem_router, prefix="/api/ecosystem", tags=["Ecosystem Integration"])
 
 # Enhanced API documentation endpoint
 @app.get("/api/documentation")
