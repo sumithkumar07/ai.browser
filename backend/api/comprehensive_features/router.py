@@ -388,8 +388,7 @@ async def create_visual_workflow(
 
 @router.post("/intelligence/cross-site-analysis")
 async def cross_site_intelligence(
-    request: CrossSiteAnalysisRequest,
-    token: str = Depends(security)
+    request: CrossSiteAnalysisRequest
 ):
     """
     🕸️ CROSS-SITE INTELLIGENCE - Website relationship mapping
