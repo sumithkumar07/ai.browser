@@ -323,7 +323,11 @@ if voice_actions_router:
 if enhanced_features_router:
     app.include_router(enhanced_features_router, prefix="/api/enhanced-features", tags=["Enhanced Features"])
 if comprehensive_features_router:
-    app.include_router(comprehensive_features_router, prefix="/api/comprehensive-features", tags=["Comprehensive Features"])
+    try:
+        app.include_router(comprehensive_features_router, prefix="/api/comprehensive-features", tags=["Comprehensive Features"])
+        print("✅ Comprehensive features router included")
+    except Exception as e:
+        print(f"❌ Comprehensive features router inclusion failed: {e}")
 if ecosystem_router:
     app.include_router(ecosystem_router, prefix="/api/ecosystem", tags=["Ecosystem Integration"])
 
