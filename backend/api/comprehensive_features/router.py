@@ -647,11 +647,10 @@ async def comprehensive_features_overview():
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/health/features-health-check")
-async def features_health_check(
-    token: str = Depends(security)
-):
+async def features_health_check():
     """
     🏥 FEATURES HEALTH CHECK - Verify all services are operational
+    PUBLIC ENDPOINT: No authentication required for health status
     """
     try:
         health_status = {
