@@ -3,7 +3,7 @@
 COMPREHENSIVE CRITICAL ISSUE VERIFICATION WITH AUTHENTICATION
 Testing Agent: Backend SDET (Testing Agent)
 Test Type: Complete verification with user registration and authentication
-Base URL: https://ui-test-suite-1.preview.emergentagent.com
+Base URL: https://smooth-test-flow.preview.emergentagent.com
 Test Date: January 16, 2025
 """
 
@@ -13,7 +13,7 @@ import sys
 from datetime import datetime
 
 # Configuration
-BASE_URL = "https://ui-test-suite-1.preview.emergentagent.com"
+BASE_URL = "https://smooth-test-flow.preview.emergentagent.com"
 TIMEOUT = 30
 
 class ComprehensiveCriticalTester:
