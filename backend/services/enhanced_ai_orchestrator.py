@@ -488,7 +488,7 @@ Example format: ["Action that provides value", "Next logical step", "Related hel
                 "version": "2.0"
             }
             
-            if db:
+            if db is not None:
                 await db.content_analysis.insert_one(analysis_doc)
             
             return {
