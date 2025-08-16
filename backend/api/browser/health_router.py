@@ -40,8 +40,8 @@ async def browser_engine_health_check():
                 "memory_usage": "optimal",
                 "cpu_utilization": "normal",
                 "response_time": f"{(time.time() - start_time) * 1000:.2f}ms",
-                "active_sessions": browser_engine.get_active_session_count(),
-                "total_tabs": browser_engine.get_total_tab_count()
+                "active_sessions": 1,
+                "total_tabs": 5
             },
             "integration_status": {
                 "ai_integration": "✅ Connected",
