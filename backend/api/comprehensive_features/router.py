@@ -22,7 +22,6 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 router = APIRouter()
-security = HTTPBearer()
 
 # ═══════════════════════════════════════════════════════════════
 # REQUEST/RESPONSE MODELS
