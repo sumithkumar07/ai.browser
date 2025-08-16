@@ -247,15 +247,25 @@ async def voice_commands(
         logger.error(f"Error in voice commands: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
+class PageContextRequest(BaseModel):
+    url: str = Field(..., description="Current page URL")
+    content_type: str = Field(default="webpage", description="Type of content")
+    page_text: str = Field(default="", description="Page text content")
+
 @router.post("/actions/contextual-ai-actions")
 async def one_click_ai_actions(
-    page_context: Dict[str, Any],
+    request: PageContextRequest,
     token: str = Depends(security)
 ):
     """
     ⚡ ONE-CLICK AI ACTIONS - Contextual floating action buttons
     """
     try:
+        page_context = {
+            "url": request.url,
+            "content_type": request.content_type,
+            "page_text": request.page_text
+        }
         result = await intelligent_actions_service.get_contextual_ai_actions(page_context)
         return {
             "feature": "one_click_ai_actions",
