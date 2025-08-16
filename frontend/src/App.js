@@ -13,8 +13,12 @@ import { ParallelFeaturesProvider } from './contexts/ParallelFeaturesContext';
 import UnifiedBrowser from './components/UnifiedBrowser/UnifiedBrowser';
 import MainBrowser from './components/MainBrowser/MainBrowser';
 import SimplifiedBrowser from './components/SimplifiedBrowser/SimplifiedBrowser';
+import MinimalBrowser from './components/MinimalBrowser/MinimalBrowser';
 import AuthWrapper from './components/Auth/AuthWrapper';
+
+// Import styles
 import './App.css';
+import './styles/minimal-browser.css';
 
 function App() {
   // Browser mode selection - can be configured based on user preference
@@ -26,7 +30,7 @@ function App() {
     // Check localStorage for saved preference
     const savedMode = localStorage.getItem('browserMode');
     
-    return mode || savedMode || 'unified'; // Default to unified browser
+    return mode || savedMode || 'minimal'; // Default to minimal browser (Fellou.ai style)
   };
 
   const browserMode = getBrowserMode();
@@ -38,8 +42,10 @@ function App() {
       case 'simplified':
         return <SimplifiedBrowser />;
       case 'unified':
-      default:
         return <UnifiedBrowser />;
+      case 'minimal':
+      default:
+        return <MinimalBrowser />;
     }
   };
 
@@ -58,11 +64,12 @@ function App() {
                     }}>
                       <AuthWrapper>
                         <Routes>
-                          {/* Main unified browser route */}
-                          <Route path="/" element={<UnifiedBrowser />} />
+                          {/* Main minimal browser route - Fellou.ai style */}
+                          <Route path="/" element={<MinimalBrowser />} />
                           
                           {/* Alternative browser modes */}
-                          <Route path="/browser" element={<UnifiedBrowser />} />
+                          <Route path="/browser" element={<MinimalBrowser />} />
+                          <Route path="/browser/minimal" element={<MinimalBrowser />} />
                           <Route path="/browser/unified" element={<UnifiedBrowser />} />
                           <Route path="/browser/advanced" element={<MainBrowser />} />
                           <Route path="/browser/simplified" element={<SimplifiedBrowser />} />
@@ -70,6 +77,7 @@ function App() {
                           {/* Legacy routes for backward compatibility */}
                           <Route path="/advanced" element={<MainBrowser />} />
                           <Route path="/simple" element={<SimplifiedBrowser />} />
+                          <Route path="/unified" element={<UnifiedBrowser />} />
                         </Routes>
                       </AuthWrapper>
                     </Router>
@@ -87,6 +95,19 @@ function App() {
           <div className="bg-black/80 text-white p-3 rounded-lg text-sm">
             <div className="mb-2 text-xs text-gray-300">Browser Mode:</div>
             <div className="flex space-x-2">
+              <button
+                onClick={() => {
+                  localStorage.setItem('browserMode', 'minimal');
+                  window.location.reload();
+                }}
+                className={`px-3 py-1 rounded text-xs transition-colors ${
+                  browserMode === 'minimal' 
+                    ? 'bg-green-600 text-white' 
+                    : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                }`}
+              >
+                Minimal
+              </button>
               <button
                 onClick={() => {
                   localStorage.setItem('browserMode', 'unified');
@@ -120,7 +141,7 @@ function App() {
                 }}
                 className={`px-3 py-1 rounded text-xs transition-colors ${
                   browserMode === 'simplified' 
-                    ? 'bg-green-600 text-white' 
+                    ? 'bg-yellow-600 text-white' 
                     : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
                 }`}
               >
@@ -128,7 +149,8 @@ function App() {
               </button>
             </div>
             <div className="text-xs text-gray-400 mt-2">
-              Current: {browserMode}
+              Current: {browserMode} 
+              {browserMode === 'minimal' && ' (Fellou.ai Style)'}
             </div>
           </div>
         </div>
@@ -208,6 +230,17 @@ function App() {
 
         .browser-pulse {
           animation: browser-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        /* Minimal Browser Overrides for Fellou.ai Style */
+        .minimal-browser * {
+          box-sizing: border-box;
+        }
+
+        /* Override dark theme for minimal browser */
+        .minimal-browser {
+          background: white !important;
+          color: #212529 !important;
         }
       `}</style>
     </div>
