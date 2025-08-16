@@ -311,13 +311,19 @@ async def quick_actions_bar(
 
 @router.post("/actions/contextual-menu")
 async def contextual_actions(
-    selection_context: Dict[str, Any],
+    request: SelectionContextRequest,
     token: str = Depends(security)
 ):
     """
     🖱️ CONTEXTUAL ACTIONS - Right-click AI menu integration
     """
     try:
+        selection_context = {
+            "selected_text": request.selected_text,
+            "element_type": request.element_type,
+            "page_url": request.page_url,
+            "element_attributes": request.element_attributes
+        }
         result = await intelligent_actions_service.get_contextual_menu_actions(selection_context)
         return {
             "feature": "contextual_actions",
