@@ -140,7 +140,7 @@ function App() {
       </div>
 
       {/* CSS Custom Properties */}
-      <style jsx global>{`
+      <style jsx="true" global="true">{`
         :root {
           --browser-primary: #6366f1;
           --browser-secondary: #8b5cf6;
