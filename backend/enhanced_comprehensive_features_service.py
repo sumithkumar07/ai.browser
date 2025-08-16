@@ -21,8 +21,9 @@ class EnhancedComprehensiveFeaturesService:
         self.memory_enhancer = EnhancedMemoryManager()
         self.performance_enhancer = EnhancedPerformanceMonitor()
         self.navigation_enhancer = EnhancedNavigationSystem()
-        self.voice_enhancer = EnhancedVoiceSystem()
-        self.automation_enhancer = EnhancedAutomationSystem()
+        # Enhanced systems will be implemented as needed
+        # self.voice_enhancer = EnhancedVoiceSystem() 
+        # self.automation_enhancer = EnhancedAutomationSystem()
         
     # Enhanced Memory & Performance Features (4 features improved)
     
