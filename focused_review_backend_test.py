@@ -11,7 +11,7 @@ Testing Categories:
 5. Authentication & User Management
 6. API Endpoint Validation & Performance
 
-Base URL: https://ai-completion-plan.preview.emergentagent.com
+Base URL: https://completion-tracker.preview.emergentagent.com
 """
 
 import requests
@@ -22,7 +22,7 @@ from datetime import datetime
 from typing import Dict, Any, Optional, List
 
 class FocusedReviewBackendTester:
-    def __init__(self, base_url="https://ai-completion-plan.preview.emergentagent.com"):
+    def __init__(self, base_url="https://completion-tracker.preview.emergentagent.com"):
         self.base_url = base_url
         self.token = None
         self.user_id = None

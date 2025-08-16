@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'https://ai-completion-plan.preview.emergentagent.com';
+const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'https://completion-tracker.preview.emergentagent.com';
 
 // Helper function to get auth token
 const getAuthToken = () => {
