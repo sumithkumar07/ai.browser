@@ -695,6 +695,98 @@ export default function UnifiedBrowser() {
         </AnimatePresence>
       </div>
 
+      {/* Comprehensive Features Panel */}
+      <ComprehensiveFeaturesPanel 
+        isVisible={showComprehensiveFeatures}
+        onClose={() => setShowComprehensiveFeatures(false)}
+      />
+
+      {/* Voice Commands Panel */}
+      <AnimatePresence>
+        {showVoiceCommands && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={() => setShowVoiceCommands(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-gray-900/95 backdrop-blur-md rounded-2xl border border-gray-700/50 shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="p-6">
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 bg-gradient-to-r from-red-500 to-pink-500 rounded-lg flex items-center justify-center">
+                      <MessageSquare size={20} className="text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-white">Voice Commands</h3>
+                      <p className="text-gray-400 text-sm">Say "Hey ARIA" to activate</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setShowVoiceCommands(false)}
+                    className="p-2 hover:bg-gray-700/50 rounded-lg text-gray-400 hover:text-white transition-colors"
+                  >
+                    <X size={20} />
+                  </button>
+                </div>
+                
+                <div className="space-y-4">
+                  <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-700/30">
+                    <h4 className="text-white font-medium mb-3">Available Voice Commands</h4>
+                    <div className="grid gap-2">
+                      {[
+                        { command: 'Hey ARIA, open Google', description: 'Navigate to Google search' },
+                        { command: 'Hey ARIA, analyze this page', description: 'Get AI insights about current page' },
+                        { command: 'Hey ARIA, summarize content', description: 'Create a summary of the page' },
+                        { command: 'Hey ARIA, bookmark this page', description: 'Smart bookmark with AI categorization' },
+                        { command: 'Hey ARIA, organize my tabs', description: 'Arrange tabs in 3D workspace' },
+                        { command: 'Hey ARIA, boost performance', description: 'Optimize browser performance' }
+                      ].map((item, index) => (
+                        <div key={index} className="bg-gray-900/50 rounded-lg p-3">
+                          <div className="text-green-300 font-medium text-sm mb-1">{item.command}</div>
+                          <div className="text-gray-400 text-xs">{item.description}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  <div className="bg-red-600/10 border border-red-500/20 rounded-lg p-4">
+                    <div className="flex items-center space-x-2 text-red-300 mb-2">
+                      <MessageSquare size={16} />
+                      <span className="font-medium">Status</span>
+                    </div>
+                    <p className="text-gray-300 text-sm">
+                      Voice recognition is ready. Click the microphone button or say "Hey ARIA" to start.
+                    </p>
+                    
+                    <button
+                      onClick={async () => {
+                        try {
+                          const result = await parallelFeatures.processVoiceCommand('Hey ARIA, help me', { url: currentUrl });
+                          console.log('Voice command result:', result);
+                        } catch (error) {
+                          console.error('Voice command error:', error);
+                        }
+                      }}
+                      className="mt-3 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
+                    >
+                      🎙️ Test Voice Command
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Status Bar */}
       <div className="status-bar bg-gray-900/80 border-t border-gray-700/30 px-4 py-1 flex items-center justify-between text-xs text-gray-500">
         <div className="flex items-center space-x-4">
