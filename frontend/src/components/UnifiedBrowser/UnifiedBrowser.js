@@ -688,7 +688,7 @@ export default function UnifiedBrowser() {
                   console.log('Executing action:', action);
                   // Handle contextual AI actions using comprehensive features
                   if (action.type === 'smart_bookmark') {
-                    comprehensiveFeaturesService.createSmartBookmark(currentUrl, { title: currentTab?.title });
+                    comprehensiveFeaturesService.createSmartBookmark(currentUrl, { title: activeTab?.title });
                   } else if (action.type === 'voice_command') {
                     setShowVoiceCommands(true);
                   } else if (action.type === 'analyze_content') {
