@@ -259,8 +259,7 @@ async def voice_commands(
 
 @router.post("/actions/contextual-ai-actions")
 async def one_click_ai_actions(
-    request: PageContextRequest,
-    token: str = Depends(security)
+    request: PageContextRequest
 ):
     """
     ⚡ ONE-CLICK AI ACTIONS - Contextual floating action buttons
