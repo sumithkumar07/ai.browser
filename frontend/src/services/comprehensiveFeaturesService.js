@@ -5,7 +5,7 @@
 
 import axios from 'axios';
 
-const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'https://ai-browser-e2e.preview.emergentagent.com';
+const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'https://hybrid-browser-qa.preview.emergentagent.com';
 
 class ComprehensiveFeaturesService {
     constructor() {
