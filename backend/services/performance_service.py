@@ -623,6 +623,76 @@ class PerformanceService:
             print(f"Error getting cached data: {e}")
             return None
 
+    async def optimize_caching(self, cache_key: str, data: Any, ttl_seconds: int = 300) -> bool:
+        """Optimized caching with custom TTL"""
+        try:
+            if not self.optimization_settings.get("cache_enabled", True):
+                return False
+                
+            current_time = time.time()
+            
+            # Store data with custom TTL
+            self.performance_cache[cache_key] = {
+                "data": data,
+                "timestamp": current_time,
+                "ttl": ttl_seconds
+            }
+            
+            # Periodic cleanup
+            if len(self.performance_cache) > 50:
+                await self._cleanup_cache()
+            
+            return True
+            
+        except Exception as e:
+            print(f"Error in optimize_caching: {e}")
+            return False
+
+    async def monitor_response_times(self, endpoint_name: str, start_time: float) -> Dict:
+        """Monitor and log response times for performance analysis"""
+        try:
+            response_time = time.time() - start_time
+            
+            # Add to metrics history
+            metric_entry = {
+                "endpoint": endpoint_name,
+                "response_time": response_time,
+                "timestamp": datetime.utcnow().isoformat()
+            }
+            
+            self.metrics_history.append(metric_entry)
+            
+            # Keep only last 100 entries
+            if len(self.metrics_history) > 100:
+                self.metrics_history = self.metrics_history[-100:]
+            
+            return {
+                "endpoint": endpoint_name,
+                "response_time": round(response_time, 3),
+                "status": "monitored"
+            }
+            
+        except Exception as e:
+            print(f"Error monitoring response times: {e}")
+            return {"error": str(e)}
+
+    async def _cleanup_cache(self):
+        """Clean up expired cache entries"""
+        try:
+            current_time = time.time()
+            expired_keys = []
+            
+            for key, entry in self.performance_cache.items():
+                ttl = entry.get("ttl", self.optimization_settings.get("cache_ttl_seconds", 300))
+                if current_time - entry["timestamp"] > ttl:
+                    expired_keys.append(key)
+            
+            for key in expired_keys:
+                del self.performance_cache[key]
+                
+        except Exception as e:
+            print(f"Error cleaning cache: {e}")
+
     async def cache_data(self, cache_key: str, data: Any) -> bool:
         """Store data in cache with timestamp"""
         try:
