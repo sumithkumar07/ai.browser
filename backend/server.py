@@ -262,7 +262,7 @@ from api.comprehensive_features.router import router as comprehensive_features_r
 from api.ecosystem.router import router as ecosystem_router
 
 # Include all routers with proper prefixes
-app.include_router(ai_router, prefix="/api/ai", tags=["AI Enhanced"])
+app.include_router(ai_router, prefix="/api/ai/enhanced", tags=["AI Enhanced"])
 app.include_router(hybrid_router, prefix="/api/ai/hybrid", tags=["Hybrid AI"])
 app.include_router(browser_router, prefix="/api/browser", tags=["Browser Core"])
 app.include_router(enhanced_browser_router, prefix="/api/browser/enhanced", tags=["Browser Enhanced"])
