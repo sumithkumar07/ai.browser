@@ -11,7 +11,7 @@ import time
 from datetime import datetime
 
 class Post502FixTester:
-    def __init__(self, base_url="https://seamless-bugfix.preview.emergentagent.com"):
+    def __init__(self, base_url="https://service-recovery.preview.emergentagent.com"):
         self.base_url = base_url
         self.token = None
         self.tests_run = 0
@@ -237,7 +237,7 @@ class Post502FixTester:
         print("🚀 FOCUSED POST-502 FIX TESTING")
         print("=" * 60)
         print("Testing key functionality after resolving 502 BAD GATEWAY errors")
-        print("Base URL: https://seamless-bugfix.preview.emergentagent.com")
+        print("Base URL: https://service-recovery.preview.emergentagent.com")
         print("=" * 60)
         
         # Test critical endpoints

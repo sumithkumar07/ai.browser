@@ -4,7 +4,7 @@
 Testing all newly implemented parallel enhancement areas to validate complete backend functionality
 across all 5 areas (A, B, C, D, E) as per review request.
 
-Base URL: https://seamless-bugfix.preview.emergentagent.com
+Base URL: https://service-recovery.preview.emergentagent.com
 """
 
 import requests
@@ -15,7 +15,7 @@ from datetime import datetime
 from typing import Dict, Any, Optional
 
 class ParallelEnhancementTester:
-    def __init__(self, base_url="https://seamless-bugfix.preview.emergentagent.com"):
+    def __init__(self, base_url="https://service-recovery.preview.emergentagent.com"):
         self.base_url = base_url
         self.tests_run = 0
         self.tests_passed = 0

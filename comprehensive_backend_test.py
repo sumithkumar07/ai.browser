@@ -11,7 +11,7 @@ import time
 from datetime import datetime
 
 class ComprehensiveAPITester:
-    def __init__(self, base_url="https://seamless-bugfix.preview.emergentagent.com"):
+    def __init__(self, base_url="https://service-recovery.preview.emergentagent.com"):
         self.base_url = base_url
         self.token = None
         self.tests_run = 0

@@ -6,7 +6,7 @@ Focus: 502 Server Errors Investigation and Complete System Testing
 Testing Scope: Complete validation of AI Agentic Browser backend to identify and resolve 
 current 502 server errors and test all capabilities as per review request.
 
-Base URL: https://seamless-bugfix.preview.emergentagent.com
+Base URL: https://service-recovery.preview.emergentagent.com
 """
 
 import requests
@@ -17,7 +17,7 @@ from datetime import datetime
 from typing import Dict, Any, Optional
 
 class Comprehensive502BackendTester:
-    def __init__(self, base_url="https://seamless-bugfix.preview.emergentagent.com"):
+    def __init__(self, base_url="https://service-recovery.preview.emergentagent.com"):
         self.base_url = base_url
         self.token = None
         self.user_id = None
@@ -677,7 +677,7 @@ class Comprehensive502BackendTester:
         print("🚀 COMPREHENSIVE END-TO-END BACKEND TESTING - FULL SYSTEM VALIDATION")
         print("=" * 80)
         print("Focus: 502 Server Errors Investigation and Complete System Testing")
-        print("Base URL: https://seamless-bugfix.preview.emergentagent.com")
+        print("Base URL: https://service-recovery.preview.emergentagent.com")
         print("=" * 80)
         
         # PRIORITY 1: CRITICAL ISSUES RESOLUTION

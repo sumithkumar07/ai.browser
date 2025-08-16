@@ -3,7 +3,7 @@
 CRITICAL ISSUE VERIFICATION - FOCUSED TESTING
 Testing Agent: Backend SDET (Testing Agent)
 Test Type: Focused verification of specific failing endpoints from previous test
-Base URL: https://seamless-bugfix.preview.emergentagent.com
+Base URL: https://service-recovery.preview.emergentagent.com
 Test Date: January 16, 2025
 
 PRIORITY TESTING - ONLY TEST THESE SPECIFIC FAILING ENDPOINTS:
@@ -20,7 +20,7 @@ import sys
 from datetime import datetime
 
 # Configuration
-BASE_URL = "https://seamless-bugfix.preview.emergentagent.com"
+BASE_URL = "https://service-recovery.preview.emergentagent.com"
 TIMEOUT = 30
 
 class CriticalIssueVerificationTester:
