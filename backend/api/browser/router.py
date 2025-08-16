@@ -12,6 +12,8 @@ from typing import List
 router = APIRouter()
 auth_service = AuthService()
 session_manager = SessionManager()
+advanced_tab_service = AdvancedTabNavigationService()
+cross_site_service = CrossSiteIntelligenceService()
 
 @router.post("/session", response_model=BrowserSession)
 async def create_session(
