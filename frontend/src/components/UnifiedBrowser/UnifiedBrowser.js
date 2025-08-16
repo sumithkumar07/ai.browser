@@ -51,6 +51,7 @@ export default function UnifiedBrowser() {
   const [sidebarWidth, setSidebarWidth] = useState(350);
 
   const { aiCapabilities, hybridFeatures } = useAI();
+  const parallelFeatures = useParallelFeatures();
   const urlInputRef = useRef(null);
   const webViewRef = useRef(null);
 
