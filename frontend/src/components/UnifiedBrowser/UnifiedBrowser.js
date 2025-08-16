@@ -412,6 +412,25 @@ export default function UnifiedBrowser() {
               <Plus size={16} />
             </button>
             
+            {/* Comprehensive Features Button */}
+            <button 
+              className={`nav-btn ${showComprehensiveFeatures ? 'bg-green-600/30 border-green-500/30' : ''}`}
+              onClick={() => setShowComprehensiveFeatures(!showComprehensiveFeatures)}
+              title="🚀 All 17 Features Ready"
+            >
+              <Sparkles size={16} className={showComprehensiveFeatures ? 'text-green-300' : ''} />
+              <span className="ml-1 text-xs">17</span>
+            </button>
+            
+            {/* Voice Commands Toggle */}
+            <button 
+              className={`nav-btn ${showVoiceCommands ? 'bg-red-600/30 border-red-500/30' : ''}`}
+              onClick={() => setShowVoiceCommands(!showVoiceCommands)}
+              title="Voice Commands (Hey ARIA)"
+            >
+              <MessageSquare size={16} className={showVoiceCommands ? 'text-red-300' : ''} />
+            </button>
+            
             {/* AI Panel Toggle */}
             <button 
               className={`nav-btn ${showAIPanel ? 'bg-purple-600/30 border-purple-500/30' : ''}`}
