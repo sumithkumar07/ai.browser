@@ -686,7 +686,16 @@ export default function UnifiedBrowser() {
                 currentTab={activeTab}
                 onActionExecute={(action) => {
                   console.log('Executing action:', action);
-                  // Handle contextual AI actions
+                  // Handle contextual AI actions using comprehensive features
+                  if (action.type === 'smart_bookmark') {
+                    comprehensiveFeaturesService.createSmartBookmark(currentUrl, { title: currentTab?.title });
+                  } else if (action.type === 'voice_command') {
+                    setShowVoiceCommands(true);
+                  } else if (action.type === 'analyze_content') {
+                    comprehensiveFeaturesService.getOneClickAIActions({ url: currentUrl, content: pageAnalysis });
+                  } else if (action.type === 'organize_tabs') {
+                    comprehensiveFeaturesService.advancedTabManagement('organize_3d_workspace', tabs);
+                  }
                 }}
                 onClose={() => setShowAIPanel(false)}
               />
