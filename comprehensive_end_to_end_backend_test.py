@@ -11,7 +11,7 @@ Testing Categories:
 5. Automation & Intelligence Systems
 6. Authentication & User Management
 
-Base URL: https://neon-fellou-test.preview.emergentagent.com
+Base URL: https://neon-fellou-ui.preview.emergentagent.com
 """
 
 import requests
@@ -22,7 +22,7 @@ from datetime import datetime
 from typing import Dict, Any, Optional, List
 
 class ComprehensiveEndToEndTester:
-    def __init__(self, base_url="https://neon-fellou-test.preview.emergentagent.com"):
+    def __init__(self, base_url="https://neon-fellou-ui.preview.emergentagent.com"):
         self.base_url = base_url
         self.token = None
         self.user_id = None

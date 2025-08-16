@@ -17,7 +17,7 @@ from datetime import datetime
 from typing import Dict, Any, Optional
 
 class HybridAIBrowserTester:
-    def __init__(self, base_url="https://neon-fellou-test.preview.emergentagent.com"):
+    def __init__(self, base_url="https://neon-fellou-ui.preview.emergentagent.com"):
         self.base_url = base_url
         self.token = None
         self.user_id = None
@@ -421,7 +421,7 @@ class HybridAIBrowserTester:
         print("🚀 HYBRID AI BROWSER - COMPREHENSIVE END-TO-END TESTING")
         print("="*80)
         print("Testing Objective: Validate all hybrid browser capabilities")
-        print("Base URL: https://neon-fellou-test.preview.emergentagent.com")
+        print("Base URL: https://neon-fellou-ui.preview.emergentagent.com")
         print("Focus: AI capabilities, hybrid features, 17 comprehensive features")
         print("="*80)
         
