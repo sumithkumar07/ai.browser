@@ -167,8 +167,7 @@ async def intelligent_bandwidth_optimization(
 
 @router.post("/tab-management/advanced-3d-workspace")
 async def advanced_tab_management(
-    request: TabManagementRequest,
-    token: str = Depends(security)
+    request: TabManagementRequest
 ):
     """
     🎯 ADVANCED TAB MANAGEMENT - 3D workspace with native controls preparation
