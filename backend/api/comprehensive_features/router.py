@@ -351,9 +351,7 @@ async def template_library(
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/builder/visual-components")
-async def visual_task_builder(
-    token: str = Depends(security)
-):
+async def visual_task_builder():
     """
     🎨 VISUAL TASK BUILDER - Drag-and-drop automation creator
     """
