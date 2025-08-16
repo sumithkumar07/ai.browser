@@ -3,7 +3,7 @@
 ## Test Execution Summary
 - **Date**: 2025-01-11
 - **Test Type**: Backend Smoke Test for AI-enhanced endpoints
-- **Base URL**: https://e2e-testing-1.preview.emergentagent.com
+- **Base URL**: https://issue-resolver-16.preview.emergentagent.com
 - **Total Tests**: 9
 - **Passed**: 9
 - **Failed**: 0
