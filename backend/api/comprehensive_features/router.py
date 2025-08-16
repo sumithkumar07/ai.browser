@@ -122,8 +122,7 @@ async def real_time_performance_monitoring(
 
 @router.post("/caching/predictive-content-caching")
 async def predictive_content_caching(
-    request: PredictiveCachingRequest,
-    token: str = Depends(security)
+    request: PredictiveCachingRequest
 ):
     """
     🔮 PREDICTIVE CACHING - AI behavior-based pre-loading
