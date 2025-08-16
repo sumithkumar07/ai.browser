@@ -163,7 +163,7 @@ App Mount → Context Initialization → Service Connection → UI Render → Us
 ```
 
 ### **2. API Integration Points**
-- **Backend URL**: `https://neon-fellou-ui.preview.emergentagent.com`
+- **Backend URL**: `https://e2e-browser-check.preview.emergentagent.com`
 - **API Routes**: All prefixed with `/api`
 - **AI Services**: GROQ integration for chat and analysis
 - **Performance Metrics**: Real-time system monitoring

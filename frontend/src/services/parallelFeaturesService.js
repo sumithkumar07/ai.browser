@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'https://neon-fellou-ui.preview.emergentagent.com';
+const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'https://e2e-browser-check.preview.emergentagent.com';
 
 // Helper function to get auth token
 const getAuthToken = () => {

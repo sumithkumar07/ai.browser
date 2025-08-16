@@ -34,7 +34,7 @@ from datetime import datetime
 from typing import Dict, Any, Optional
 
 class FocusedRetester:
-    def __init__(self, base_url="https://neon-fellou-ui.preview.emergentagent.com"):
+    def __init__(self, base_url="https://e2e-browser-check.preview.emergentagent.com"):
         self.base_url = base_url
         self.token = None
         self.user_id = None
@@ -244,7 +244,7 @@ class FocusedRetester:
         print("- ✅ Restarted backend service to apply changes")
         print("- ✅ Verified methods work in isolation testing")
         print("")
-        print("Base URL: https://neon-fellou-ui.preview.emergentagent.com")
+        print("Base URL: https://e2e-browser-check.preview.emergentagent.com")
         print("=" * 80)
         
         # Step 1: Authentication Flow
